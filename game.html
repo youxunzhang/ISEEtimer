@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间守护者 - TimeMaster 小游戏</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .game-header {
+            margin-bottom: 40px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .game-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .timer-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .time-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .timer-label {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .click-area {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 30px auto;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .click-area:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .click-area:active {
+            transform: scale(0.95);
+        }
+
+        .click-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: clickRipple 0.6s ease-out;
+        }
+
+        @keyframes clickRipple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .game-controls {
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .game-instructions {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .game-instructions h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .game-instructions p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .combo-display {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #feca57;
+            font-weight: 700;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .combo-display.show {
+            opacity: 1;
+            top: -40px;
+        }
+
+        @media (max-width: 768px) {
+            .time-display {
+                font-size: 2.5rem;
+            }
+            
+            .click-area {
+                width: 150px;
+                height: 150px;
+                font-size: 2rem;
+            }
+            
+            .game-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">
+        <i class="fas fa-arrow-left"></i> 返回
+    </button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">时间守护者</h1>
+            <p class="game-subtitle">点击守护时间，不要让倒计时归零！</p>
+        </div>
+
+        <div class="timer-display">
+            <div class="time-display" id="timeDisplay">60</div>
+            <div class="timer-label" id="timerLabel">剩余时间</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="click-area" id="clickArea">
+            <i class="fas fa-clock"></i>
+            <div class="combo-display" id="comboDisplay"></div>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="clickCount">0</div>
+                <div class="stat-label">点击次数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="comboCount">0</div>
+                <div class="stat-label">连击次数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="timeAdded">0</div>
+                <div class="stat-label">增加时间</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">得分</div>
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button class="btn" id="startBtn">
+                <i class="fas fa-play"></i> 开始游戏
+            </button>
+            <button class="btn" id="pauseBtn" disabled>
+                <i class="fas fa-pause"></i> 暂停
+            </button>
+            <button class="btn" id="resetBtn">
+                <i class="fas fa-redo"></i> 重新开始
+            </button>
+        </div>
+
+        <div class="game-instructions">
+            <h3><i class="fas fa-info-circle"></i> 游戏规则</h3>
+            <p>
+                1. 点击中央的时钟图标来增加时间<br>
+                2. 连续点击可以获得连击奖励<br>
+                3. 不要让倒计时归零，否则游戏结束<br>
+                4. 每次点击增加1-3秒，连击越多增加越多<br>
+                5. 挑战你的反应速度和持久力！
+            </p>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-bell"></i>
+        <span id="notificationText"></span>
+    </div>
+
+    <script>
+        // 游戏状态
+        let gameState = {
+            isRunning: false,
+            timeLeft: 60,
+            maxTime: 60,
+            clickCount: 0,
+            comboCount: 0,
+            timeAdded: 0,
+            score: 0,
+            lastClickTime: 0,
+            comboTimeout: null
+        };
+
+        // DOM 元素
+        const elements = {
+            timeDisplay: document.getElementById('timeDisplay'),
+            timerLabel: document.getElementById('timerLabel'),
+            progressFill: document.getElementById('progressFill'),
+            clickArea: document.getElementById('clickArea'),
+            comboDisplay: document.getElementById('comboDisplay'),
+            clickCount: document.getElementById('clickCount'),
+            comboCount: document.getElementById('comboCount'),
+            timeAdded: document.getElementById('timeAdded'),
+            score: document.getElementById('score'),
+            startBtn: document.getElementById('startBtn'),
+            pauseBtn: document.getElementById('pauseBtn'),
+            resetBtn: document.getElementById('resetBtn'),
+            notification: document.getElementById('notification'),
+            notificationText: document.getElementById('notificationText')
+        };
+
+        let gameInterval = null;
+
+        // 初始化游戏
+        function initGame() {
+            updateDisplay();
+            addEventListeners();
+        }
+
+        // 添加事件监听器
+        function addEventListeners() {
+            elements.startBtn.addEventListener('click', startGame);
+            elements.pauseBtn.addEventListener('click', pauseGame);
+            elements.resetBtn.addEventListener('click', resetGame);
+            elements.clickArea.addEventListener('click', handleClick);
+        }
+
+        // 开始游戏
+        function startGame() {
+            if (gameState.isRunning) return;
+            
+            gameState.isRunning = true;
+            gameInterval = setInterval(() => {
+                gameState.timeLeft--;
+                updateDisplay();
+                
+                if (gameState.timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            elements.startBtn.disabled = true;
+            elements.pauseBtn.disabled = false;
+            elements.timerLabel.textContent = '游戏进行中...';
+        }
+
+        // 暂停游戏
+        function pauseGame() {
+            if (!gameState.isRunning) return;
+            
+            gameState.isRunning = false;
+            clearInterval(gameInterval);
+            
+            elements.startBtn.disabled = false;
+            elements.pauseBtn.disabled = true;
+            elements.timerLabel.textContent = '游戏暂停';
+        }
+
+        // 重置游戏
+        function resetGame() {
+            gameState = {
+                isRunning: false,
+                timeLeft: 60,
+                maxTime: 60,
+                clickCount: 0,
+                comboCount: 0,
+                timeAdded: 0,
+                score: 0,
+                lastClickTime: 0,
+                comboTimeout: null
+            };
+            
+            clearInterval(gameInterval);
+            clearTimeout(gameState.comboTimeout);
+            
+            elements.startBtn.disabled = false;
+            elements.pauseBtn.disabled = true;
+            elements.timerLabel.textContent = '准备开始';
+            
+            updateDisplay();
+        }
+
+        // 处理点击
+        function handleClick() {
+            if (!gameState.isRunning) return;
+            
+            // 创建点击效果
+            createClickEffect(event);
+            
+            // 更新点击统计
+            gameState.clickCount++;
+            
+            // 计算连击
+            const now = Date.now();
+            if (now - gameState.lastClickTime < 1000) {
+                gameState.comboCount++;
+                clearTimeout(gameState.comboTimeout);
+                gameState.comboTimeout = setTimeout(() => {
+                    gameState.comboCount = 0;
+                    updateDisplay();
+                }, 2000);
+            } else {
+                gameState.comboCount = 1;
+            }
+            gameState.lastClickTime = now;
+            
+            // 计算增加的时间
+            const timeIncrease = Math.min(3, 1 + Math.floor(gameState.comboCount / 3));
+            gameState.timeLeft = Math.min(gameState.maxTime, gameState.timeLeft + timeIncrease);
+            gameState.timeAdded += timeIncrease;
+            
+            // 计算得分
+            const clickScore = timeIncrease * (1 + gameState.comboCount * 0.5);
+            gameState.score += Math.floor(clickScore);
+            
+            // 显示连击效果
+            showComboEffect(timeIncrease);
+            
+            // 更新显示
+            updateDisplay();
+            
+            // 显示通知
+            if (gameState.comboCount >= 5) {
+                showNotification(`连击 ${gameState.comboCount} 次！+${timeIncrease}秒`);
+            }
+        }
+
+        // 创建点击效果
+        function createClickEffect(event) {
+            const rect = elements.clickArea.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + 'px';
+            effect.style.top = y + 'px';
+            
+            elements.clickArea.appendChild(effect);
+            
+            setTimeout(() => {
+                effect.remove();
+            }, 600);
+        }
+
+        // 显示连击效果
+        function showComboEffect(timeIncrease) {
+            elements.comboDisplay.textContent = `+${timeIncrease}s`;
+            elements.comboDisplay.classList.add('show');
+            
+            setTimeout(() => {
+                elements.comboDisplay.classList.remove('show');
+            }, 1000);
+        }
+
+        // 结束游戏
+        function endGame() {
+            gameState.isRunning = false;
+            clearInterval(gameInterval);
+            
+            elements.startBtn.disabled = false;
+            elements.pauseBtn.disabled = true;
+            elements.timerLabel.textContent = '游戏结束';
+            
+            showNotification(`游戏结束！最终得分：${gameState.score}`);
+        }
+
+        // 更新显示
+        function updateDisplay() {
+            elements.timeDisplay.textContent = gameState.timeLeft;
+            elements.clickCount.textContent = gameState.clickCount;
+            elements.comboCount.textContent = gameState.comboCount;
+            elements.timeAdded.textContent = gameState.timeAdded;
+            elements.score.textContent = gameState.score;
+            
+            // 更新进度条
+            const progress = (gameState.timeLeft / gameState.maxTime) * 100;
+            elements.progressFill.style.width = `${progress}%`;
+            
+            // 根据剩余时间改变颜色
+            if (gameState.timeLeft <= 10) {
+                elements.progressFill.style.background = 'linear-gradient(90deg, #ff6b6b, #ff4757)';
+            } else if (gameState.timeLeft <= 30) {
+                elements.progressFill.style.background = 'linear-gradient(90deg, #feca57, #ff9ff3)';
+            } else {
+                elements.progressFill.style.background = 'linear-gradient(90deg, #ff6b6b, #feca57)';
+            }
+        }
+
+        // 显示通知
+        function showNotification(message) {
+            elements.notificationText.textContent = message;
+            elements.notification.classList.add('show');
+            
+            setTimeout(() => {
+                elements.notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                if (gameState.isRunning) {
+                    pauseGame();
+                } else {
+                    startGame();
+                }
+            } else if (event.code === 'KeyR') {
+                event.preventDefault();
+                resetGame();
+            }
+        });
+
+        // 初始化游戏
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html> 
