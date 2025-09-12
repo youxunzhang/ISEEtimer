@@ -2,16 +2,26 @@
 let currentTheme = localStorage.getItem('theme') || 'light';
 let activeTab = 'stopwatch';
 
+// 性能优化变量
+let lastUpdateTime = 0;
+let animationFrameId = null;
+let pageVisibilityStart = 0;
+let accumulatedTime = 0;
+
 // 计时器相关变量
 let timerInterval = null;
 let timerRunning = false;
 let timerTime = 0;
+let timerStartTime = 0;
+let timerPausedTime = 0;
 
 // 倒计时相关变量
 let countdownInterval = null;
 let countdownRunning = false;
 let countdownTime = 0;
 let countdownTotal = 0;
+let countdownStartTime = 0;
+let countdownPausedTime = 0;
 
 // 番茄钟相关变量
 let pomodoroInterval = null;
@@ -20,13 +30,22 @@ let pomodoroTime = 0;
 let pomodoroTotal = 0;
 let pomodoroPhase = 'work'; // 'work', 'break', 'longBreak'
 let pomodoroRound = 1;
+let pomodoroStartTime = 0;
+let pomodoroPausedTime = 0;
 
 // 秒表相关变量
 let stopwatchInterval = null;
 let stopwatchRunning = false;
 let stopwatchTime = 0;
 let stopwatchStartTime = 0;
+let stopwatchPausedTime = 0;
 let lapTimes = [];
+let lastStopwatchUpdate = 0;
+
+// 计时精度控制
+const TIMER_PRECISION = 1000; // 1秒
+const STOPWATCH_PRECISION = 10; // 10毫秒
+const DISPLAY_UPDATE_RATE = 16; // ~60fps
 
 // DOM 元素
 const elements = {
@@ -208,7 +227,7 @@ function showNotification(message, duration = 3000) {
     }, duration);
 }
 
-// 计时器功能
+// 计时器功能 - 优化版本
 function startTimer() {
     if (timerRunning) return;
     
@@ -222,13 +241,20 @@ function startTimer() {
     }
     
     timerRunning = true;
+    timerStartTime = Date.now() - (timerPausedTime * 1000);
+    
     timerInterval = setInterval(() => {
-        timerTime++;
+        const currentTime = Date.now();
+        const elapsed = Math.floor((currentTime - timerStartTime) / 1000);
+        timerTime = elapsed;
         updateTimerDisplay();
-    }, 1000);
+    }, TIMER_PRECISION);
     
     elements.startTimer.disabled = true;
     elements.pauseTimer.disabled = false;
+    
+    // 记录开始时间用于页面可见性处理
+    pageVisibilityStart = Date.now();
 }
 
 function pauseTimer() {
@@ -236,6 +262,7 @@ function pauseTimer() {
     
     timerRunning = false;
     clearInterval(timerInterval);
+    timerPausedTime = timerTime;
     
     elements.startTimer.disabled = false;
     elements.pauseTimer.disabled = true;
@@ -245,6 +272,8 @@ function resetTimer() {
     timerRunning = false;
     clearInterval(timerInterval);
     timerTime = 0;
+    timerPausedTime = 0;
+    timerStartTime = 0;
     updateTimerDisplay();
     
     elements.startTimer.disabled = false;

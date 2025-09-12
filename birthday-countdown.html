@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日倒计时器 | 免费在线生日倒计时时钟 | TimeMaster</title>
+    <meta name="description" content="专业的生日倒计时器，为重要生日提供精确倒计时。免费在线生日倒计时时钟，支持自定义生日日期，让每个生日都充满期待。">
+    <meta name="keywords" content="生日倒计时,birthday countdown,生日倒计时器,生日倒计时时钟,生日倒计时app,免费生日倒计时器,在线生日倒计时,生日提醒">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/birthday-countdown.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/birthday-countdown.html">
+    <meta property="og:title" content="生日倒计时器 | TimeMaster - 免费在线生日倒计时时钟">
+    <meta property="og:description" content="专业的生日倒计时器，为重要生日提供精确倒计时。免费使用，支持自定义生日日期。">
+    <meta property="og:image" content="https://yourdomain.com/birthday-countdown-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/birthday-countdown.html">
+    <meta property="twitter:title" content="生日倒计时器 | TimeMaster">
+    <meta property="twitter:description" content="专业的生日倒计时器，为重要生日提供精确倒计时">
+    <meta property="twitter:image" content="https://yourdomain.com/birthday-countdown-og.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "生日倒计时器",
+      "description": "专业的生日倒计时器，为重要生日提供精确倒计时",
+      "url": "https://yourdomain.com/birthday-countdown.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "生日日期倒计时",
+        "精确到秒的倒计时",
+        "自定义生日日期",
+        "生日提醒功能",
+        "免费使用"
+      ]
+    }
+    </script>
+    
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .birthday-hero {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .birthday-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .birthday-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .countdown-display {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .countdown-time {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .time-unit {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            border-radius: 15px;
+            padding: 30px 20px;
+            color: white;
+        }
+        
+        .time-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .time-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .birthday-date-input {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .birthday-date-input h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .date-input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .date-input {
+            padding: 12px 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            min-width: 200px;
+        }
+        
+        .birthday-tips {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .birthday-tips h3 {
+            color: #856404;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .birthday-tips ul {
+            color: #856404;
+            padding-left: 20px;
+        }
+        
+        .birthday-tips li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .birthday-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .birthday-type {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .birthday-type:hover {
+            border-color: #ff9a9e;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .birthday-type i {
+            font-size: 2rem;
+            color: #ff9a9e;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .birthday-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-time {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .time-number {
+                font-size: 2rem;
+            }
+            
+            .date-input-group {
+                flex-direction: column;
+            }
+            
+            .date-input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <header>
+        <nav class="navbar" role="navigation" aria-label="主导航">
+            <div class="nav-brand">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <span>TimeMaster - 专业倒计时器</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    主页
+                </a>
+                <a href="wedding-countdown.html" class="nav-item">
+                    <i class="fas fa-heart"></i>
+                    婚礼倒计时
+                </a>
+                <a href="exam-countdown.html" class="nav-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    考试倒计时
+                </a>
+                <a href="birthday-countdown.html" class="nav-item active">
+                    <i class="fas fa-birthday-cake"></i>
+                    生日倒计时
+                </a>
+                <a href="sitemap.html" class="nav-item">
+                    <i class="fas fa-sitemap"></i>
+                    网站地图
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content" role="main">
+            <!-- 生日倒计时英雄区域 -->
+            <section class="birthday-hero">
+                <h1><i class="fas fa-birthday-cake"></i> 生日倒计时器</h1>
+                <p>为重要生日提供精确倒计时，让每个生日都充满期待与惊喜</p>
+            </section>
+
+            <!-- 生日类型选择 -->
+            <section class="birthday-types">
+                <div class="birthday-type">
+                    <i class="fas fa-child"></i>
+                    <h3>儿童生日</h3>
+                    <p>为孩子的重要生日设置倒计时</p>
+                </div>
+                <div class="birthday-type">
+                    <i class="fas fa-user"></i>
+                    <h3>成人生日</h3>
+                    <p>为朋友、家人的生日设置倒计时</p>
+                </div>
+                <div class="birthday-type">
+                    <i class="fas fa-heart"></i>
+                    <h3>纪念生日</h3>
+                    <p>为特殊的纪念生日设置倒计时</p>
+                </div>
+                <div class="birthday-type">
+                    <i class="fas fa-star"></i>
+                    <h3>里程碑生日</h3>
+                    <p>为18岁、30岁等重要生日倒计时</p>
+                </div>
+            </section>
+
+            <!-- 生日日期设置 -->
+            <section class="birthday-date-input">
+                <h3><i class="fas fa-calendar-alt"></i> 设置生日日期</h3>
+                <div class="date-input-group">
+                    <input type="date" id="birthdayDate" class="date-input" placeholder="选择生日日期">
+                    <input type="time" id="birthdayTime" class="date-input" placeholder="选择生日时间">
+                    <button class="btn btn-primary" id="setBirthdayDate">
+                        <i class="fas fa-calendar-check"></i>
+                        开始倒计时
+                    </button>
+                </div>
+            </section>
+
+            <!-- 倒计时显示 -->
+            <section class="countdown-display" id="countdownDisplay" style="display: none;">
+                <h2>距离生日还有</h2>
+                <div class="countdown-time">
+                    <div class="time-unit">
+                        <div class="time-number" id="birthdayDays">0</div>
+                        <div class="time-label">天</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-number" id="birthdayHours">0</div>
+                        <div class="time-label">小时</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-number" id="birthdayMinutes">0</div>
+                        <div class="time-label">分钟</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-number" id="birthdaySeconds">0</div>
+                        <div class="time-label">秒</div>
+                    </div>
+                </div>
+                <div id="birthdayMessage" class="birthday-message"></div>
+            </section>
+
+            <!-- 生日准备建议 -->
+            <section class="birthday-tips">
+                <h3><i class="fas fa-lightbulb"></i> 生日倒计时准备建议</h3>
+                <ul>
+                    <li><strong>1个月前：</strong>确定生日聚会计划，预订场地和蛋糕</li>
+                    <li><strong>2周前：</strong>发送生日邀请，准备装饰用品</li>
+                    <li><strong>1周前：</strong>购买生日礼物，确认参加人数</li>
+                    <li><strong>3天前：</strong>准备生日派对用品，检查所有安排</li>
+                    <li><strong>生日当天：</strong>享受美好时光，记录珍贵回忆</li>
+                </ul>
+            </section>
+
+            <!-- 页面内容概要 -->
+            <section class="page-summary">
+                <h2><i class="fas fa-birthday-cake"></i> 生日倒计时器 - 页面概要</h2>
+                <p>欢迎使用 <span class="highlight">TimeMaster 生日倒计时器</span>，这是专为重要生日设计的倒计时工具。无论是孩子的生日、朋友的生日、家人的生日还是自己的生日，我们的生日倒计时器都能为您提供精确到秒的倒计时服务。</p>
+                
+                <h3>功能特色：</h3>
+                <ul>
+                    <li><span class="highlight">精确倒计时</span> - 支持精确到秒的生日倒计时显示</li>
+                    <li><span class="highlight">多种生日类型</span> - 支持儿童生日、成人生日、纪念生日等</li>
+                    <li><span class="highlight">自定义日期</span> - 自由设置生日日期和时间</li>
+                    <li><span class="highlight">生日提醒</span> - 提前提醒生日准备事项</li>
+                    <li><span class="highlight">免费使用</span> - 无需注册，无需下载，即开即用</li>
+                </ul>
+
+                <h3>适用场景：</h3>
+                <ul>
+                    <li>儿童生日倒计时 - 为孩子的重要生日设置倒计时</li>
+                    <li>成人生日倒计时 - 为朋友、家人的生日设置倒计时</li>
+                    <li>纪念生日倒计时 - 为特殊的纪念生日设置倒计时</li>
+                    <li>里程碑生日倒计时 - 为18岁、30岁等重要生日倒计时</li>
+                    <li>生日派对倒计时 - 为生日派对设置倒计时</li>
+                </ul>
+
+                <h3>相关推荐：</h3>
+                <ul>
+                    <li><a href="wedding-countdown.html">婚礼倒计时器</a> - 为特殊日子设置倒计时</li>
+                    <li><a href="exam-countdown.html">考试倒计时器</a> - 为重要考试设置倒计时</li>
+                    <li><a href="index.html">在线倒计时器</a> - 通用倒计时工具</li>
+                </ul>
+
+                <p>TimeMaster 生日倒计时器致力于为您的特殊日子提供最精准的倒计时服务，让每个生日都充满期待与惊喜。无论是即将到来的生日还是明年的生日，我们都能为您提供专业的解决方案，让生日庆祝变得更加有趣和有意义。</p>
+            </section>
+        </main>
+
+        <!-- 收藏按钮 -->
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="收藏此页面">
+            <i class="fas fa-bookmark"></i>
+        </button>
+
+        <!-- 分享按钮 -->
+        <button class="share-btn" id="shareBtn" aria-label="分享此页面">
+            <i class="fas fa-share-alt"></i>
+        </button>
+
+        <!-- 分享面板 -->
+        <div class="share-panel" id="sharePanel">
+            <h3>分享到社交媒体</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-button facebook" data-platform="facebook" aria-label="分享到Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-button twitter" data-platform="twitter" aria-label="分享到Twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="share-button linkedin" data-platform="linkedin" aria-label="分享到LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="share-button reddit" data-platform="reddit" aria-label="分享到Reddit">
+                    <i class="fab fa-reddit-alien"></i>
+                    <span>Reddit</span>
+                </a>
+                <a href="#" class="share-button whatsapp" data-platform="whatsapp" aria-label="分享到WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="share-button telegram" data-platform="telegram" aria-label="分享到Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                    <span>Telegram</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 生日倒计时功能
+        let birthdayCountdownInterval = null;
+        let birthdayTargetDate = null;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBirthdayCountdown();
+        });
+
+        function initializeBirthdayCountdown() {
+            const setDateBtn = document.getElementById('setBirthdayDate');
+            setDateBtn.addEventListener('click', startBirthdayCountdown);
+        }
+
+        function startBirthdayCountdown() {
+            const dateInput = document.getElementById('birthdayDate');
+            const timeInput = document.getElementById('birthdayTime');
+            
+            if (!dateInput.value) {
+                alert('请选择生日日期');
+                return;
+            }
+            
+            const date = new Date(dateInput.value);
+            if (timeInput.value) {
+                const [hours, minutes] = timeInput.value.split(':');
+                date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            } else {
+                date.setHours(12, 0, 0, 0); // 默认中午12点
+            }
+            
+            birthdayTargetDate = date;
+            document.getElementById('countdownDisplay').style.display = 'block';
+            
+            // 开始倒计时
+            birthdayCountdownInterval = setInterval(updateBirthdayCountdown, 1000);
+            updateBirthdayCountdown();
+        }
+
+        function updateBirthdayCountdown() {
+            if (!birthdayTargetDate) return;
+            
+            const now = new Date();
+            const timeLeft = birthdayTargetDate - now;
+            
+            if (timeLeft <= 0) {
+                clearInterval(birthdayCountdownInterval);
+                document.getElementById('birthdayMessage').innerHTML = 
+                    '<h2 style="color: #ff9a9e;"><i class="fas fa-birthday-cake"></i> 生日快乐！🎉</h2>';
+                return;
+            }
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            document.getElementById('birthdayDays').textContent = days;
+            document.getElementById('birthdayHours').textContent = hours;
+            document.getElementById('birthdayMinutes').textContent = minutes;
+            document.getElementById('birthdaySeconds').textContent = seconds;
+            
+            // 更新消息
+            let message = '';
+            if (days > 365) {
+                const years = Math.floor(days / 365);
+                message = `还有 ${years} 年 ${days % 365} 天就要过生日了！`;
+            } else if (days > 90) {
+                message = `还有 ${days} 天就要过生日了！开始准备生日惊喜吧！`;
+            } else if (days > 30) {
+                message = `还有 ${days} 天就要过生日了！生日准备进行得怎么样了？`;
+            } else if (days > 7) {
+                message = `还有 ${days} 天就要过生日了！最后准备阶段！`;
+            } else if (days > 0) {
+                message = `还有 ${days} 天就要过生日了！激动吗？`;
+            } else {
+                message = `今天就是生日！生日快乐！🎉`;
+            }
+            
+            document.getElementById('birthdayMessage').innerHTML = 
+                `<p style="font-size: 1.2rem; color: #666; margin-top: 20px;">${message}</p>`;
+        }
+
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // 收藏功能
+        const bookmarkBtn = document.getElementById('bookmarkBtn');
+        
+        const isBookmarked = localStorage.getItem('bookmarked-birthday') === 'true';
+        if (isBookmarked) {
+            bookmarkBtn.classList.add('bookmarked');
+        }
+        
+        bookmarkBtn.addEventListener('click', () => {
+            const isCurrentlyBookmarked = bookmarkBtn.classList.contains('bookmarked');
+            
+            if (isCurrentlyBookmarked) {
+                bookmarkBtn.classList.remove('bookmarked');
+                localStorage.setItem('bookmarked-birthday', 'false');
+            } else {
+                bookmarkBtn.classList.add('bookmarked');
+                localStorage.setItem('bookmarked-birthday', 'true');
+            }
+        });
+
+        // 分享功能
+        const shareBtn = document.getElementById('shareBtn');
+        const sharePanel = document.getElementById('sharePanel');
+        
+        shareBtn.addEventListener('click', () => {
+            sharePanel.classList.toggle('show');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!shareBtn.contains(e.target) && !sharePanel.contains(e.target)) {
+                sharePanel.classList.remove('show');
+            }
+        });
+        
+        const shareButtons = document.querySelectorAll('.share-button');
+        const pageTitle = document.title;
+        const pageUrl = window.location.href;
+        
+        shareButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const platform = button.getAttribute('data-platform');
+                let shareUrl = '';
+                
+                switch(platform) {
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                        break;
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                        break;
+                    case 'linkedin':
+                        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+                        break;
+                    case 'reddit':
+                        shareUrl = `https://reddit.com/submit?url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`;
+                        break;
+                    case 'whatsapp':
+                        shareUrl = `https://wa.me/?text=${encodeURIComponent(pageTitle + ' ' + pageUrl)}`;
+                        break;
+                    case 'telegram':
+                        shareUrl = `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
+                        break;
+                }
+                
+                if (shareUrl) {
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                    sharePanel.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

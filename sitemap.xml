@@ -28,4 +28,36 @@
         <priority>0.6</priority>
     </url>
     
+    <!-- 婚礼倒计时页面 -->
+    <url>
+        <loc>https://yourdomain.com/wedding-countdown.html</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 考试倒计时页面 -->
+    <url>
+        <loc>https://yourdomain.com/exam-countdown.html</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 生日倒计时页面 -->
+    <url>
+        <loc>https://yourdomain.com/birthday-countdown.html</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 制作教程页面 -->
+    <url>
+        <loc>https://yourdomain.com/how-to-create-countdown-timer.html</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
 </urlset>
