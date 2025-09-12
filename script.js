@@ -35,6 +35,11 @@ const elements = {
     tabPanels: document.querySelectorAll('.tab-panel'),
     themeToggle: document.getElementById('themeToggle'),
     
+    // 收藏和分享
+    bookmarkBtn: document.getElementById('bookmarkBtn'),
+    shareBtn: document.getElementById('shareBtn'),
+    sharePanel: document.getElementById('sharePanel'),
+    
     // 计时器
     hours: document.getElementById('hours'),
     minutes: document.getElementById('minutes'),
@@ -590,4 +595,87 @@ document.addEventListener('visibilitychange', function() {
         if (pomodoroRunning) pausePomodoro();
         if (stopwatchRunning) pauseStopwatch();
     }
-}); 
+});
+
+// 收藏功能
+function initBookmark() {
+    if (!elements.bookmarkBtn) return;
+    
+    // 检查是否已收藏
+    const isBookmarked = localStorage.getItem('bookmarked-index') === 'true';
+    if (isBookmarked) {
+        elements.bookmarkBtn.classList.add('bookmarked');
+    }
+    
+    elements.bookmarkBtn.addEventListener('click', () => {
+        const isCurrentlyBookmarked = elements.bookmarkBtn.classList.contains('bookmarked');
+        
+        if (isCurrentlyBookmarked) {
+            elements.bookmarkBtn.classList.remove('bookmarked');
+            localStorage.setItem('bookmarked-index', 'false');
+        } else {
+            elements.bookmarkBtn.classList.add('bookmarked');
+            localStorage.setItem('bookmarked-index', 'true');
+        }
+    });
+}
+
+// 分享功能
+function initShare() {
+    if (!elements.shareBtn || !elements.sharePanel) return;
+    
+    elements.shareBtn.addEventListener('click', () => {
+        elements.sharePanel.classList.toggle('show');
+    });
+    
+    // 点击外部关闭分享面板
+    document.addEventListener('click', (e) => {
+        if (!elements.shareBtn.contains(e.target) && !elements.sharePanel.contains(e.target)) {
+            elements.sharePanel.classList.remove('show');
+        }
+    });
+    
+    // 分享按钮功能
+    const shareButtons = document.querySelectorAll('.share-button');
+    const pageTitle = document.title;
+    const pageUrl = window.location.href;
+    const pageDescription = 'TimeMaster - 专业的在线倒计时器，支持自定义倒计时、番茄钟、秒表功能。免费使用，无需下载，支持移动端。';
+    
+    shareButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const platform = button.getAttribute('data-platform');
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+                    break;
+                case 'reddit':
+                    shareUrl = `https://reddit.com/submit?url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(pageTitle + ' ' + pageUrl)}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+                elements.sharePanel.classList.remove('show');
+            }
+        });
+    });
+}
+
+// 初始化收藏和分享功能
+initBookmark();
+initShare(); 

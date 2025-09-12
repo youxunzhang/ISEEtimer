@@ -404,6 +404,293 @@ body {
     gap: 0.5rem;
 }
 
+/* 收藏按钮样式 */
+.bookmark-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    font-size: 1.2rem;
+}
+
+.bookmark-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.bookmark-btn.bookmarked {
+    background: var(--warning-color);
+    color: white;
+    border-color: var(--warning-color);
+}
+
+.bookmark-btn.bookmarked:hover {
+    background: #d97706;
+    transform: translateY(-2px);
+}
+
+/* 分享按钮样式 */
+.share-btn {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    font-size: 1.2rem;
+}
+
+.share-btn:hover {
+    background: var(--success-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 分享面板 */
+.share-panel {
+    position: fixed;
+    top: 140px;
+    right: 20px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--shadow-xl);
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    min-width: 200px;
+}
+
+.share-panel.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.share-panel h3 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.share-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.share-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.share-button:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    transform: translateY(-1px);
+}
+
+.share-button.facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+.share-button.twitter:hover {
+    background: #1da1f2;
+    border-color: #1da1f2;
+}
+
+.share-button.linkedin:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+}
+
+.share-button.reddit:hover {
+    background: #ff4500;
+    border-color: #ff4500;
+}
+
+.share-button.whatsapp:hover {
+    background: #25d366;
+    border-color: #25d366;
+}
+
+.share-button.telegram:hover {
+    background: #0088cc;
+    border-color: #0088cc;
+}
+
+.share-button i {
+    font-size: 1.1rem;
+}
+
+/* 页面内容概要样式 */
+.page-summary {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 40px 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.page-summary h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+
+.page-summary p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.page-summary ul {
+    color: var(--text-secondary);
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.page-summary li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.page-summary .highlight {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* 网站地图页面样式 */
+.sitemap-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.sitemap-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--accent-color), #764ba2);
+    border-radius: 20px;
+    color: white;
+}
+
+.sitemap-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.sitemap-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.sitemap-section {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-md);
+}
+
+.sitemap-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+
+.sitemap-list {
+    list-style: none;
+    padding: 0;
+}
+
+.sitemap-list li {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+.sitemap-list li:hover {
+    background: var(--bg-tertiary);
+    transform: translateX(5px);
+}
+
+.sitemap-list a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sitemap-list a:hover {
+    color: var(--accent-color);
+}
+
+.sitemap-list i {
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+.sitemap-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .navbar {
@@ -476,6 +763,49 @@ body {
     
     .nav-brand i {
         font-size: 1.5rem;
+    }
+    
+    .bookmark-btn, .share-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .share-btn {
+        top: 75px;
+    }
+    
+    .share-panel {
+        top: 130px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+    }
+    
+    .share-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-summary {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+    
+    .sitemap-container {
+        padding: 10px;
+    }
+    
+    .sitemap-header {
+        padding: 30px 15px;
+    }
+    
+    .sitemap-header h1 {
+        font-size: 2rem;
+    }
+    
+    .sitemap-section {
+        padding: 20px;
+        margin-bottom: 20px;
     }
 }
 
