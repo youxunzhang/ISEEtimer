@@ -310,8 +310,10 @@ function startCountdown() {
     }
     
     countdownRunning = true;
+    countdownStartTime = Date.now();
     countdownInterval = setInterval(() => {
-        countdownTime--;
+        const elapsed = Math.floor((Date.now() - countdownStartTime) / 1000);
+        countdownTime = Math.max(0, countdownTotal - elapsed);
         updateCountdownDisplay();
         
         if (countdownTime <= 0) {
@@ -330,6 +332,7 @@ function pauseCountdown() {
     
     countdownRunning = false;
     clearInterval(countdownInterval);
+    countdownPausedTime = countdownTime;
     
     elements.startCountdown.disabled = false;
     elements.pauseCountdown.disabled = true;
@@ -339,6 +342,8 @@ function resetCountdown() {
     countdownRunning = false;
     clearInterval(countdownInterval);
     countdownTime = countdownTotal;
+    countdownPausedTime = 0;
+    countdownStartTime = 0;
     updateCountdownDisplay();
     
     elements.startCountdown.disabled = false;
@@ -376,8 +381,10 @@ function startPomodoro() {
     }
     
     pomodoroRunning = true;
+    pomodoroStartTime = Date.now();
     pomodoroInterval = setInterval(() => {
-        pomodoroTime--;
+        const elapsed = Math.floor((Date.now() - pomodoroStartTime) / 1000);
+        pomodoroTime = Math.max(0, pomodoroTotal - elapsed);
         updatePomodoroDisplay();
         
         if (pomodoroTime <= 0) {
@@ -395,6 +402,7 @@ function pausePomodoro() {
     
     pomodoroRunning = false;
     clearInterval(pomodoroInterval);
+    pomodoroPausedTime = pomodoroTime;
     
     elements.startPomodoro.disabled = false;
     elements.pausePomodoro.disabled = true;
@@ -405,6 +413,8 @@ function resetPomodoro() {
     clearInterval(pomodoroInterval);
     pomodoroPhase = 'work';
     pomodoroRound = 1;
+    pomodoroPausedTime = 0;
+    pomodoroStartTime = 0;
     updatePomodoroFromInputs();
     updatePomodoroDisplay();
     
@@ -623,6 +633,9 @@ document.addEventListener('visibilitychange', function() {
         if (countdownRunning) pauseCountdown();
         if (pomodoroRunning) pausePomodoro();
         if (stopwatchRunning) pauseStopwatch();
+    } else {
+        // 页面重新可见时，根据情况恢复计时器
+        // 这里可以根据需要添加恢复逻辑
     }
 });
 
