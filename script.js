@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
     updateTimerDisplay();
     updateCountdownDisplay();
-    updatePomodoroDisplay();
-    updateStopwatchDisplay();
+    updatePomodoroFromInputs(); // 确保番茄钟正确初始化
+    initializeStopwatch(); // 确保秒表正确初始化
 });
 
 // 主题管理
@@ -381,7 +381,13 @@ function startPomodoro() {
     }
     
     pomodoroRunning = true;
-    pomodoroStartTime = Date.now();
+    // 如果有暂停时间，从暂停时间开始，否则重新开始
+    if (pomodoroPausedTime > 0) {
+        pomodoroStartTime = Date.now() - (pomodoroTotal - pomodoroTime) * 1000;
+    } else {
+        pomodoroStartTime = Date.now();
+    }
+    
     pomodoroInterval = setInterval(() => {
         const elapsed = Math.floor((Date.now() - pomodoroStartTime) / 1000);
         pomodoroTime = Math.max(0, pomodoroTotal - elapsed);
@@ -430,6 +436,8 @@ function handlePomodoroComplete() {
             const longBreakMinutes = parseInt(elements.longBreakTime.value) || 15;
             pomodoroTotal = longBreakMinutes * 60;
             pomodoroTime = pomodoroTotal;
+            pomodoroStartTime = 0; // 重置开始时间
+            pomodoroPausedTime = 0; // 重置暂停时间
             elements.pomodoroLabel.textContent = '长休息时间';
             showNotification('专注时间结束，开始长休息！');
         } else {
@@ -438,6 +446,8 @@ function handlePomodoroComplete() {
             const breakMinutes = parseInt(elements.breakTime.value) || 5;
             pomodoroTotal = breakMinutes * 60;
             pomodoroTime = pomodoroTotal;
+            pomodoroStartTime = 0; // 重置开始时间
+            pomodoroPausedTime = 0; // 重置暂停时间
             elements.pomodoroLabel.textContent = '休息时间';
             showNotification('专注时间结束，开始休息！');
         }
@@ -448,9 +458,28 @@ function handlePomodoroComplete() {
         const workMinutes = parseInt(elements.workTime.value) || 25;
         pomodoroTotal = workMinutes * 60;
         pomodoroTime = pomodoroTotal;
+        pomodoroStartTime = 0; // 重置开始时间
+        pomodoroPausedTime = 0; // 重置暂停时间
         elements.pomodoroLabel.textContent = '专注时间';
         showNotification('休息结束，开始新一轮专注！');
     }
+    
+    // 自动开始下一阶段
+    pomodoroRunning = true;
+    pomodoroStartTime = Date.now();
+    pomodoroInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - pomodoroStartTime) / 1000);
+        pomodoroTime = Math.max(0, pomodoroTotal - elapsed);
+        updatePomodoroDisplay();
+        
+        if (pomodoroTime <= 0) {
+            pausePomodoro();
+            handlePomodoroComplete();
+        }
+    }, 1000);
+    
+    elements.startPomodoro.disabled = true;
+    elements.pausePomodoro.disabled = false;
     
     updatePomodoroDisplay();
     playNotificationSound();
@@ -463,30 +492,65 @@ function updatePomodoroDisplay() {
     
     // 更新进度条
     const progress = pomodoroTotal > 0 ? ((pomodoroTotal - pomodoroTime) / pomodoroTotal) * 100 : 0;
-    elements.pomodoroProgress.style.width = `${progress}%`;
+    elements.pomodoroProgress.style.width = `${Math.max(0, Math.min(100, progress))}%`;
     
     // 更新进度文本
     const phaseText = pomodoroPhase === 'work' ? '专注' : pomodoroPhase === 'break' ? '休息' : '长休息';
     elements.pomodoroProgressText.textContent = `第 ${pomodoroRound} 轮 - ${phaseText}`;
+    
+    // 根据剩余时间改变进度条颜色
+    if (progress > 80) {
+        elements.pomodoroProgress.style.backgroundColor = 'var(--success-color)';
+    } else if (progress > 50) {
+        elements.pomodoroProgress.style.backgroundColor = 'var(--warning-color)';
+    } else {
+        elements.pomodoroProgress.style.backgroundColor = 'var(--danger-color)';
+    }
 }
 
 function updatePomodoroFromInputs() {
     const workMinutes = parseInt(elements.workTime.value) || 25;
     pomodoroTotal = workMinutes * 60;
     pomodoroTime = pomodoroTotal;
+    pomodoroPausedTime = 0;
+    pomodoroStartTime = 0;
     updatePomodoroDisplay();
 }
 
 // 秒表功能
+function initializeStopwatch() {
+    // 确保秒表初始状态正确
+    stopwatchRunning = false;
+    stopwatchTime = 0;
+    stopwatchStartTime = 0;
+    stopwatchPausedTime = 0;
+    lapTimes = [];
+    
+    // 设置按钮初始状态
+    elements.startStopwatch.disabled = false;
+    elements.pauseStopwatch.disabled = true;
+    elements.lapStopwatch.disabled = true;
+    
+    // 更新显示
+    updateStopwatchDisplay();
+    updateLapList();
+}
+
 function startStopwatch() {
     if (stopwatchRunning) return;
     
     stopwatchRunning = true;
-    stopwatchStartTime = Date.now() - stopwatchTime;
+    // 如果有暂停时间，从暂停时间开始，否则重新开始
+    if (stopwatchPausedTime > 0) {
+        stopwatchStartTime = Date.now() - stopwatchPausedTime;
+    } else {
+        stopwatchStartTime = Date.now() - stopwatchTime;
+    }
+    
     stopwatchInterval = setInterval(() => {
         stopwatchTime = Date.now() - stopwatchStartTime;
         updateStopwatchDisplay();
-    }, 10);
+    }, 16); // 约60fps更新频率，提供更流畅的显示
     
     elements.startStopwatch.disabled = true;
     elements.pauseStopwatch.disabled = false;
@@ -498,18 +562,31 @@ function pauseStopwatch() {
     
     stopwatchRunning = false;
     clearInterval(stopwatchInterval);
+    stopwatchPausedTime = stopwatchTime; // 保存暂停时的时间
     
     elements.startStopwatch.disabled = false;
     elements.pauseStopwatch.disabled = true;
+    elements.lapStopwatch.disabled = true; // 暂停时禁用计圈按钮
 }
 
 function lapStopwatch() {
     if (!stopwatchRunning) return;
     
+    const currentTime = stopwatchTime;
+    const lapNumber = lapTimes.length + 1;
+    
+    // 计算圈间时间差
+    let lapDuration = currentTime;
+    if (lapTimes.length > 0) {
+        lapDuration = currentTime - lapTimes[lapTimes.length - 1].time;
+    }
+    
     const lapTime = {
-        number: lapTimes.length + 1,
-        time: stopwatchTime,
-        display: formatStopwatchTime(stopwatchTime)
+        number: lapNumber,
+        time: currentTime,
+        duration: lapDuration,
+        display: formatStopwatchTime(currentTime),
+        lapDisplay: formatStopwatchTime(lapDuration)
     };
     
     lapTimes.push(lapTime);
@@ -520,6 +597,8 @@ function resetStopwatch() {
     stopwatchRunning = false;
     clearInterval(stopwatchInterval);
     stopwatchTime = 0;
+    stopwatchStartTime = 0;
+    stopwatchPausedTime = 0;
     lapTimes = [];
     updateStopwatchDisplay();
     updateLapList();
@@ -542,7 +621,7 @@ function formatStopwatchTime(milliseconds) {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    const ms = Math.floor((milliseconds % 1000) / 10);
+    const ms = Math.floor((milliseconds % 1000) / 10); // 显示到10毫秒精度
     
     return {
         hours: hours.toString().padStart(2, '0'),
@@ -555,12 +634,18 @@ function formatStopwatchTime(milliseconds) {
 function updateLapList() {
     elements.lapList.innerHTML = '';
     
-    lapTimes.forEach(lap => {
+    lapTimes.forEach((lap, index) => {
         const lapItem = document.createElement('div');
         lapItem.className = 'lap-item';
+        
+        // 显示圈间时间和总时间
+        const lapTimeText = index === 0 ? 
+            `总时间: ${lap.display}` : 
+            `圈间: ${lap.lapDisplay} | 总时间: ${lap.display}`;
+        
         lapItem.innerHTML = `
             <span class="lap-number">第 ${lap.number} 圈</span>
-            <span class="lap-time">${lap.display}</span>
+            <span class="lap-time">${lapTimeText}</span>
         `;
         elements.lapList.appendChild(lapItem);
     });
