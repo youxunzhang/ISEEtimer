@@ -8,6 +8,9 @@ let animationFrameId = null;
 let pageVisibilityStart = 0;
 let accumulatedTime = 0;
 
+// Web Worker for background timer
+let timerWorker = null;
+
 // 计时器相关变量
 let timerInterval = null;
 let timerRunning = false;
@@ -114,11 +117,54 @@ const elements = {
 document.addEventListener('DOMContentLoaded', function() {
     initializeTheme();
     initializeEventListeners();
+    initializeTimerWorker();
     updateTimerDisplay();
     updateCountdownDisplay();
     updatePomodoroFromInputs(); // 确保番茄钟正确初始化
     initializeStopwatch(); // 确保秒表正确初始化
 });
+
+// 初始化Web Worker
+function initializeTimerWorker() {
+    if (typeof Worker !== 'undefined') {
+        try {
+            timerWorker = new Worker('timer-worker.js');
+            timerWorker.onmessage = function(e) {
+                const { type, data } = e.data;
+                if (type === 'STATUS_UPDATE') {
+                    // 更新本地计时器状态
+                    if (data.timer.running) {
+                        timerTime = data.timer.currentTime;
+                        updateTimerDisplay();
+                    }
+                    if (data.countdown.running) {
+                        countdownTime = data.countdown.currentTime;
+                        updateCountdownDisplay();
+                        if (countdownTime <= 0) {
+                            pauseCountdown();
+                            showNotification('倒计时结束！');
+                            playNotificationSound();
+                        }
+                    }
+                    if (data.pomodoro.running) {
+                        pomodoroTime = data.pomodoro.currentTime;
+                        updatePomodoroDisplay();
+                        if (pomodoroTime <= 0) {
+                            pausePomodoro();
+                            handlePomodoroComplete();
+                        }
+                    }
+                    if (data.stopwatch.running) {
+                        stopwatchTime = data.stopwatch.currentTime;
+                        updateStopwatchDisplay();
+                    }
+                }
+            };
+        } catch (error) {
+            console.log('Web Worker not supported, using fallback method');
+        }
+    }
+}
 
 // 主题管理
 function initializeTheme() {
@@ -241,7 +287,16 @@ function startTimer() {
     }
     
     timerRunning = true;
-    timerStartTime = Date.now() - (timerPausedTime * 1000);
+    // 基于当前时间计算开始时间，确保后台运行准确
+    timerStartTime = Date.now() - (timerTime * 1000);
+    
+    // 通知Web Worker开始计时
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'START_TIMER',
+            data: { currentTime: timerTime }
+        });
+    }
     
     timerInterval = setInterval(() => {
         const currentTime = Date.now();
@@ -264,6 +319,13 @@ function pauseTimer() {
     clearInterval(timerInterval);
     timerPausedTime = timerTime;
     
+    // 通知Web Worker暂停计时
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'PAUSE_TIMER'
+        });
+    }
+    
     elements.startTimer.disabled = false;
     elements.pauseTimer.disabled = true;
 }
@@ -274,6 +336,14 @@ function resetTimer() {
     timerTime = 0;
     timerPausedTime = 0;
     timerStartTime = 0;
+    
+    // 通知Web Worker重置计时
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'RESET_TIMER'
+        });
+    }
+    
     updateTimerDisplay();
     
     elements.startTimer.disabled = false;
@@ -310,7 +380,16 @@ function startCountdown() {
     }
     
     countdownRunning = true;
-    countdownStartTime = Date.now();
+    countdownStartTime = Date.now() - (countdownTotal - countdownTime) * 1000;
+    
+    // 通知Web Worker开始倒计时
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'START_COUNTDOWN',
+            data: { currentTime: countdownTime, totalTime: countdownTotal }
+        });
+    }
+    
     countdownInterval = setInterval(() => {
         const elapsed = Math.floor((Date.now() - countdownStartTime) / 1000);
         countdownTime = Math.max(0, countdownTotal - elapsed);
@@ -334,6 +413,13 @@ function pauseCountdown() {
     clearInterval(countdownInterval);
     countdownPausedTime = countdownTime;
     
+    // 通知Web Worker暂停倒计时
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'PAUSE_COUNTDOWN'
+        });
+    }
+    
     elements.startCountdown.disabled = false;
     elements.pauseCountdown.disabled = true;
 }
@@ -344,6 +430,14 @@ function resetCountdown() {
     countdownTime = countdownTotal;
     countdownPausedTime = 0;
     countdownStartTime = 0;
+    
+    // 通知Web Worker重置倒计时
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'RESET_COUNTDOWN'
+        });
+    }
+    
     updateCountdownDisplay();
     
     elements.startCountdown.disabled = false;
@@ -381,11 +475,15 @@ function startPomodoro() {
     }
     
     pomodoroRunning = true;
-    // 如果有暂停时间，从暂停时间开始，否则重新开始
-    if (pomodoroPausedTime > 0) {
-        pomodoroStartTime = Date.now() - (pomodoroTotal - pomodoroTime) * 1000;
-    } else {
-        pomodoroStartTime = Date.now();
+    // 基于当前剩余时间计算开始时间，确保后台运行准确
+    pomodoroStartTime = Date.now() - (pomodoroTotal - pomodoroTime) * 1000;
+    
+    // 通知Web Worker开始番茄钟
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'START_POMODORO',
+            data: { currentTime: pomodoroTime, totalTime: pomodoroTotal }
+        });
     }
     
     pomodoroInterval = setInterval(() => {
@@ -410,6 +508,13 @@ function pausePomodoro() {
     clearInterval(pomodoroInterval);
     pomodoroPausedTime = pomodoroTime;
     
+    // 通知Web Worker暂停番茄钟
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'PAUSE_POMODORO'
+        });
+    }
+    
     elements.startPomodoro.disabled = false;
     elements.pausePomodoro.disabled = true;
 }
@@ -421,6 +526,14 @@ function resetPomodoro() {
     pomodoroRound = 1;
     pomodoroPausedTime = 0;
     pomodoroStartTime = 0;
+    
+    // 通知Web Worker重置番茄钟
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'RESET_POMODORO'
+        });
+    }
+    
     updatePomodoroFromInputs();
     updatePomodoroDisplay();
     
@@ -466,7 +579,7 @@ function handlePomodoroComplete() {
     
     // 自动开始下一阶段
     pomodoroRunning = true;
-    pomodoroStartTime = Date.now();
+    pomodoroStartTime = Date.now() - (pomodoroTotal - pomodoroTime) * 1000;
     pomodoroInterval = setInterval(() => {
         const elapsed = Math.floor((Date.now() - pomodoroStartTime) / 1000);
         pomodoroTime = Math.max(0, pomodoroTotal - elapsed);
@@ -540,11 +653,15 @@ function startStopwatch() {
     if (stopwatchRunning) return;
     
     stopwatchRunning = true;
-    // 如果有暂停时间，从暂停时间开始，否则重新开始
-    if (stopwatchPausedTime > 0) {
-        stopwatchStartTime = Date.now() - stopwatchPausedTime;
-    } else {
-        stopwatchStartTime = Date.now() - stopwatchTime;
+    // 基于当前时间计算开始时间，确保后台运行准确
+    stopwatchStartTime = Date.now() - stopwatchTime;
+    
+    // 通知Web Worker开始秒表
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'START_STOPWATCH',
+            data: { currentTime: stopwatchTime }
+        });
     }
     
     stopwatchInterval = setInterval(() => {
@@ -563,6 +680,13 @@ function pauseStopwatch() {
     stopwatchRunning = false;
     clearInterval(stopwatchInterval);
     stopwatchPausedTime = stopwatchTime; // 保存暂停时的时间
+    
+    // 通知Web Worker暂停秒表
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'PAUSE_STOPWATCH'
+        });
+    }
     
     elements.startStopwatch.disabled = false;
     elements.pauseStopwatch.disabled = true;
@@ -600,6 +724,14 @@ function resetStopwatch() {
     stopwatchStartTime = 0;
     stopwatchPausedTime = 0;
     lapTimes = [];
+    
+    // 通知Web Worker重置秒表
+    if (timerWorker) {
+        timerWorker.postMessage({
+            type: 'RESET_STOPWATCH'
+        });
+    }
+    
     updateStopwatchDisplay();
     updateLapList();
     
@@ -713,16 +845,34 @@ document.addEventListener('keydown', function(event) {
 // 页面可见性变化处理
 document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
-        // 页面隐藏时暂停所有计时器
-        if (timerRunning) pauseTimer();
-        if (countdownRunning) pauseCountdown();
-        if (pomodoroRunning) pausePomodoro();
-        if (stopwatchRunning) pauseStopwatch();
+        // 页面隐藏时保存当前时间戳，但不暂停计时器
+        // 这样计时器可以在后台继续运行
+        pageVisibilityStart = Date.now();
     } else {
-        // 页面重新可见时，根据情况恢复计时器
-        // 这里可以根据需要添加恢复逻辑
+        // 页面重新可见时，更新显示但不影响计时器运行
+        // 计时器会继续在后台运行，只是更新显示
+        if (timerRunning || countdownRunning || pomodoroRunning || stopwatchRunning) {
+            // 立即更新一次显示
+            updateAllDisplays();
+        }
     }
 });
+
+// 更新所有显示的函数
+function updateAllDisplays() {
+    if (timerRunning) {
+        updateTimerDisplay();
+    }
+    if (countdownRunning) {
+        updateCountdownDisplay();
+    }
+    if (pomodoroRunning) {
+        updatePomodoroDisplay();
+    }
+    if (stopwatchRunning) {
+        updateStopwatchDisplay();
+    }
+}
 
 // 收藏功能
 function initBookmark() {
