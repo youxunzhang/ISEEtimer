@@ -112,26 +112,35 @@
                 </a>
             </div>
             <div class="nav-links">
-                <a href="wedding-countdown.html" class="nav-link">
-                    <i class="fas fa-heart"></i>
-                    婚礼倒计时
-                </a>
-                <a href="exam-countdown.html" class="nav-link">
-                    <i class="fas fa-graduation-cap"></i>
-                    考试倒计时
-                </a>
-                <a href="birthday-countdown.html" class="nav-link">
-                    <i class="fas fa-birthday-cake"></i>
-                    生日倒计时
-                </a>
-                <a href="how-to-create-countdown-timer.html" class="nav-link">
-                    <i class="fas fa-code"></i>
-                    制作教程
-                </a>
-                <a href="sitemap.html" class="nav-link">
-                    <i class="fas fa-sitemap"></i>
-                    网站地图
-                </a>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle" id="festivalDropdown">
+                        <i class="fas fa-calendar-alt"></i>
+                        节日倒计时
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu" id="festivalMenu">
+                        <a href="wedding-countdown.html" class="dropdown-item">
+                            <i class="fas fa-heart"></i>
+                            婚礼倒计时
+                        </a>
+                        <a href="exam-countdown.html" class="dropdown-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            考试倒计时
+                        </a>
+                        <a href="birthday-countdown.html" class="dropdown-item">
+                            <i class="fas fa-birthday-cake"></i>
+                            生日倒计时
+                        </a>
+                        <a href="how-to-create-countdown-timer.html" class="dropdown-item">
+                            <i class="fas fa-code"></i>
+                            制作教程
+                        </a>
+                        <a href="sitemap.html" class="dropdown-item">
+                            <i class="fas fa-sitemap"></i>
+                            网站地图
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="nav-controls">
                 <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
@@ -355,5 +364,6 @@
 
     <script src="script.js" defer></script>
     <script src="articles.js" defer></script>
+    <script src="dropdown.js" defer></script>
 </body>
 </html>
