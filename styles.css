@@ -105,6 +105,18 @@ body {
     border: 1px solid transparent;
 }
 
+.nav-link.active {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-link.active:hover {
+    background-color: var(--accent-hover);
+    color: #ffffff;
+}
+
 .nav-link:hover {
     background: var(--bg-tertiary);
     color: var(--accent-color);
@@ -189,6 +201,17 @@ body {
 
 .dropdown-item:last-child {
     border-bottom: none;
+}
+
+.dropdown-item.active {
+    background: var(--accent-color);
+    color: #ffffff;
+    border-bottom-color: transparent;
+}
+
+.dropdown-item.active:hover {
+    background: var(--accent-hover);
+    color: #ffffff;
 }
 
 .dropdown-item:hover {

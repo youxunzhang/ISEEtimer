@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界时间工具 | 全球时区转换器 | TimeMaster</title>
+    <meta name="description" content="世界时间工具中心，实时查看全球主要城市当地时间，使用国际时间转换器、UTC时间换算工具、时区差计算器和年龄计算器，掌握节假日日历，轻松安排跨时区的工作与生活。">
+    <meta name="keywords" content="世界时间,时区转换器,UTC转换,国际时间,时区计算器,在线世界时钟,节假日日历,年龄计算器">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/world-time-tools.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/world-time-tools.html">
+    <meta property="og:title" content="世界时间工具 | TimeMaster">
+    <meta property="og:description" content="全球实时时间、国际时区转换器、UTC换算、节假日日历与年龄计算器，一站式掌握世界时间。">
+    <meta property="og:image" content="https://yourdomain.com/og-world-time.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/world-time-tools.html">
+    <meta property="twitter:title" content="世界时间工具 | TimeMaster">
+    <meta property="twitter:description" content="实时查看世界各地时间，使用免费UTC转换器、时区计算器、节假日日历与年龄计算器。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-world-time.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TimeMaster 世界时间工具",
+      "url": "https://yourdomain.com/world-time-tools.html",
+      "applicationCategory": "Productivity",
+      "operatingSystem": "Any",
+      "description": "免费世界时间工具集合，提供全球实时时间、UTC时间换算、国际时区转换器、时区差计算器、节假日日历和年龄计算器",
+      "featureList": [
+        "世界主要城市实时时间",
+        "国际时间与时区转换器",
+        "UTC换算工具",
+        "时区差计算器",
+        "年龄计算器",
+        "全球节假日日历"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .world-time-main {
+            display: block;
+            width: 100%;
+            padding: 2.5rem 1.5rem 5rem;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .world-time-hero {
+            background: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 3.5rem 3rem;
+            box-shadow: 0 25px 60px rgba(59, 130, 246, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-time-hero::after {
+            content: '';
+            position: absolute;
+            right: -80px;
+            top: -80px;
+            width: 260px;
+            height: 260px;
+            background: rgba(255,255,255,0.12);
+            filter: blur(0px);
+            border-radius: 50%;
+        }
+
+        .world-time-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .world-time-hero p {
+            max-width: 640px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .hero-highlights {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .hero-highlight {
+            background: rgba(255,255,255,0.15);
+            border-radius: 18px;
+            padding: 1.25rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-highlight i {
+            font-size: 1.8rem;
+        }
+
+        .hero-highlight span {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .section-card {
+            background: var(--bg-primary);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 720px;
+        }
+
+        .world-clock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .clock-card {
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.08), rgba(14, 116, 144, 0.08));
+            border-radius: 20px;
+            padding: 1.75rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .clock-card.local {
+            border: 2px solid rgba(56, 189, 248, 0.6);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(125, 211, 252, 0.2));
+        }
+
+        .clock-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .clock-header i {
+            font-size: 2rem;
+            color: #0ea5e9;
+        }
+
+        .clock-location h3 {
+            font-size: 1.35rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .clock-location span {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .clock-time {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: 0.6rem;
+        }
+
+        .clock-date {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .clock-offset {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.12);
+            color: #1d4ed8;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .converter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .converter-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .converter-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #3b82f6, #22d3ee);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.4rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.25);
+        }
+
+        .primary-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 32px rgba(59, 130, 246, 0.25);
+        }
+
+        .converter-result,
+        .utc-result,
+        .difference-result,
+        .age-result {
+            border-radius: 16px;
+            padding: 1.2rem 1.4rem;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .converter-result strong,
+        .difference-result strong,
+        .utc-result strong {
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .result-meta {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .result-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.16);
+            color: #1d4ed8;
+            font-size: 0.85rem;
+        }
+
+        .difference-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .difference-summary span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+        }
+
+        .utc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .utc-card {
+            background: var(--bg-primary);
+            border-radius: 18px;
+            padding: 2rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .utc-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            font-size: 1.35rem;
+        }
+
+        .age-card {
+            background: var(--bg-primary);
+            border-radius: 18px;
+            padding: 2.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .age-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .age-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .age-inputs input {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            font-size: 1rem;
+            background: var(--bg-secondary);
+        }
+
+        .holiday-card {
+            background: var(--bg-primary);
+            border-radius: 18px;
+            padding: 1.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .holiday-card.upcoming {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 16px 32px rgba(59, 130, 246, 0.18);
+        }
+
+        .holiday-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .holiday-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .holiday-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .holiday-date {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .holiday-countdown {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.16);
+            color: #15803d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .holiday-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .holiday-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .holiday-controls label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .holiday-controls select {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .page-summary {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            line-height: 1.9;
+        }
+
+        .page-summary h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-summary ul {
+            margin: 1rem 0 1.5rem;
+            padding-left: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .page-summary li {
+            margin-bottom: 0.65rem;
+        }
+
+        @media (max-width: 992px) {
+            .world-time-hero {
+                padding: 3rem 2.25rem;
+            }
+
+            .world-time-hero h1 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .world-time-main {
+                padding: 2rem 1rem 4rem;
+            }
+
+            .world-time-hero {
+                padding: 2.5rem 1.8rem;
+            }
+
+            .world-time-hero h1 {
+                font-size: 2.1rem;
+            }
+
+            .hero-highlights {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+
+            .section-card,
+            .converter-card,
+            .utc-card,
+            .age-card,
+            .page-summary {
+                padding: 1.75rem;
+            }
+
+            .clock-card {
+                padding: 1.5rem;
+            }
+
+            .converter-grid,
+            .utc-grid,
+            .holiday-list {
+                grid-template-columns: 1fr;
+            }
+
+            .age-inputs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+        <nav class="navbar" role="navigation" aria-label="主导航">
+            <div class="nav-brand">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <span>TimeMaster - 专业时间工具</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item" data-tab="timer" id="timer-tab" aria-controls="timer">在线计时器</button>
+                <button class="nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown">倒计时器</button>
+                <button class="nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro">番茄钟计时器</button>
+                <button class="nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch">秒表计时</button>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    主页
+                </a>
+                <a href="world-time-tools.html" class="nav-link active">
+                    <i class="fas fa-globe"></i>
+                    世界时间工具
+                </a>
+                <a href="articles.html" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    文章专栏
+                </a>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle" id="festivalDropdown">
+                        <i class="fas fa-calendar-alt"></i>
+                        节日倒计时
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu" id="festivalMenu">
+                        <a href="wedding-countdown.html" class="dropdown-item">
+                            <i class="fas fa-heart"></i>
+                            婚礼倒计时
+                        </a>
+                        <a href="exam-countdown.html" class="dropdown-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            考试倒计时
+                        </a>
+                        <a href="birthday-countdown.html" class="dropdown-item">
+                            <i class="fas fa-birthday-cake"></i>
+                            生日倒计时
+                        </a>
+                        <a href="how-to-create-countdown-timer.html" class="dropdown-item">
+                            <i class="fas fa-code"></i>
+                            制作教程
+                        </a>
+                        <a href="sitemap.html" class="dropdown-item">
+                            <i class="fas fa-sitemap"></i>
+                            网站地图
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+                <a href="game.html" class="game-link" aria-label="时间守护者小游戏">
+                    <i class="fas fa-gamepad" aria-hidden="true"></i>
+                    时间守护者小游戏
+                </a>
+            </div>
+        </nav>
+        </header>
+
+        <main class="main-content world-time-main" role="main">
+            <div class="page-wrapper">
+                <section class="world-time-hero" aria-labelledby="world-time-hero-title">
+                    <h1 id="world-time-hero-title"><i class="fas fa-globe-asia"></i> 世界时间工具中心</h1>
+                    <p>实时掌握世界各地时间，支持跨时区会议安排、远程协作与旅行计划。使用 TimeMaster 的国际时间转换器、UTC换算、节假日日历与年龄计算器，让时间管理更高效。</p>
+                    <div class="hero-highlights">
+                        <div class="hero-highlight">
+                            <i class="fas fa-clock"></i>
+                            <span>全球实时时钟</span>
+                        </div>
+                        <div class="hero-highlight">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>一键时区转换</span>
+                        </div>
+                        <div class="hero-highlight">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>节假日提醒</span>
+                        </div>
+                        <div class="hero-highlight">
+                            <i class="fas fa-user-clock"></i>
+                            <span>精准年龄计算</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section-card" aria-labelledby="world-clock-section">
+                    <div class="section-header">
+                        <h2 id="world-clock-section"><i class="fas fa-earth-asia"></i> 世界各地实时时间</h2>
+                        <p>查看全球主要城市此刻的当地时间与日期，实时掌握当地时差，随时了解国际会议与跨境沟通的最佳时机。</p>
+                    </div>
+                    <div class="world-clock-grid" id="worldClockGrid" aria-live="polite"></div>
+                </section>
+
+                <section class="section-card" aria-labelledby="timezone-converter">
+                    <div class="section-header">
+                        <h2 id="timezone-converter"><i class="fas fa-exchange-alt"></i> 国际时间转换器</h2>
+                        <p>输入任意时间，选择原始时区与目标时区，即可获得精准的跨时区转换结果，并自动计算两地时差，辅助您制定会议、旅行与直播计划。</p>
+                    </div>
+                    <div class="converter-grid">
+                        <div class="converter-card" id="converterCard">
+                            <h3><i class="fas fa-random"></i> 时区时间换算</h3>
+                            <div class="input-group">
+                                <label for="sourceDateTime">选择原始时间</label>
+                                <input type="datetime-local" id="sourceDateTime" aria-describedby="sourceHelp">
+                                <small id="sourceHelp" style="color: var(--text-secondary);">支持选择日期与时间，默认采用24小时制</small>
+                            </div>
+                            <div class="input-group">
+                                <label for="fromTimeZone">原始时区</label>
+                                <select id="fromTimeZone"></select>
+                            </div>
+                            <div class="input-group">
+                                <label for="toTimeZone">目标时区</label>
+                                <select id="toTimeZone"></select>
+                            </div>
+                            <button type="button" class="primary-button" id="convertTimeButton">
+                                <i class="fas fa-play"></i>
+                                开始转换
+                            </button>
+                            <div class="converter-result" id="converterResult" aria-live="polite"></div>
+                        </div>
+                        <div class="converter-card">
+                            <h3><i class="fas fa-clock-rotate-left"></i> 时区差计算器</h3>
+                            <div class="input-group">
+                                <label for="differenceFrom">对比时区 A</label>
+                                <select id="differenceFrom"></select>
+                            </div>
+                            <div class="input-group">
+                                <label for="differenceTo">对比时区 B</label>
+                                <select id="differenceTo"></select>
+                            </div>
+                            <div class="difference-result" id="differenceResult" aria-live="polite"></div>
+                            <div class="difference-summary" id="differenceSummary"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section-card" aria-labelledby="utc-converter">
+                    <div class="section-header">
+                        <h2 id="utc-converter"><i class="fas fa-globe"></i> 免费 UTC 时间转换器</h2>
+                        <p>快速在本地时间与世界标准时间之间切换，同时支持将 UTC 时间换算到任意时区，掌握跨国项目的统一基准时间。</p>
+                    </div>
+                    <div class="utc-grid">
+                        <div class="utc-card">
+                            <h3><i class="fas fa-arrow-up-right-dots"></i> 本地时间转 UTC</h3>
+                            <div class="input-group">
+                                <label for="localDateTime">选择本地时间</label>
+                                <input type="datetime-local" id="localDateTime">
+                            </div>
+                            <div class="input-group">
+                                <label for="localTimezone">本地时区</label>
+                                <select id="localTimezone"></select>
+                            </div>
+                            <button type="button" class="primary-button" id="convertToUTC">
+                                <i class="fas fa-arrow-right"></i>
+                                计算 UTC 时间
+                            </button>
+                            <div class="utc-result" id="localToUtcResult" aria-live="polite"></div>
+                        </div>
+                        <div class="utc-card">
+                            <h3><i class="fas fa-arrow-down-left-dots"></i> UTC 转任意时区</h3>
+                            <div class="input-group">
+                                <label for="utcDateTime">输入 UTC 时间</label>
+                                <input type="datetime-local" id="utcDateTime">
+                            </div>
+                            <div class="input-group">
+                                <label for="utcTargetTimezone">目标时区</label>
+                                <select id="utcTargetTimezone"></select>
+                            </div>
+                            <button type="button" class="primary-button" id="convertFromUTC">
+                                <i class="fas fa-arrow-right"></i>
+                                计算当地时间
+                            </button>
+                            <div class="utc-result" id="utcToLocalResult" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="age-card" aria-labelledby="age-calculator">
+                    <h2 id="age-calculator"><i class="fas fa-user-clock"></i> 年龄计算器</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">输入出生日期即可自动计算当前年龄、总天数以及距离下一个生日的时间，适用于填写表格、记录成长轨迹与规划生日行程。</p>
+                    <div class="age-inputs">
+                        <input type="date" id="birthDate" aria-label="出生日期">
+                        <button type="button" class="primary-button" id="calculateAge">
+                            <i class="fas fa-calculator"></i>
+                            计算年龄
+                        </button>
+                    </div>
+                    <div class="age-result" id="ageResult" aria-live="polite"></div>
+                </section>
+
+                <section class="section-card" aria-labelledby="holiday-calendar">
+                    <div class="section-header">
+                        <h2 id="holiday-calendar"><i class="fas fa-calendar-star"></i> 全球节假日日历</h2>
+                        <p>掌握主要国家的公共假期安排，了解放假时长与节日特色，为跨国合作、出差旅行和国际营销制定准确计划。</p>
+                    </div>
+                    <div class="holiday-controls">
+                        <label for="holidayRegion">选择地区
+                            <select id="holidayRegion"></select>
+                        </label>
+                        <label for="holidayYear">选择年份
+                            <select id="holidayYear"></select>
+                        </label>
+                    </div>
+                    <div class="holiday-list" id="holidayList" aria-live="polite"></div>
+                </section>
+
+                <section class="page-summary" aria-labelledby="world-time-summary">
+                    <h2 id="world-time-summary"><i class="fas fa-lightbulb"></i> 使用世界时间工具的最佳实践</h2>
+                    <p>TimeMaster 世界时间工具集合为跨国团队、海外留学、国际电商与旅行规划提供全面的时间管理支持。通过实时世界时钟与时区换算功能，您可以轻松安排跨地区的会议与课程；结合节假日日历与年龄计算器，进一步完善人力排班、营销节点与个人成长记录。</p>
+                    <ul>
+                        <li>随时掌握全球主要城市的当地时间，避免深夜打扰或错过黄金联系时段。</li>
+                        <li>在 UTC 时间与本地时区之间快速切换，确保跨时区项目拥有统一的时间基准。</li>
+                        <li>利用节假日日历了解不同国家的放假安排，合理规划出差、推广或运营节奏。</li>
+                        <li>通过年龄计算器快速获取周岁、月龄、天数等信息，适用于教育、医疗与活动登记。</li>
+                    </ul>
+                    <p>无论您是远程办公、全球旅行还是跨境电商经营者，TimeMaster 的免费世界时间工具都能为您提供可靠的数据支持，让每一次跨时区协作更加顺畅。</p>
+                </section>
+            </div>
+        </main>
+
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="收藏此页面">
+            <i class="fas fa-bookmark"></i>
+        </button>
+
+        <button class="share-btn" id="shareBtn" aria-label="分享此页面">
+            <i class="fas fa-share-alt"></i>
+        </button>
+
+        <div class="share-panel" id="sharePanel">
+            <h3>分享到社交媒体</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-button facebook" data-platform="facebook" aria-label="分享到Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-button twitter" data-platform="twitter" aria-label="分享到Twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="share-button linkedin" data-platform="linkedin" aria-label="分享到LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="share-button reddit" data-platform="reddit" aria-label="分享到Reddit">
+                    <i class="fab fa-reddit-alien"></i>
+                    <span>Reddit</span>
+                </a>
+                <a href="#" class="share-button whatsapp" data-platform="whatsapp" aria-label="分享到WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="share-button telegram" data-platform="telegram" aria-label="分享到Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                    <span>Telegram</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MILLISECONDS_PER_MINUTE = 60000;
+        const MILLISECONDS_PER_DAY = 86400000;
+        let timeZoneOptions = [];
+
+        function parseDateTimeInput(value) {
+            if (!value) return null;
+            const [datePart, timePart = '00:00'] = value.split('T');
+            if (!datePart || !timePart) return null;
+            const [year, month, day] = datePart.split('-').map(Number);
+            const timeSegments = timePart.split(':').map(Number);
+            const [hour = 0, minute = 0, second = 0] = timeSegments;
+            if ([year, month, day, hour, minute, second].some(num => Number.isNaN(num))) {
+                return null;
+            }
+            return { year, month, day, hour, minute, second };
+        }
+
+        function getTimezoneOffset(timeZone, date = new Date()) {
+            const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone,
+                hourCycle: 'h23',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const parts = formatter.formatToParts(date);
+            const values = {};
+            for (const part of parts) {
+                if (part.type !== 'literal') {
+                    values[part.type] = part.value;
+                }
+            }
+            const utcEquivalent = Date.UTC(
+                Number(values.year),
+                Number(values.month) - 1,
+                Number(values.day),
+                Number(values.hour),
+                Number(values.minute),
+                Number(values.second)
+            );
+            return (utcEquivalent - date.getTime()) / MILLISECONDS_PER_MINUTE;
+        }
+
+        function formatOffset(timeZone, date = new Date()) {
+            const offsetMinutes = Math.round(getTimezoneOffset(timeZone, date));
+            const sign = offsetMinutes >= 0 ? '+' : '-';
+            const absolute = Math.abs(offsetMinutes);
+            const hours = String(Math.floor(absolute / 60)).padStart(2, '0');
+            const minutes = String(absolute % 60).padStart(2, '0');
+            return `UTC${sign}${hours}:${minutes}`;
+        }
+
+        function parseDateTimeToUTC(dateTimeString, timeZone) {
+            const parts = parseDateTimeInput(dateTimeString);
+            if (!parts) return null;
+            const { year, month, day, hour, minute, second } = parts;
+            const baseDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+            const offsetMinutes = getTimezoneOffset(timeZone, baseDate);
+            return new Date(baseDate.getTime() - offsetMinutes * MILLISECONDS_PER_MINUTE);
+        }
+
+        function formatDateTime(date, timeZone, options = {}) {
+            const { includeSeconds = true, includeWeekday = true } = options;
+            const formatter = new Intl.DateTimeFormat('zh-CN', {
+                timeZone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: includeSeconds ? '2-digit' : undefined,
+                weekday: includeWeekday ? 'short' : undefined,
+                hourCycle: 'h23'
+            });
+            const parts = formatter.formatToParts(date);
+            const values = {};
+            parts.forEach(part => {
+                if (part.type !== 'literal') {
+                    values[part.type] = part.value;
+                }
+            });
+            const dateText = values.weekday
+                ? `${values.year}-${values.month}-${values.day} ${values.weekday}`
+                : `${values.year}-${values.month}-${values.day}`;
+            const timeText = includeSeconds && values.second !== undefined
+                ? `${values.hour}:${values.minute}:${values.second}`
+                : `${values.hour}:${values.minute}`;
+            return `${dateText} ${timeText}`.trim();
+        }
+
+        function getTimeZoneLabel(value) {
+            const match = timeZoneOptions.find(option => option.value === value);
+            return match ? match.label : value;
+        }
+
+        function buildOption(option, referenceDate = new Date()) {
+            const element = document.createElement('option');
+            element.value = option.value;
+            element.textContent = `${option.label} · ${formatOffset(option.value, referenceDate)}`;
+            return element;
+        }
+
+        function populateTimeZoneSelect(select, referenceDate = new Date()) {
+            select.innerHTML = '';
+            timeZoneOptions.forEach(option => {
+                select.appendChild(buildOption(option, referenceDate));
+            });
+        }
+
+        function populateHolidayControls(regionSelect, yearSelect, holidayData) {
+            regionSelect.innerHTML = '';
+            Object.entries(holidayData).forEach(([key, data]) => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = data.name;
+                regionSelect.appendChild(option);
+            });
+
+            const currentYear = new Date().getFullYear();
+            yearSelect.innerHTML = '';
+            [currentYear, currentYear + 1].forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = `${year} 年`;
+                yearSelect.appendChild(option);
+            });
+        }
+
+        function calculateAgeDetail(birthDate) {
+            const today = new Date();
+            const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const birth = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+            if (birth > todayStart) {
+                return null;
+            }
+
+            let years = todayStart.getFullYear() - birth.getFullYear();
+            let months = todayStart.getMonth() - birth.getMonth();
+            let days = todayStart.getDate() - birth.getDate();
+
+            if (days < 0) {
+                months -= 1;
+                const previousMonth = new Date(todayStart.getFullYear(), todayStart.getMonth(), 0);
+                days += previousMonth.getDate();
+            }
+
+            if (months < 0) {
+                years -= 1;
+                months += 12;
+            }
+
+            const totalDays = Math.floor((todayStart - birth) / MILLISECONDS_PER_DAY);
+            let nextBirthday = new Date(todayStart.getFullYear(), birth.getMonth(), birth.getDate());
+            if (nextBirthday < todayStart) {
+                nextBirthday = new Date(todayStart.getFullYear() + 1, birth.getMonth(), birth.getDate());
+            }
+            const daysToNextBirthday = Math.round((nextBirthday - todayStart) / MILLISECONDS_PER_DAY);
+
+            return { years, months, days, totalDays, nextBirthday, daysToNextBirthday };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai';
+            const baseTimeZones = [
+                { value: 'UTC', label: '协调世界时 (UTC)' },
+                { value: 'Asia/Shanghai', label: '中国 - 北京' },
+                { value: 'Asia/Hong_Kong', label: '中国香港' },
+                { value: 'Asia/Tokyo', label: '日本 - 东京' },
+                { value: 'Asia/Seoul', label: '韩国 - 首尔' },
+                { value: 'Asia/Singapore', label: '新加坡' },
+                { value: 'Asia/Bangkok', label: '泰国 - 曼谷' },
+                { value: 'Asia/Kolkata', label: '印度 - 新德里' },
+                { value: 'Asia/Dubai', label: '阿联酋 - 迪拜' },
+                { value: 'Europe/London', label: '英国 - 伦敦' },
+                { value: 'Europe/Paris', label: '法国 - 巴黎' },
+                { value: 'Europe/Berlin', label: '德国 - 柏林' },
+                { value: 'Europe/Moscow', label: '俄罗斯 - 莫斯科' },
+                { value: 'Europe/Madrid', label: '西班牙 - 马德里' },
+                { value: 'Africa/Johannesburg', label: '南非 - 约翰内斯堡' },
+                { value: 'America/New_York', label: '美国 - 纽约' },
+                { value: 'America/Chicago', label: '美国 - 芝加哥' },
+                { value: 'America/Denver', label: '美国 - 丹佛' },
+                { value: 'America/Los_Angeles', label: '美国 - 洛杉矶' },
+                { value: 'America/Sao_Paulo', label: '巴西 - 圣保罗' },
+                { value: 'America/Mexico_City', label: '墨西哥 - 墨西哥城' },
+                { value: 'Pacific/Auckland', label: '新西兰 - 奥克兰' },
+                { value: 'Australia/Sydney', label: '澳大利亚 - 悉尼' }
+            ];
+
+            const hasUserTimeZone = baseTimeZones.some(option => option.value === userTimeZone);
+            timeZoneOptions = hasUserTimeZone
+                ? baseTimeZones
+                : [
+                    { value: userTimeZone, label: `本地检测 - ${userTimeZone}` },
+                    ...baseTimeZones
+                ];
+
+            const worldClockCities = [
+                { city: '本地时区', region: getTimeZoneLabel(userTimeZone), timeZone: userTimeZone, icon: 'fas fa-location-arrow', local: true },
+                { city: '北京', region: '中国', timeZone: 'Asia/Shanghai', icon: 'fas fa-city' },
+                { city: '东京', region: '日本', timeZone: 'Asia/Tokyo', icon: 'fas fa-torii-gate' },
+                { city: '新加坡', region: '新加坡', timeZone: 'Asia/Singapore', icon: 'fas fa-building' },
+                { city: '迪拜', region: '阿联酋', timeZone: 'Asia/Dubai', icon: 'fas fa-mosque' },
+                { city: '伦敦', region: '英国', timeZone: 'Europe/London', icon: 'fas fa-landmark' },
+                { city: '巴黎', region: '法国', timeZone: 'Europe/Paris', icon: 'fas fa-archway' },
+                { city: '柏林', region: '德国', timeZone: 'Europe/Berlin', icon: 'fas fa-brain' },
+                { city: '莫斯科', region: '俄罗斯', timeZone: 'Europe/Moscow', icon: 'fas fa-chess-rook' },
+                { city: '纽约', region: '美国', timeZone: 'America/New_York', icon: 'fas fa-city' },
+                { city: '芝加哥', region: '美国', timeZone: 'America/Chicago', icon: 'fas fa-industry' },
+                { city: '洛杉矶', region: '美国', timeZone: 'America/Los_Angeles', icon: 'fas fa-film' },
+                { city: '圣保罗', region: '巴西', timeZone: 'America/Sao_Paulo', icon: 'fas fa-globe-americas' },
+                { city: '约翰内斯堡', region: '南非', timeZone: 'Africa/Johannesburg', icon: 'fas fa-sun' },
+                { city: '悉尼', region: '澳大利亚', timeZone: 'Australia/Sydney', icon: 'fas fa-water' },
+                { city: '奥克兰', region: '新西兰', timeZone: 'Pacific/Auckland', icon: 'fas fa-anchor' }
+            ];
+
+            const worldClockGrid = document.getElementById('worldClockGrid');
+            worldClockCities.forEach(city => {
+                const card = document.createElement('div');
+                card.className = `clock-card${city.local ? ' local' : ''}`;
+                card.dataset.timezone = city.timeZone;
+                card.innerHTML = `
+                    <div class="clock-header">
+                        <i class="${city.icon}" aria-hidden="true"></i>
+                        <div class="clock-location">
+                            <h3>${city.city}</h3>
+                            <span>${city.region}</span>
+                        </div>
+                    </div>
+                    <div class="clock-time" data-role="time">--:--:--</div>
+                    <div class="clock-date" data-role="date">--</div>
+                    <div class="clock-offset" data-role="offset">${formatOffset(city.timeZone)}</div>
+                `;
+                worldClockGrid.appendChild(card);
+            });
+
+            const worldClockCards = worldClockGrid.querySelectorAll('.clock-card');
+            function updateWorldClocks() {
+                const now = new Date();
+                worldClockCards.forEach(card => {
+                    const timeZone = card.dataset.timezone;
+                    const timeElement = card.querySelector('[data-role="time"]');
+                    const dateElement = card.querySelector('[data-role="date"]');
+                    const offsetElement = card.querySelector('[data-role="offset"]');
+
+                    if (timeElement) {
+                        const timeFormatter = new Intl.DateTimeFormat('zh-CN', {
+                            timeZone,
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                            hourCycle: 'h23'
+                        });
+                        timeElement.textContent = timeFormatter.format(now);
+                    }
+                    if (dateElement) {
+                        const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
+                            timeZone,
+                            month: '2-digit',
+                            day: '2-digit',
+                            weekday: 'long'
+                        });
+                        dateElement.textContent = dateFormatter.format(now);
+                    }
+                    if (offsetElement) {
+                        offsetElement.textContent = formatOffset(timeZone, now);
+                    }
+                });
+            }
+
+            updateWorldClocks();
+            setInterval(updateWorldClocks, 1000);
+
+            const sourceDateTime = document.getElementById('sourceDateTime');
+            const fromTimeZone = document.getElementById('fromTimeZone');
+            const toTimeZone = document.getElementById('toTimeZone');
+            const converterResult = document.getElementById('converterResult');
+            const differenceFrom = document.getElementById('differenceFrom');
+            const differenceTo = document.getElementById('differenceTo');
+            const differenceResult = document.getElementById('differenceResult');
+            const differenceSummary = document.getElementById('differenceSummary');
+
+            const localDateTime = document.getElementById('localDateTime');
+            const localTimezone = document.getElementById('localTimezone');
+            const localToUtcResult = document.getElementById('localToUtcResult');
+            const utcDateTime = document.getElementById('utcDateTime');
+            const utcTargetTimezone = document.getElementById('utcTargetTimezone');
+            const utcToLocalResult = document.getElementById('utcToLocalResult');
+
+            const selectsToPopulate = [fromTimeZone, toTimeZone, differenceFrom, differenceTo, localTimezone, utcTargetTimezone];
+            selectsToPopulate.forEach(select => populateTimeZoneSelect(select));
+
+            const defaultTimeZone = hasUserTimeZone ? userTimeZone : 'Asia/Shanghai';
+            fromTimeZone.value = defaultTimeZone;
+            localTimezone.value = defaultTimeZone;
+            differenceFrom.value = defaultTimeZone;
+
+            const defaultTarget = 'America/New_York';
+            if (timeZoneOptions.some(option => option.value === defaultTarget)) {
+                toTimeZone.value = defaultTarget;
+                differenceTo.value = defaultTarget;
+                utcTargetTimezone.value = defaultTarget;
+            }
+
+            function describeDifference(from, to, referenceDate = new Date()) {
+                const fromOffset = getTimezoneOffset(from, referenceDate);
+                const toOffset = getTimezoneOffset(to, referenceDate);
+                const diffMinutes = Math.round(toOffset - fromOffset);
+                if (diffMinutes === 0) {
+                    return '两个时区之间没有时差。';
+                }
+                const ahead = diffMinutes > 0;
+                const absolute = Math.abs(diffMinutes);
+                const hours = Math.floor(absolute / 60);
+                const minutes = absolute % 60;
+                const parts = [];
+                if (hours > 0) {
+                    parts.push(`${hours} 小时`);
+                }
+                if (minutes > 0) {
+                    parts.push(`${minutes} 分钟`);
+                }
+                return `目标时区比原始时区${ahead ? '早' : '晚'} ${parts.join(' ')}`;
+            }
+
+            document.getElementById('convertTimeButton').addEventListener('click', () => {
+                const dateValue = sourceDateTime.value;
+                if (!dateValue) {
+                    converterResult.textContent = '请先选择要转换的日期与时间。';
+                    return;
+                }
+                const from = fromTimeZone.value;
+                const to = toTimeZone.value;
+                const utcDate = parseDateTimeToUTC(dateValue, from);
+                if (!utcDate) {
+                    converterResult.textContent = '无法解析时间，请检查输入格式。';
+                    return;
+                }
+
+                const fromTimeText = formatDateTime(utcDate, from);
+                const toTimeText = formatDateTime(utcDate, to);
+                const utcText = formatDateTime(utcDate, 'UTC');
+                const diffDescription = describeDifference(from, to, utcDate);
+
+                converterResult.innerHTML = `
+                    <strong>转换结果</strong>
+                    <div>原始时区（${getTimeZoneLabel(from)}）：${fromTimeText} (${formatOffset(from, utcDate)})</div>
+                    <div>目标时区（${getTimeZoneLabel(to)}）：${toTimeText} (${formatOffset(to, utcDate)})</div>
+                    <div class="result-meta">
+                        <span class="result-chip"><i class="fas fa-clock"></i>${diffDescription}</span>
+                        <span class="result-chip"><i class="fas fa-globe"></i>对应 UTC 时间：${utcText}</span>
+                    </div>
+                `;
+            });
+
+            function updateDifference() {
+                const from = differenceFrom.value;
+                const to = differenceTo.value;
+                const now = new Date();
+                const fromNow = formatDateTime(now, from);
+                const toNow = formatDateTime(now, to);
+
+                differenceResult.innerHTML = `
+                    <strong>当前时间对比</strong>
+                    <div>${getTimeZoneLabel(from)}：${fromNow} (${formatOffset(from, now)})</div>
+                    <div>${getTimeZoneLabel(to)}：${toNow} (${formatOffset(to, now)})</div>
+                `;
+
+                differenceSummary.innerHTML = '';
+                const summary = document.createElement('span');
+                summary.innerHTML = `<i class="fas fa-hourglass-half"></i>${describeDifference(from, to, now)}`;
+                differenceSummary.appendChild(summary);
+
+                const meetingHint = document.createElement('span');
+                meetingHint.innerHTML = `<i class="fas fa-handshake"></i>当 ${getTimeZoneLabel(from)} 为上午9点时，${getTimeZoneLabel(to)} 为 ${formatDateTime(parseDateTimeToUTC(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T09:00`, from) || now, to, { includeWeekday: false, includeSeconds: false })}`;
+                differenceSummary.appendChild(meetingHint);
+            }
+
+            updateDifference();
+            differenceFrom.addEventListener('change', updateDifference);
+            differenceTo.addEventListener('change', updateDifference);
+            setInterval(updateDifference, 60000);
+
+            document.getElementById('convertToUTC').addEventListener('click', () => {
+                const value = localDateTime.value;
+                if (!value) {
+                    localToUtcResult.textContent = '请选择需要转换的本地时间。';
+                    return;
+                }
+                const timezone = localTimezone.value;
+                const utcDate = parseDateTimeToUTC(value, timezone);
+                if (!utcDate) {
+                    localToUtcResult.textContent = '时间格式解析失败，请重新输入。';
+                    return;
+                }
+                localToUtcResult.innerHTML = `
+                    <strong>UTC 时间</strong>
+                    <div>${formatDateTime(utcDate, 'UTC')}</div>
+                    <div class="result-meta">
+                        <span class="result-chip"><i class="fas fa-location-dot"></i>${getTimeZoneLabel(timezone)} → UTC</span>
+                        <span class="result-chip"><i class="fas fa-clock"></i>时差：${formatOffset(timezone, utcDate)}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('convertFromUTC').addEventListener('click', () => {
+                const value = utcDateTime.value;
+                if (!value) {
+                    utcToLocalResult.textContent = '请输入 UTC 时间。';
+                    return;
+                }
+                const target = utcTargetTimezone.value;
+                const utcDate = parseDateTimeToUTC(value, 'UTC');
+                if (!utcDate) {
+                    utcToLocalResult.textContent = '时间格式解析失败，请确认输入。';
+                    return;
+                }
+                utcToLocalResult.innerHTML = `
+                    <strong>当地时间</strong>
+                    <div>${formatDateTime(utcDate, target)}</div>
+                    <div class="result-meta">
+                        <span class="result-chip"><i class="fas fa-globe"></i>UTC → ${getTimeZoneLabel(target)}</span>
+                        <span class="result-chip"><i class="fas fa-clock"></i>当地时差：${formatOffset(target, utcDate)}</span>
+                    </div>
+                `;
+            });
+
+            const ageResult = document.getElementById('ageResult');
+            document.getElementById('calculateAge').addEventListener('click', () => {
+                const value = document.getElementById('birthDate').value;
+                if (!value) {
+                    ageResult.textContent = '请输入出生日期。';
+                    return;
+                }
+                const parts = value.split('-').map(Number);
+                if (parts.length < 3 || parts.some(num => Number.isNaN(num))) {
+                    ageResult.textContent = '日期格式有误，请重新选择。';
+                    return;
+                }
+                const birthDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                const detail = calculateAgeDetail(birthDate);
+                if (!detail) {
+                    ageResult.textContent = '出生日期不能晚于今天。';
+                    return;
+                }
+
+                ageResult.innerHTML = `
+                    <strong>年龄计算结果</strong>
+                    <div>当前年龄：${detail.years} 岁 ${detail.months} 个月 ${detail.days} 天</div>
+                    <div>累计天数：${detail.totalDays.toLocaleString()} 天</div>
+                    <div>距离下一个生日：${detail.daysToNextBirthday} 天（${formatDateTime(detail.nextBirthday, defaultTimeZone, { includeSeconds: false })}）</div>
+                `;
+            });
+
+            const holidayData = {
+                china: {
+                    name: '中国法定节假日',
+                    items: [
+                        { date: '2024-10-01', name: '国庆节', description: '全国放假7天，庆祝中华人民共和国成立。' },
+                        { date: '2024-09-17', name: '中秋节', description: '阖家团圆的传统节日，常与国庆拼假。' },
+                        { date: '2025-01-29', name: '春节', description: '农历新年，最长的全国性假期。' },
+                        { date: '2025-02-14', name: '元宵节', description: '农历新年后的第一个月圆之夜，赏灯与猜灯谜。' },
+                        { date: '2025-05-01', name: '劳动节', description: '五一假期，适合旅行与休闲放松。' }
+                    ]
+                },
+                usa: {
+                    name: '美国联邦假日',
+                    items: [
+                        { date: '2024-11-28', name: '感恩节', description: '家人团聚与感恩的节日，常伴随购物季。' },
+                        { date: '2024-12-25', name: '圣诞节', description: '全年最重要的节日之一，庆祝圣诞与新年。' },
+                        { date: '2025-01-01', name: '元旦', description: '新年伊始，全国放假庆祝。' },
+                        { date: '2025-07-04', name: '独立日', description: '庆祝美国独立，烟花与游行遍布全国。' },
+                        { date: '2025-09-01', name: '劳动节', description: '夏末假期，标志暑假结束。' }
+                    ]
+                },
+                uk: {
+                    name: '英国公共假日',
+                    items: [
+                        { date: '2024-12-25', name: '圣诞节', description: '家人团聚，享用传统烤火鸡大餐。' },
+                        { date: '2024-12-26', name: '节礼日', description: '圣诞后购物与慈善日，英国独特假期。' },
+                        { date: '2025-04-18', name: '耶稣受难日', description: '复活节长周末的开始。' },
+                        { date: '2025-04-21', name: '复活节星期一', description: '复活节假期延续，多地举行庆典。' },
+                        { date: '2025-08-25', name: '夏季银行假日', description: '夏末假日，适合短途旅行与户外活动。' }
+                    ]
+                },
+                australia: {
+                    name: '澳大利亚公共假日',
+                    items: [
+                        { date: '2024-12-25', name: '圣诞节', description: '南半球的夏季圣诞，海滩是热门去处。' },
+                        { date: '2024-12-26', name: '节礼日', description: '延续圣诞的假期氛围与大促销活动。' },
+                        { date: '2025-01-01', name: '元旦', description: '新年烟花秀点亮悉尼海港。' },
+                        { date: '2025-01-27', name: '澳大利亚日', description: '庆祝澳大利亚历史与多元文化。' },
+                        { date: '2025-04-25', name: '澳新军团日', description: '纪念澳新军团，举行清晨纪念仪式。' }
+                    ]
+                }
+            };
+
+            const holidayRegion = document.getElementById('holidayRegion');
+            const holidayYear = document.getElementById('holidayYear');
+            const holidayList = document.getElementById('holidayList');
+
+            populateHolidayControls(holidayRegion, holidayYear, holidayData);
+
+            function renderHolidays() {
+                const regionKey = holidayRegion.value;
+                const targetYear = Number(holidayYear.value);
+                const regionInfo = holidayData[regionKey];
+                if (!regionInfo) {
+                    holidayList.innerHTML = '<p>暂无节假日数据。</p>';
+                    return;
+                }
+
+                const today = new Date();
+                const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const holidays = regionInfo.items
+                    .filter(item => new Date(item.date).getFullYear() === targetYear)
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                if (holidays.length === 0) {
+                    holidayList.innerHTML = '<p>该年份暂无节假日数据，欢迎稍后再来查看。</p>';
+                    return;
+                }
+
+                const upcomingIndex = holidays.findIndex(item => new Date(item.date) >= todayStart);
+                holidayList.innerHTML = '';
+
+                holidays.forEach((holiday, index) => {
+                    const holidayDate = new Date(`${holiday.date}T00:00:00`);
+                    const diffDays = Math.round((holidayDate - todayStart) / MILLISECONDS_PER_DAY);
+                    const isUpcoming = index === upcomingIndex && diffDays >= 0;
+                    const card = document.createElement('article');
+                    card.className = `holiday-card${isUpcoming ? ' upcoming' : ''}`;
+
+                    const dateParts = new Intl.DateTimeFormat('zh-CN', {
+                        month: '2-digit',
+                        day: '2-digit',
+                        weekday: 'long'
+                    }).formatToParts(holidayDate).reduce((acc, part) => {
+                        if (part.type !== 'literal') acc[part.type] = part.value;
+                        return acc;
+                    }, {});
+
+                    const countdownText = diffDays > 0
+                        ? `还有 ${diffDays} 天`
+                        : diffDays === 0
+                            ? '今天就是节日'
+                            : `已过去 ${Math.abs(diffDays)} 天`;
+
+                    card.innerHTML = `
+                        <div class="holiday-name">${holiday.name}</div>
+                        <div class="holiday-date">${dateParts.month}月${dateParts.day}日 · ${dateParts.weekday}</div>
+                        <div class="holiday-countdown"><i class="fas fa-hourglass"></i>${countdownText}</div>
+                        <div class="holiday-description">${holiday.description}</div>
+                    `;
+
+                    holidayList.appendChild(card);
+                });
+            }
+
+            renderHolidays();
+            holidayRegion.addEventListener('change', renderHolidays);
+            holidayYear.addEventListener('change', renderHolidays);
+
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            const bookmarkKey = 'bookmarked-world-time';
+            if (localStorage.getItem(bookmarkKey) === 'true') {
+                bookmarkBtn.classList.add('bookmarked');
+            }
+
+            bookmarkBtn.addEventListener('click', () => {
+                const bookmarked = bookmarkBtn.classList.toggle('bookmarked');
+                localStorage.setItem(bookmarkKey, bookmarked ? 'true' : 'false');
+            });
+
+            const shareBtn = document.getElementById('shareBtn');
+            const sharePanel = document.getElementById('sharePanel');
+            shareBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                sharePanel.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!sharePanel.contains(event.target) && event.target !== shareBtn) {
+                    sharePanel.classList.remove('show');
+                }
+            });
+
+            const shareButtons = document.querySelectorAll('.share-button');
+            const pageTitle = document.title;
+            const pageUrl = window.location.href;
+
+            shareButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const platform = button.dataset.platform;
+                    let shareUrl = '';
+                    switch (platform) {
+                        case 'facebook':
+                            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'twitter':
+                            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'linkedin':
+                            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'reddit':
+                            shareUrl = `https://reddit.com/submit?url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`;
+                            break;
+                        case 'whatsapp':
+                            shareUrl = `https://wa.me/?text=${encodeURIComponent(pageTitle + ' ' + pageUrl)}`;
+                            break;
+                        case 'telegram':
+                            shareUrl = `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
+                            break;
+                        default:
+                            shareUrl = '';
+                    }
+
+                    if (shareUrl) {
+                        window.open(shareUrl, '_blank', 'width=600,height=520');
+                        sharePanel.classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>
