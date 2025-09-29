@@ -19,7 +19,15 @@
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
-    
+
+    <!-- 倒计时挑战小游戏页面 -->
+    <url>
+        <loc>https://yourdomain.com/countdown-game.html</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
     <!-- 小游戏页面 -->
     <url>
         <loc>https://yourdomain.com/game.html</loc>
