@@ -95,11 +95,96 @@
             color: #4b5563;
         }
 
+        .festival-category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+            background: rgba(99, 102, 241, 0.08);
+            padding: 16px 20px;
+            border-radius: 16px;
+        }
+
+        .festival-category-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            color: #4338ca;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.9);
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .festival-category-link i {
+            font-size: 1rem;
+        }
+
+        .festival-category-link span {
+            white-space: nowrap;
+        }
+
+        .festival-category-link:hover,
+        .festival-category-link:focus {
+            background: #4338ca;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .festival-category-link.active {
+            background: #4338ca;
+            color: #ffffff;
+            box-shadow: 0 12px 22px rgba(67, 56, 202, 0.25);
+        }
+
+        .festival-category-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
+            margin-bottom: 48px;
+            scroll-margin-top: 120px;
+        }
+
+        .festival-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .festival-category-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .festival-category-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            margin: 0;
+            color: #312e81;
+        }
+
+        .festival-category-title i {
+            font-size: 1.4rem;
+            color: #4338ca;
+        }
+
+        .festival-category-description {
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
         .festival-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
-            margin-bottom: 48px;
         }
 
         .festival-card {
@@ -395,6 +480,10 @@
             .festival-countdown {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            .festival-category-section {
+                padding: 24px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -408,6 +497,15 @@
 
             .festival-countdown {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .festival-category-nav {
+                padding: 14px;
+            }
+
+            .festival-category-link {
+                flex: 1 1 calc(50% - 12px);
+                justify-content: center;
             }
 
             .bookmark-btn,
@@ -426,6 +524,10 @@
         @media (max-width: 520px) {
             .festival-countdown {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .festival-category-link {
+                flex: 1 1 100%;
             }
 
             .festival-card {
@@ -525,7 +627,9 @@
                 <p>我们精选了中国用户最关注的七大节日，每个节日都提供未来数年的精确日期信息和实时倒计时，让规划节奏更轻松。</p>
             </section>
 
-            <section class="festival-grid" id="festivalGrid" aria-live="polite"></section>
+            <nav class="festival-category-nav" id="festivalCategoryNav" aria-label="节日分类导航"></nav>
+
+            <div id="festivalSections" class="festival-sections" aria-live="polite"></div>
 
             <section class="festival-tips">
                 <h2><i class="fas fa-lightbulb"></i> 节日前的实用提醒</h2>
@@ -598,6 +702,27 @@
     </div>
 
     <script>
+        const festivalCategories = [
+            {
+                id: 'traditional',
+                title: '中国传统节日',
+                description: '农历节气与传统习俗交织的节日，适合安排家庭团圆、文化体验与传统礼仪活动。',
+                icon: 'fa-fan'
+            },
+            {
+                id: 'national',
+                title: '国家法定节假日',
+                description: '国家层面统一放假的公众假期，适合规划中长途出行与大型活动。',
+                icon: 'fa-landmark'
+            },
+            {
+                id: 'global',
+                title: '国际节日',
+                description: '与全球同步庆祝的节日，感受世界各地的节庆氛围与文化交流。',
+                icon: 'fa-earth-asia'
+            }
+        ];
+
         const festivals = [
             {
                 id: 'newYear',
@@ -605,6 +730,7 @@
                 icon: 'fa-sun',
                 tagline: '开启全新一年的第一天',
                 description: '元旦节是全球共同庆祝的新年第一天，适合总结过去、规划新目标，也是制定全年计划的关键时间节点。',
+                category: 'global',
                 occurrences: [
                     { date: '2024-01-01T00:00:00+08:00', label: '2024年：1月1日（星期一）' },
                     { date: '2025-01-01T00:00:00+08:00', label: '2025年：1月1日（星期三）' },
@@ -619,6 +745,7 @@
                 icon: 'fa-dragon',
                 tagline: '农历新年，阖家团圆',
                 description: '春节是中国最重要的传统节日，标志着农历新年的开始，家人团聚、辞旧迎新、共享团圆饭。',
+                category: 'traditional',
                 occurrences: [
                     { date: '2024-02-10T00:00:00+08:00', label: '2024年：2月10日（星期六）' },
                     { date: '2025-01-29T00:00:00+08:00', label: '2025年：1月29日（星期三）' },
@@ -633,6 +760,7 @@
                 icon: 'fa-seedling',
                 tagline: '缅怀先人，踏青赏春',
                 description: '清明节既是重要的祭祖节日，也是春季踏青的好时节，人们会祭扫祖先、植树和踏春。',
+                category: 'traditional',
                 occurrences: [
                     { date: '2024-04-04T00:00:00+08:00', label: '2024年：4月4日（星期四）' },
                     { date: '2025-04-04T00:00:00+08:00', label: '2025年：4月4日（星期五）' },
@@ -647,6 +775,7 @@
                 icon: 'fa-briefcase',
                 tagline: '致敬劳动者，享受五一假期',
                 description: '劳动节是为庆祝劳动者贡献而设立的公共假日，五一长假适合出行旅行或参与城市节庆活动。',
+                category: 'national',
                 occurrences: [
                     { date: '2024-05-01T00:00:00+08:00', label: '2024年：5月1日（星期三）' },
                     { date: '2025-05-01T00:00:00+08:00', label: '2025年：5月1日（星期四）' },
@@ -661,6 +790,7 @@
                 icon: 'fa-water',
                 tagline: '赛龙舟，吃粽子',
                 description: '端午节是纪念爱国诗人屈原的传统节日，人们会包粽子、赛龙舟、挂艾草，祈求平安健康。',
+                category: 'traditional',
                 occurrences: [
                     { date: '2024-06-10T00:00:00+08:00', label: '2024年：6月10日（星期一）' },
                     { date: '2025-05-31T00:00:00+08:00', label: '2025年：5月31日（星期六）' },
@@ -675,6 +805,7 @@
                 icon: 'fa-moon',
                 tagline: '赏月吃月饼，家人团圆',
                 description: '中秋节寓意家庭团圆和丰收，人们会在这一天赏明月、品月饼，与亲友共度团聚时光。',
+                category: 'traditional',
                 occurrences: [
                     { date: '2024-09-17T00:00:00+08:00', label: '2024年：9月17日（星期二）' },
                     { date: '2025-10-06T00:00:00+08:00', label: '2025年：10月6日（星期一）' },
@@ -689,6 +820,7 @@
                 icon: 'fa-flag',
                 tagline: '举国同庆的黄金周',
                 description: '国庆节庆祝中华人民共和国成立，是全年最长的公共假期之一，适合长途旅行与家庭出游。',
+                category: 'national',
                 occurrences: [
                     { date: '2024-10-01T00:00:00+08:00', label: '2024年：10月1日（星期二）' },
                     { date: '2025-10-01T00:00:00+08:00', label: '2025年：10月1日（星期三）' },
@@ -699,13 +831,54 @@
             }
         ];
 
-        const festivalContainer = document.getElementById('festivalGrid');
+        const festivalNav = document.getElementById('festivalCategoryNav');
+        const festivalSectionsContainer = document.getElementById('festivalSections');
+
+        function createFestivalSections() {
+            if (!festivalNav || !festivalSectionsContainer) {
+                return;
+            }
+            festivalCategories.forEach(category => {
+                const navLink = document.createElement('a');
+                navLink.className = 'festival-category-link';
+                navLink.href = `#category-${category.id}`;
+                navLink.setAttribute('data-category', category.id);
+                navLink.innerHTML = `<i class="fas ${category.icon}" aria-hidden="true"></i><span>${category.title}</span>`;
+                navLink.addEventListener('click', () => {
+                    festivalNav.querySelectorAll('.festival-category-link').forEach(link => link.classList.remove('active'));
+                    navLink.classList.add('active');
+                });
+                festivalNav.appendChild(navLink);
+
+                const section = document.createElement('section');
+                section.className = 'festival-category-section';
+                section.id = `category-${category.id}`;
+                section.setAttribute('aria-labelledby', `heading-${category.id}`);
+                section.innerHTML = `
+                    <div class="festival-category-header">
+                        <h2 class="festival-category-title" id="heading-${category.id}">
+                            <i class="fas ${category.icon}" aria-hidden="true"></i>
+                            ${category.title}
+                        </h2>
+                        <p class="festival-category-description">${category.description}</p>
+                    </div>
+                    <div class="festival-grid" data-category-grid="${category.id}" role="list"></div>
+                `;
+                festivalSectionsContainer.appendChild(section);
+            });
+
+            const firstLink = festivalNav.querySelector('.festival-category-link');
+            if (firstLink) {
+                firstLink.classList.add('active');
+            }
+        }
 
         function renderFestivalCards() {
             festivals.forEach(festival => {
                 const card = document.createElement('article');
                 card.className = 'festival-card';
                 card.setAttribute('data-festival', festival.id);
+                card.setAttribute('role', 'listitem');
                 card.innerHTML = `
                     <div class="festival-card-header">
                         <div class="festival-icon" aria-hidden="true">
@@ -743,8 +916,35 @@
                         </ul>
                     </div>
                 `;
-                festivalContainer.appendChild(card);
+                const targetGrid = document.querySelector(`[data-category-grid="${festival.category}"]`);
+                if (targetGrid) {
+                    targetGrid.appendChild(card);
+                }
             });
+        }
+
+        function setupCategoryObserver() {
+            if (!festivalNav) {
+                return;
+            }
+            if (!('IntersectionObserver' in window)) {
+                return;
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const targetId = entry.target.id.replace('category-', '');
+                    const activeLink = festivalNav.querySelector('.festival-category-link.active');
+                    if (activeLink && activeLink.dataset.category === targetId) return;
+                    festivalNav.querySelectorAll('.festival-category-link').forEach(link => link.classList.remove('active'));
+                    const matchedLink = festivalNav.querySelector(`.festival-category-link[data-category="${targetId}"]`);
+                    if (matchedLink) {
+                        matchedLink.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            document.querySelectorAll('.festival-category-section').forEach(section => observer.observe(section));
         }
 
         function getNextOccurrence(festival) {
@@ -810,7 +1010,9 @@
         }
 
         function initializeCountdowns() {
+            createFestivalSections();
             renderFestivalCards();
+            setupCategoryObserver();
             festivals.forEach(festival => {
                 const next = getNextOccurrence(festival);
                 festival.currentTarget = next ? next.target : null;
