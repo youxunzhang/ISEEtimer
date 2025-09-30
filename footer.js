@@ -54,6 +54,7 @@
                         <li><a href="wedding-countdown.html">婚礼倒计时</a></li>
                         <li><a href="exam-countdown.html">考试倒计时</a></li>
                         <li><a href="birthday-countdown.html">生日倒计时</a></li>
+                        <li><a href="festival-countdown.html">重大节日倒计时</a></li>
                         <li><a href="game.html">时间守护者小游戏</a></li>
                     </ul>
                 </div>
