@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重大节日倒计时 | 免费在线节日倒计时器 | TimeMaster</title>
+    <meta name="description" content="TimeMaster 重大节日倒计时页面，实时统计距离春节、清明节、端午节、中秋节、国庆节等重要节日的时间，帮助您提前规划假期和重要安排。">
+    <meta name="keywords" content="节日倒计时,春节倒计时,中秋节倒计时,国庆节倒计时,清明节倒计时,端午节倒计时,劳动节倒计时">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/festival-countdown.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/festival-countdown.html">
+    <meta property="og:title" content="重大节日倒计时 | TimeMaster">
+    <meta property="og:description" content="实时掌握春节、端午节、中秋节、国庆节等重大节日倒计时时间，轻松安排假期和家庭活动。">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/festival-countdown.html">
+    <meta property="twitter:title" content="重大节日倒计时 | TimeMaster">
+    <meta property="twitter:description" content="实时掌握春节、端午节、中秋节、国庆节等重大节日倒计时时间。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "重大节日倒计时",
+      "description": "汇总春节、清明、端午、中秋、国庆等重大节日的倒计时时间，帮助用户制定出行与家庭计划。",
+      "url": "https://yourdomain.com/festival-countdown.html"
+    }
+    </script>
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .festival-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 70px 20px;
+            border-radius: 24px;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 48px;
+            box-shadow: 0 25px 45px rgba(102, 126, 234, 0.35);
+        }
+
+        .festival-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .festival-hero p {
+            font-size: 1.25rem;
+            opacity: 0.92;
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .festival-intro {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
+            margin-bottom: 40px;
+        }
+
+        .festival-intro h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.75rem;
+            margin-bottom: 18px;
+            color: #4338ca;
+        }
+
+        .festival-intro p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            color: #4b5563;
+        }
+
+        .festival-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .festival-card {
+            background: linear-gradient(160deg, rgba(255,255,255,0.98), rgba(241,245,249,0.92));
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: 0 18px 40px rgba(148, 163, 184, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .festival-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(102, 126, 234, 0.12), transparent 55%);
+            pointer-events: none;
+        }
+
+        .festival-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .festival-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(102, 126, 234, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #5a67d8;
+        }
+
+        .festival-card h3 {
+            font-size: 1.6rem;
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .festival-tagline {
+            color: #6366f1;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .festival-description {
+            color: #4b5563;
+            line-height: 1.7;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .festival-countdown {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-block {
+            background: rgba(99, 102, 241, 0.12);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #4338ca;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.95rem;
+            color: #4b5563;
+            letter-spacing: 0.05em;
+        }
+
+        .festival-next-date {
+            background: rgba(248, 250, 252, 0.95);
+            border-left: 4px solid #6366f1;
+            border-radius: 12px;
+            padding: 16px;
+            color: #1f2937;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .festival-next-date span {
+            color: #4338ca;
+        }
+
+        .festival-upcoming h4 {
+            font-size: 1.1rem;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .festival-upcoming-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .festival-upcoming-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .festival-upcoming-list li i {
+            color: #6366f1;
+        }
+
+        .festival-tips {
+            background: linear-gradient(120deg, rgba(236, 253, 245, 0.95), rgba(224, 231, 255, 0.9));
+            border-radius: 20px;
+            padding: 36px;
+            box-shadow: 0 18px 38px rgba(59, 130, 246, 0.2);
+            margin-bottom: 48px;
+        }
+
+        .festival-tips h2 {
+            font-size: 1.8rem;
+            color: #047857;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .festival-tips ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .festival-tips li {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            color: #047857;
+            line-height: 1.6;
+        }
+
+        .festival-tips li i {
+            margin-top: 4px;
+        }
+
+        .festival-faq {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+            margin-bottom: 60px;
+        }
+
+        .festival-faq h2 {
+            font-size: 1.75rem;
+            margin-bottom: 24px;
+            color: #1f2937;
+        }
+
+        .festival-faq-item {
+            margin-bottom: 24px;
+        }
+
+        .festival-faq-item h3 {
+            font-size: 1.2rem;
+            color: #4338ca;
+            margin-bottom: 10px;
+        }
+
+        .festival-faq-item p {
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
+        .bookmark-btn,
+        .share-btn {
+            position: fixed;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 50;
+        }
+
+        .bookmark-btn {
+            bottom: 120px;
+            background: #f97316;
+        }
+
+        .bookmark-btn.bookmarked {
+            background: #fb923c;
+            box-shadow: 0 10px 25px rgba(251, 146, 60, 0.4);
+        }
+
+        .share-btn {
+            bottom: 60px;
+            background: #6366f1;
+        }
+
+        .bookmark-btn:hover,
+        .share-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .share-panel {
+            position: fixed;
+            right: 92px;
+            bottom: 60px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 24px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+            width: 300px;
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 60;
+        }
+
+        .share-panel.show {
+            display: flex;
+        }
+
+        .share-panel h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #1f2937;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .share-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 500;
+            background: #f8fafc;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .share-button:hover {
+            background: #e0e7ff;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .festival-countdown {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .festival-hero {
+                padding: 48px 20px;
+            }
+
+            .festival-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .festival-countdown {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .bookmark-btn,
+            .share-btn {
+                right: 16px;
+            }
+
+            .share-panel {
+                right: 16px;
+                left: 16px;
+                bottom: 120px;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .festival-countdown {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .festival-card {
+                padding: 24px 20px;
+            }
+
+            .countdown-value {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <header>
+        <nav class="navbar" role="navigation" aria-label="主导航">
+            <div class="nav-brand">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <span>TimeMaster - 专业在线倒计时器</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item" data-tab="timer" id="timer-tab" aria-controls="timer">在线计时器</button>
+                <button class="nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown">倒计时器</button>
+                <button class="nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro">番茄钟计时器</button>
+                <button class="nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch">秒表计时</button>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    主页
+                </a>
+                <a href="world-time-tools.html" class="nav-link">
+                    <i class="fas fa-globe"></i>
+                    世界时间工具
+                </a>
+                <a href="festival-countdown.html" class="nav-link active">
+                    <i class="fas fa-calendar-days"></i>
+                    重大节日倒计时
+                </a>
+                <a href="articles.html" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    文章专栏
+                </a>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle active" id="festivalDropdown">
+                        <i class="fas fa-calendar-alt"></i>
+                        节日倒计时
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu" id="festivalMenu">
+                        <a href="festival-countdown.html" class="dropdown-item active">
+                            <i class="fas fa-calendar-days"></i>
+                            重大节日倒计时
+                        </a>
+                        <a href="wedding-countdown.html" class="dropdown-item">
+                            <i class="fas fa-heart"></i>
+                            婚礼倒计时
+                        </a>
+                        <a href="exam-countdown.html" class="dropdown-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            考试倒计时
+                        </a>
+                        <a href="birthday-countdown.html" class="dropdown-item">
+                            <i class="fas fa-birthday-cake"></i>
+                            生日倒计时
+                        </a>
+                        <a href="how-to-create-countdown-timer.html" class="dropdown-item">
+                            <i class="fas fa-code"></i>
+                            制作教程
+                        </a>
+                        <a href="sitemap.html" class="dropdown-item">
+                            <i class="fas fa-sitemap"></i>
+                            网站地图
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content" role="main">
+            <section class="festival-hero">
+                <h1><i class="fas fa-calendar-week"></i> 重大节日倒计时中心</h1>
+                <p>实时掌握春节、清明、端午、中秋、国庆等重大节日的倒计时时间。为假期出行、家庭聚会、节庆活动做好充分准备，让每一个重要时刻都不被错过。</p>
+            </section>
+
+            <section class="festival-intro">
+                <h2><i class="fas fa-hourglass-half"></i> 为什么需要节日倒计时？</h2>
+                <p>节假日往往意味着团聚、旅行与庆祝。提前了解节日时间，可以帮助您安排年假、抢购车票、预定酒店或筹备节庆活动。本页面聚合了全年最重要的节日倒计时信息，为您提供一目了然的时间表。</p>
+                <p>我们精选了中国用户最关注的七大节日，每个节日都提供未来数年的精确日期信息和实时倒计时，让规划节奏更轻松。</p>
+            </section>
+
+            <section class="festival-grid" id="festivalGrid" aria-live="polite"></section>
+
+            <section class="festival-tips">
+                <h2><i class="fas fa-lightbulb"></i> 节日前的实用提醒</h2>
+                <ul>
+                    <li><i class="fas fa-plane"></i> 提前 30 天以上规划跨城或跨国旅行，避开抢票高峰。</li>
+                    <li><i class="fas fa-gift"></i> 准备节日礼物或伴手礼时，建议留出物流缓冲时间。</li>
+                    <li><i class="fas fa-users"></i> 家庭聚会提前预约餐厅或场地，尤其是春节、国庆黄金周。</li>
+                    <li><i class="fas fa-notes-medical"></i> 节假日前检查常备药物和健康保障，确保旅途安心。</li>
+                    <li><i class="fas fa-seedling"></i> 清明、端午等传统节日可安排亲子体验活动，传承文化记忆。</li>
+                </ul>
+            </section>
+
+            <section class="festival-faq">
+                <h2>常见问题解答</h2>
+                <div class="festival-faq-item">
+                    <h3>节日日期信息来自哪里？</h3>
+                    <p>节日日期参考国务院发布的放假安排以及近年农历节日的公历时间，确保符合国内主流作息。我们会定期更新日期数据，保证倒计时信息的准确性。</p>
+                </div>
+                <div class="festival-faq-item">
+                    <h3>倒计时可以添加到我的日历吗？</h3>
+                    <p>您可以使用浏览器的收藏功能快速保存此页面，也可以将节日日期手动加入常用日历工具（如 Google 日历、苹果日历）中，设置提醒避免错过。</p>
+                </div>
+                <div class="festival-faq-item">
+                    <h3>如何保持页面的主题设置？</h3>
+                    <p>TimeMaster 支持浅色与深色两种主题模式。点击右上角的月亮图标即可切换，系统会自动保存您的选择，下一次访问仍会保留当前主题。</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- 收藏按钮 -->
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="收藏此页面">
+            <i class="fas fa-bookmark"></i>
+        </button>
+
+        <!-- 分享按钮 -->
+        <button class="share-btn" id="shareBtn" aria-label="分享此页面">
+            <i class="fas fa-share-alt"></i>
+        </button>
+
+        <!-- 分享面板 -->
+        <div class="share-panel" id="sharePanel">
+            <h3>分享到社交媒体</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-button" data-platform="wechat" aria-label="分享到微信">
+                    <i class="fab fa-weixin"></i>
+                    <span>微信好友</span>
+                </a>
+                <a href="#" class="share-button" data-platform="weibo" aria-label="分享到微博">
+                    <i class="fab fa-weibo"></i>
+                    <span>新浪微博</span>
+                </a>
+                <a href="#" class="share-button" data-platform="qq" aria-label="分享到QQ">
+                    <i class="fab fa-qq"></i>
+                    <span>QQ 好友</span>
+                </a>
+                <a href="#" class="share-button" data-platform="facebook" aria-label="分享到Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-button" data-platform="twitter" aria-label="分享到Twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="share-button" data-platform="linkedin" aria-label="分享到LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const festivals = [
+            {
+                id: 'newYear',
+                name: '元旦节',
+                icon: 'fa-sun',
+                tagline: '开启全新一年的第一天',
+                description: '元旦节是全球共同庆祝的新年第一天，适合总结过去、规划新目标，也是制定全年计划的关键时间节点。',
+                occurrences: [
+                    { date: '2024-01-01T00:00:00+08:00', label: '2024年：1月1日（星期一）' },
+                    { date: '2025-01-01T00:00:00+08:00', label: '2025年：1月1日（星期三）' },
+                    { date: '2026-01-01T00:00:00+08:00', label: '2026年：1月1日（星期四）' },
+                    { date: '2027-01-01T00:00:00+08:00', label: '2027年：1月1日（星期五）' },
+                    { date: '2028-01-01T00:00:00+08:00', label: '2028年：1月1日（星期六）' }
+                ]
+            },
+            {
+                id: 'springFestival',
+                name: '春节',
+                icon: 'fa-dragon',
+                tagline: '农历新年，阖家团圆',
+                description: '春节是中国最重要的传统节日，标志着农历新年的开始，家人团聚、辞旧迎新、共享团圆饭。',
+                occurrences: [
+                    { date: '2024-02-10T00:00:00+08:00', label: '2024年：2月10日（星期六）' },
+                    { date: '2025-01-29T00:00:00+08:00', label: '2025年：1月29日（星期三）' },
+                    { date: '2026-02-17T00:00:00+08:00', label: '2026年：2月17日（星期二）' },
+                    { date: '2027-02-06T00:00:00+08:00', label: '2027年：2月6日（星期六）' },
+                    { date: '2028-01-26T00:00:00+08:00', label: '2028年：1月26日（星期三）' }
+                ]
+            },
+            {
+                id: 'qingming',
+                name: '清明节',
+                icon: 'fa-seedling',
+                tagline: '缅怀先人，踏青赏春',
+                description: '清明节既是重要的祭祖节日，也是春季踏青的好时节，人们会祭扫祖先、植树和踏春。',
+                occurrences: [
+                    { date: '2024-04-04T00:00:00+08:00', label: '2024年：4月4日（星期四）' },
+                    { date: '2025-04-04T00:00:00+08:00', label: '2025年：4月4日（星期五）' },
+                    { date: '2026-04-04T00:00:00+08:00', label: '2026年：4月4日（星期六）' },
+                    { date: '2027-04-05T00:00:00+08:00', label: '2027年：4月5日（星期一）' },
+                    { date: '2028-04-04T00:00:00+08:00', label: '2028年：4月4日（星期二）' }
+                ]
+            },
+            {
+                id: 'labourDay',
+                name: '劳动节',
+                icon: 'fa-briefcase',
+                tagline: '致敬劳动者，享受五一假期',
+                description: '劳动节是为庆祝劳动者贡献而设立的公共假日，五一长假适合出行旅行或参与城市节庆活动。',
+                occurrences: [
+                    { date: '2024-05-01T00:00:00+08:00', label: '2024年：5月1日（星期三）' },
+                    { date: '2025-05-01T00:00:00+08:00', label: '2025年：5月1日（星期四）' },
+                    { date: '2026-05-01T00:00:00+08:00', label: '2026年：5月1日（星期五）' },
+                    { date: '2027-05-01T00:00:00+08:00', label: '2027年：5月1日（星期六）' },
+                    { date: '2028-05-01T00:00:00+08:00', label: '2028年：5月1日（星期一）' }
+                ]
+            },
+            {
+                id: 'dragonBoat',
+                name: '端午节',
+                icon: 'fa-water',
+                tagline: '赛龙舟，吃粽子',
+                description: '端午节是纪念爱国诗人屈原的传统节日，人们会包粽子、赛龙舟、挂艾草，祈求平安健康。',
+                occurrences: [
+                    { date: '2024-06-10T00:00:00+08:00', label: '2024年：6月10日（星期一）' },
+                    { date: '2025-05-31T00:00:00+08:00', label: '2025年：5月31日（星期六）' },
+                    { date: '2026-06-19T00:00:00+08:00', label: '2026年：6月19日（星期五）' },
+                    { date: '2027-06-09T00:00:00+08:00', label: '2027年：6月9日（星期三）' },
+                    { date: '2028-05-28T00:00:00+08:00', label: '2028年：5月28日（星期日）' }
+                ]
+            },
+            {
+                id: 'midAutumn',
+                name: '中秋节',
+                icon: 'fa-moon',
+                tagline: '赏月吃月饼，家人团圆',
+                description: '中秋节寓意家庭团圆和丰收，人们会在这一天赏明月、品月饼，与亲友共度团聚时光。',
+                occurrences: [
+                    { date: '2024-09-17T00:00:00+08:00', label: '2024年：9月17日（星期二）' },
+                    { date: '2025-10-06T00:00:00+08:00', label: '2025年：10月6日（星期一）' },
+                    { date: '2026-09-25T00:00:00+08:00', label: '2026年：9月25日（星期五）' },
+                    { date: '2027-09-15T00:00:00+08:00', label: '2027年：9月15日（星期三）' },
+                    { date: '2028-10-03T00:00:00+08:00', label: '2028年：10月3日（星期二）' }
+                ]
+            },
+            {
+                id: 'nationalDay',
+                name: '国庆节',
+                icon: 'fa-flag',
+                tagline: '举国同庆的黄金周',
+                description: '国庆节庆祝中华人民共和国成立，是全年最长的公共假期之一，适合长途旅行与家庭出游。',
+                occurrences: [
+                    { date: '2024-10-01T00:00:00+08:00', label: '2024年：10月1日（星期二）' },
+                    { date: '2025-10-01T00:00:00+08:00', label: '2025年：10月1日（星期三）' },
+                    { date: '2026-10-01T00:00:00+08:00', label: '2026年：10月1日（星期四）' },
+                    { date: '2027-10-01T00:00:00+08:00', label: '2027年：10月1日（星期五）' },
+                    { date: '2028-10-01T00:00:00+08:00', label: '2028年：10月1日（星期日）' }
+                ]
+            }
+        ];
+
+        const festivalContainer = document.getElementById('festivalGrid');
+
+        function renderFestivalCards() {
+            festivals.forEach(festival => {
+                const card = document.createElement('article');
+                card.className = 'festival-card';
+                card.setAttribute('data-festival', festival.id);
+                card.innerHTML = `
+                    <div class="festival-card-header">
+                        <div class="festival-icon" aria-hidden="true">
+                            <i class="fas ${festival.icon}"></i>
+                        </div>
+                        <div>
+                            <h3>${festival.name}</h3>
+                            <p class="festival-tagline">${festival.tagline}</p>
+                        </div>
+                    </div>
+                    <p class="festival-description">${festival.description}</p>
+                    <div class="festival-countdown" role="group" aria-label="${festival.name}倒计时">
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="days">00</span>
+                            <span class="countdown-label">天</span>
+                        </div>
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="hours">00</span>
+                            <span class="countdown-label">小时</span>
+                        </div>
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="minutes">00</span>
+                            <span class="countdown-label">分钟</span>
+                        </div>
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="seconds">00</span>
+                            <span class="countdown-label">秒</span>
+                        </div>
+                    </div>
+                    <div class="festival-next-date">下一次节日时间：<span class="next-date-text">计算中...</span></div>
+                    <div class="festival-upcoming">
+                        <h4><i class="fas fa-calendar-alt"></i> 未来节日安排</h4>
+                        <ul class="festival-upcoming-list">
+                            ${festival.occurrences.map(occurrence => `<li><i class=\"fas fa-clock\"></i>${occurrence.label}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                festivalContainer.appendChild(card);
+            });
+        }
+
+        function getNextOccurrence(festival) {
+            const now = new Date();
+            for (const occurrence of festival.occurrences) {
+                const occurrenceDate = new Date(occurrence.date);
+                if (occurrenceDate.getTime() - now.getTime() > 0) {
+                    return { target: occurrenceDate, label: occurrence.label };
+                }
+            }
+            const lastOccurrence = festival.occurrences[festival.occurrences.length - 1];
+            return lastOccurrence ? { target: new Date(lastOccurrence.date), label: lastOccurrence.label } : null;
+        }
+
+        function padNumber(value) {
+            return value.toString().padStart(2, '0');
+        }
+
+        function updateCountdowns() {
+            festivals.forEach(festival => {
+                const card = document.querySelector(`[data-festival="${festival.id}"]`);
+                if (!card) return;
+
+                if (!festival.currentTarget || festival.currentTarget.getTime() - Date.now() <= 0) {
+                    const next = getNextOccurrence(festival);
+                    festival.currentTarget = next ? next.target : null;
+                    festival.currentLabel = next ? next.label : '等待更新';
+                }
+
+                const nextDateElement = card.querySelector('.next-date-text');
+                if (festival.currentLabel) {
+                    nextDateElement.textContent = festival.currentLabel;
+                }
+
+                if (!festival.currentTarget) {
+                    const values = card.querySelectorAll('.countdown-value');
+                    values.forEach(value => value.textContent = '--');
+                    return;
+                }
+
+                const now = new Date();
+                const diff = festival.currentTarget.getTime() - now.getTime();
+
+                if (diff <= 0) {
+                    const values = card.querySelectorAll('.countdown-value');
+                    values.forEach(value => value.textContent = '00');
+                    nextDateElement.textContent = '正在庆祝中，敬请期待下一次更新';
+                    festival.currentTarget = null;
+                    return;
+                }
+
+                const totalSeconds = Math.floor(diff / 1000);
+                const days = Math.floor(totalSeconds / (24 * 3600));
+                const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                card.querySelector('[data-unit="days"]').textContent = padNumber(days);
+                card.querySelector('[data-unit="hours"]').textContent = padNumber(hours);
+                card.querySelector('[data-unit="minutes"]').textContent = padNumber(minutes);
+                card.querySelector('[data-unit="seconds"]').textContent = padNumber(seconds);
+            });
+        }
+
+        function initializeCountdowns() {
+            renderFestivalCards();
+            festivals.forEach(festival => {
+                const next = getNextOccurrence(festival);
+                festival.currentTarget = next ? next.target : null;
+                festival.currentLabel = next ? next.label : '等待更新';
+            });
+            updateCountdowns();
+            setInterval(updateCountdowns, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCountdowns();
+
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const sharePanel = document.getElementById('sharePanel');
+            const shareButtons = document.querySelectorAll('.share-button');
+
+            if (localStorage.getItem('bookmarked-festival') === 'true') {
+                bookmarkBtn.classList.add('bookmarked');
+            }
+
+            bookmarkBtn.addEventListener('click', () => {
+                const isBookmarked = bookmarkBtn.classList.toggle('bookmarked');
+                localStorage.setItem('bookmarked-festival', isBookmarked.toString());
+            });
+
+            shareBtn.addEventListener('click', () => {
+                sharePanel.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!sharePanel.contains(event.target) && !shareBtn.contains(event.target)) {
+                    sharePanel.classList.remove('show');
+                }
+            });
+
+            const pageTitle = document.title;
+            const pageUrl = window.location.href;
+
+            shareButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const platform = button.getAttribute('data-platform');
+                    let shareUrl = '';
+
+                    switch(platform) {
+                        case 'wechat':
+                            alert('请使用浏览器分享功能或复制链接后在微信中发送。');
+                            break;
+                        case 'weibo':
+                            shareUrl = `https://service.weibo.com/share/share.php?title=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'qq':
+                            shareUrl = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`;
+                            break;
+                        case 'facebook':
+                            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'twitter':
+                            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'linkedin':
+                            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                    }
+
+                    if (shareUrl) {
+                        window.open(shareUrl, '_blank', 'width=640,height=480');
+                        sharePanel.classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>
