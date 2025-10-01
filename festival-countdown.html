@@ -183,12 +183,11 @@
 
         .festival-grid {
             display: grid;
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-            gap: 1px;
-            padding: 1px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            padding: 0;
             border-radius: 24px;
-            overflow: hidden;
-            background: rgba(99, 102, 241, 0.18);
+            background: transparent;
         }
 
         .festival-card {
@@ -200,6 +199,7 @@
             text-align: center;
             gap: 18px;
             transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
 
         .festival-card:hover,
@@ -483,10 +483,6 @@
         }
 
         @media (min-width: 640px) {
-            .festival-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
             .festival-countdown {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
             }
