@@ -648,6 +648,7 @@
             let isRunning = false;
             let animationId = null;
             let lastTickTimestamp = null;
+            let lastRealTime = null;
 
             const timeDisplay = document.getElementById('timeRemaining');
             const progressFill = document.getElementById('progressFill');
@@ -713,12 +714,21 @@
                     return;
                 }
 
+                const now = Date.now();
+
                 if (!lastTickTimestamp) {
                     lastTickTimestamp = timestamp;
                 }
 
-                const delta = (timestamp - lastTickTimestamp) / 1000;
+                if (!lastRealTime) {
+                    lastRealTime = now;
+                }
+
+                const deltaFrame = (timestamp - lastTickTimestamp) / 1000;
+                const deltaReal = (now - lastRealTime) / 1000;
                 lastTickTimestamp = timestamp;
+                lastRealTime = now;
+                const delta = Math.max(deltaFrame, deltaReal);
                 remaining = Math.max(0, remaining - delta);
                 updateDisplay();
 
@@ -738,6 +748,7 @@
                 isRunning = true;
                 incenseScene.classList.add('burning');
                 lastTickTimestamp = null;
+                lastRealTime = null;
                 updateDisplay();
                 animationId = window.requestAnimationFrame(step);
             }
@@ -763,6 +774,7 @@
                 isRunning = false;
                 remaining = DURATION;
                 lastTickTimestamp = null;
+                lastRealTime = null;
                 incenseScene.classList.remove('burning');
                 updateDisplay();
             }
@@ -770,12 +782,6 @@
             startButton.addEventListener('click', startTimer);
             pauseButton.addEventListener('click', pauseTimer);
             resetButton.addEventListener('click', resetTimer);
-
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'hidden' && isRunning) {
-                    pauseTimer();
-                }
-            });
 
             updateDisplay();
         })();
