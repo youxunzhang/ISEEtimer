@@ -455,26 +455,77 @@
         }
 
         @media (max-width: 640px) {
+            .main-content {
+                padding: 56px 16px 80px;
+            }
+
             .incense-layout {
-                padding: 28px 22px;
-                border-radius: 24px;
-                gap: 36px;
+                padding: 24px 18px;
+                border-radius: 22px;
+                gap: 28px;
+            }
+
+            .incense-info {
+                order: 2;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
             }
 
             .incense-info h1 {
-                font-size: 2rem;
+                font-size: 1.9rem;
+            }
+
+            .incense-info > p {
+                font-size: 0.98rem;
             }
 
             .timer-panel {
-                padding: 22px;
+                padding: 20px 18px;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+            }
+
+            .timer-hero {
+                justify-content: center;
             }
 
             .timer-count {
-                font-size: 3rem;
+                font-size: 2.8rem;
+            }
+
+            .status-board {
+                gap: 12px;
+            }
+
+            .control-bar {
+                flex-direction: column;
             }
 
             .control-button {
-                min-width: 120px;
+                min-width: 0;
+                width: 100%;
+            }
+
+            .incense-visual {
+                order: 1;
+            }
+
+            .incense-scene {
+                width: 180px;
+                height: 360px;
+                padding-bottom: 36px;
+            }
+
+            .incense-tips {
+                padding: 20px 18px;
+                align-items: stretch;
+                text-align: left;
+            }
+
+            .incense-tips ul {
+                width: 100%;
             }
         }
     </style>
@@ -644,10 +695,11 @@
     <script>
         (function() {
             const DURATION = 30 * 60; // 30 minutes in seconds
+            const STORAGE_KEY = 'incense-timer-state';
             let remaining = DURATION;
             let isRunning = false;
             let animationId = null;
-            let lastTickTimestamp = null;
+            let startTimestamp = null;
 
             const timeDisplay = document.getElementById('timeRemaining');
             const progressFill = document.getElementById('progressFill');
@@ -708,27 +760,99 @@
                 pauseButton.disabled = !isRunning;
             }
 
-            function step(timestamp) {
+            function syncRemainingWithClock() {
+                if (!startTimestamp) {
+                    return;
+                }
+                const elapsed = (Date.now() - startTimestamp) / 1000;
+                remaining = Math.max(0, DURATION - elapsed);
+            }
+
+            function step() {
                 if (!isRunning) {
+                    animationId = null;
                     return;
                 }
 
-                if (!lastTickTimestamp) {
-                    lastTickTimestamp = timestamp;
-                }
-
-                const delta = (timestamp - lastTickTimestamp) / 1000;
-                lastTickTimestamp = timestamp;
-                remaining = Math.max(0, remaining - delta);
+                syncRemainingWithClock();
                 updateDisplay();
 
                 if (remaining > 0) {
                     animationId = window.requestAnimationFrame(step);
                 } else {
                     isRunning = false;
+                    startTimestamp = null;
                     incenseScene.classList.remove('burning');
                     updateDisplay();
+                    clearState();
                 }
+            }
+
+            function persistState() {
+                try {
+                    const state = {
+                        remaining: Math.max(0, Number(remaining.toFixed(3))),
+                        isRunning,
+                        startTimestamp: isRunning ? startTimestamp : null,
+                        updatedAt: Date.now()
+                    };
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                } catch (error) {
+                    console.warn('无法保存计时状态', error);
+                }
+            }
+
+            function clearState() {
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                } catch (error) {
+                    console.warn('无法清除计时状态', error);
+                }
+            }
+
+            function loadState() {
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    if (!stored) {
+                        updateDisplay();
+                        return;
+                    }
+                    const state = JSON.parse(stored);
+                    if (state && typeof state.remaining === 'number') {
+                        remaining = Math.min(DURATION, Math.max(0, state.remaining));
+                    }
+
+                    if (state && state.isRunning && state.startTimestamp) {
+                        startTimestamp = state.startTimestamp;
+                        syncRemainingWithClock();
+                        if (remaining > 0) {
+                            isRunning = true;
+                            incenseScene.classList.add('burning');
+                            updateDisplay();
+                            startAnimationLoop();
+                            return;
+                        }
+                    }
+
+                    isRunning = false;
+                    startTimestamp = null;
+                    incenseScene.classList.remove('burning');
+                    if (remaining <= 0) {
+                        remaining = 0;
+                        clearState();
+                    }
+                    updateDisplay();
+                } catch (error) {
+                    console.warn('无法恢复计时状态', error);
+                    updateDisplay();
+                }
+            }
+
+            function startAnimationLoop() {
+                if (animationId) {
+                    window.cancelAnimationFrame(animationId);
+                }
+                animationId = window.requestAnimationFrame(step);
             }
 
             function startTimer() {
@@ -737,9 +861,10 @@
                 }
                 isRunning = true;
                 incenseScene.classList.add('burning');
-                lastTickTimestamp = null;
+                startTimestamp = Date.now() - (DURATION - remaining) * 1000;
                 updateDisplay();
-                animationId = window.requestAnimationFrame(step);
+                persistState();
+                startAnimationLoop();
             }
 
             function pauseTimer() {
@@ -748,11 +873,14 @@
                 }
                 isRunning = false;
                 incenseScene.classList.remove('burning');
+                syncRemainingWithClock();
+                startTimestamp = null;
                 if (animationId) {
                     window.cancelAnimationFrame(animationId);
                     animationId = null;
                 }
                 updateDisplay();
+                persistState();
             }
 
             function resetTimer() {
@@ -762,9 +890,10 @@
                 }
                 isRunning = false;
                 remaining = DURATION;
-                lastTickTimestamp = null;
+                startTimestamp = null;
                 incenseScene.classList.remove('burning');
                 updateDisplay();
+                clearState();
             }
 
             startButton.addEventListener('click', startTimer);
@@ -772,12 +901,22 @@
             resetButton.addEventListener('click', resetTimer);
 
             document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'hidden' && isRunning) {
-                    pauseTimer();
+                if (document.visibilityState === 'hidden') {
+                    persistState();
+                } else if (document.visibilityState === 'visible' && isRunning) {
+                    startAnimationLoop();
                 }
             });
 
-            updateDisplay();
+            window.addEventListener('beforeunload', persistState);
+
+            loadState();
+
+            window.addEventListener('storage', (event) => {
+                if (event.key === STORAGE_KEY) {
+                    loadState();
+                }
+            });
         })();
     </script>
 </body>
