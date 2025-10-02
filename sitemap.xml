@@ -6,7 +6,7 @@
 
     <!-- 首页 -->
     <url>
-        <loc>https://iseetimer.com/</loc>
+        <loc>https://www.iseetime.online/</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
@@ -14,7 +14,7 @@
 
     <!-- 全屏倒计时器 -->
     <url>
-        <loc>https://iseetimer.com/fullscreen-countdown.html</loc>
+        <loc>https://www.iseetime.online/fullscreen-countdown.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
@@ -22,7 +22,7 @@
 
     <!-- 世界时间工具 -->
     <url>
-        <loc>https://iseetimer.com/world-time-tools.html</loc>
+        <loc>https://www.iseetime.online/world-time-tools.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -30,7 +30,7 @@
 
     <!-- 重大节日倒计时 -->
     <url>
-        <loc>https://iseetimer.com/festival-countdown.html</loc>
+        <loc>https://www.iseetime.online/festival-countdown.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -38,7 +38,7 @@
 
     <!-- 一炷香专注计时器 -->
     <url>
-        <loc>https://iseetimer.com/incense-timer.html</loc>
+        <loc>https://www.iseetime.online/incense-timer.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
@@ -46,7 +46,7 @@
 
     <!-- 倒计时小游戏 -->
     <url>
-        <loc>https://iseetimer.com/countdown-game.html</loc>
+        <loc>https://www.iseetime.online/countdown-game.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
@@ -54,7 +54,7 @@
 
     <!-- 经典计时小游戏合集 -->
     <url>
-        <loc>https://iseetimer.com/game.html</loc>
+        <loc>https://www.iseetime.online/game.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
@@ -62,7 +62,7 @@
 
     <!-- 婚礼倒计时 -->
     <url>
-        <loc>https://iseetimer.com/wedding-countdown.html</loc>
+        <loc>https://www.iseetime.online/wedding-countdown.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -70,7 +70,7 @@
 
     <!-- 考试倒计时 -->
     <url>
-        <loc>https://iseetimer.com/exam-countdown.html</loc>
+        <loc>https://www.iseetime.online/exam-countdown.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -78,7 +78,7 @@
 
     <!-- 生日倒计时 -->
     <url>
-        <loc>https://iseetimer.com/birthday-countdown.html</loc>
+        <loc>https://www.iseetime.online/birthday-countdown.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -86,7 +86,7 @@
 
     <!-- 文章聚合页 -->
     <url>
-        <loc>https://iseetimer.com/articles.html</loc>
+        <loc>https://www.iseetime.online/articles.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
@@ -94,7 +94,7 @@
 
     <!-- 网站建设时间规划 -->
     <url>
-        <loc>https://iseetimer.com/article-time-planning.html</loc>
+        <loc>https://www.iseetime.online/article-time-planning.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -102,7 +102,7 @@
 
     <!-- 网站建设方案规划 -->
     <url>
-        <loc>https://iseetimer.com/article-website-planning.html</loc>
+        <loc>https://www.iseetime.online/article-website-planning.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -110,7 +110,7 @@
 
     <!-- 制作教程 -->
     <url>
-        <loc>https://iseetimer.com/how-to-create-countdown-timer.html</loc>
+        <loc>https://www.iseetime.online/how-to-create-countdown-timer.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
@@ -118,7 +118,7 @@
 
     <!-- 网站地图 -->
     <url>
-        <loc>https://iseetimer.com/sitemap.html</loc>
+        <loc>https://www.iseetime.online/sitemap.html</loc>
         <lastmod>2024-05-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
