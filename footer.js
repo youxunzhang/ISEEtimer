@@ -42,7 +42,7 @@
                 <div class="footer-column">
                     <h4>核心工具</h4>
                     <ul>
-                        <li><a href="index.html#timer">在线计时器</a></li>
+                        <li><a href="fullscreen-countdown.html">全屏倒计时器</a></li>
                         <li><a href="index.html#countdown">倒计时器</a></li>
                         <li><a href="index.html#pomodoro">番茄钟计时</a></li>
                         <li><a href="index.html#stopwatch">秒表功能</a></li>

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全屏倒计时器 | 极简倒计时 | TimeMaster</title>
+    <meta name="description" content="全屏极简倒计时器，支持自定义倒计时时长与快捷预设，适合会议、课堂、直播、演讲等场景。">
+    <meta name="keywords" content="全屏倒计时,极简倒计时,倒计时网页,会议倒计时,演讲倒计时">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/fullscreen-countdown.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/fullscreen-countdown.html">
+    <meta property="og:title" content="全屏倒计时器 | TimeMaster">
+    <meta property="og:description" content="全屏极简倒计时器，支持自定义倒计时时长与快捷预设。">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/fullscreen-countdown.html">
+    <meta property="twitter:title" content="全屏倒计时器 | TimeMaster">
+    <meta property="twitter:description" content="全屏极简倒计时器，支持自定义倒计时时长与快捷预设。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body.fullscreen-countdown-page {
+            background-color: #050505;
+            color: #f9fafb;
+        }
+
+        .fullscreen-countdown-page .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fullscreen-countdown-page main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        .countdown-stage {
+            width: min(100%, 1200px);
+            background: linear-gradient(160deg, #111827 0%, #000000 60%, #0b1120 100%);
+            border-radius: 32px;
+            padding: clamp(2rem, 4vw, 3rem);
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.45);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-stage::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 45%),
+                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.18), transparent 45%);
+        }
+
+        .countdown-display {
+            text-align: center;
+            margin-bottom: clamp(2rem, 6vw, 3.5rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-time {
+            font-size: clamp(4.5rem, 14vw, 15rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            display: inline-flex;
+            align-items: baseline;
+            gap: clamp(0.5rem, 2vw, 1.5rem);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .countdown-time span {
+            display: inline-block;
+            min-width: clamp(3.5rem, 11vw, 12rem);
+        }
+
+        .countdown-time .separator {
+            color: #fbbf24;
+            animation: soft-blink 1.8s ease-in-out infinite;
+            min-width: auto;
+        }
+
+        @keyframes soft-blink {
+            0%, 100% { opacity: 1; }
+            45% { opacity: 0.35; }
+        }
+
+        .countdown-status {
+            margin-top: 1.25rem;
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(209, 213, 219, 0.7);
+        }
+
+        .countdown-controls {
+            display: grid;
+            gap: clamp(1.5rem, 4vw, 2.5rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .countdown-inputs label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-weight: 500;
+            color: rgba(229, 231, 235, 0.85);
+            letter-spacing: 0.05em;
+        }
+
+        .countdown-inputs input {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 14px;
+            padding: 0.85rem 1.25rem;
+            color: #e5e7eb;
+            font-size: 1.15rem;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+            text-align: center;
+        }
+
+        .countdown-inputs input:focus {
+            border-color: rgba(59, 130, 246, 0.75);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.25);
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .preset-button {
+            padding: 0.75rem 1.35rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            background: rgba(15, 23, 42, 0.55);
+            color: #e5e7eb;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .preset-button:hover,
+        .preset-button:focus {
+            border-color: rgba(59, 130, 246, 0.85);
+            background: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .action-button {
+            padding: 0.9rem 2.4rem;
+            border-radius: 14px;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .action-button i {
+            font-size: 1.1rem;
+        }
+
+        .action-button.start {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #0b1120;
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.35);
+        }
+
+        .action-button.pause {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #0b1120;
+            box-shadow: 0 20px 40px rgba(251, 191, 36, 0.35);
+        }
+
+        .action-button.reset {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            color: #f9fafb;
+            box-shadow: 0 20px 40px rgba(248, 113, 113, 0.35);
+        }
+
+        .action-button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .action-button:not(:disabled):hover,
+        .action-button:not(:disabled):focus {
+            transform: translateY(-2px);
+        }
+
+        .countdown-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: rgba(148, 163, 184, 0.7);
+            letter-spacing: 0.04em;
+        }
+
+        .countdown-meta strong {
+            color: #f3f4f6;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .countdown-stage {
+                border-radius: 24px;
+                padding: 2rem 1.5rem;
+            }
+
+            .countdown-time {
+                font-size: clamp(3.5rem, 18vw, 10rem);
+                gap: clamp(0.35rem, 3vw, 1rem);
+            }
+
+            .countdown-time span {
+                min-width: clamp(2.75rem, 14vw, 8rem);
+            }
+
+            .countdown-inputs {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 540px) {
+            .countdown-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="fullscreen-countdown-page">
+    <div class="container">
+        <header>
+            <nav class="navbar" role="navigation" aria-label="主导航">
+                <div class="nav-brand">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span>TimeMaster - 专业在线倒计时器</span>
+                </div>
+                <div class="nav-menu">
+                    <button class="nav-item active" type="button">全屏倒计时器</button>
+                    <button class="nav-item" type="button" onclick="location.href='index.html#countdown'">倒计时器</button>
+                    <button class="nav-item" type="button" onclick="location.href='index.html#pomodoro'">番茄钟计时器</button>
+                    <button class="nav-item" type="button" onclick="location.href='index.html#stopwatch'">秒表计时</button>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        主页
+                    </a>
+                    <a href="world-time-tools.html" class="nav-link">
+                        <i class="fas fa-globe"></i>
+                        世界时间工具
+                    </a>
+                    <a href="festival-countdown.html" class="nav-link">
+                        <i class="fas fa-calendar-days"></i>
+                        重大节日倒计时
+                    </a>
+                    <a href="countdown-game.html" class="nav-link">
+                        <i class="fas fa-hourglass-half"></i>
+                        倒计时挑战
+                    </a>
+                    <a href="articles.html" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        文章专栏
+                    </a>
+                    <div class="nav-dropdown">
+                        <button class="nav-link dropdown-toggle" id="festivalDropdown">
+                            <i class="fas fa-calendar-alt"></i>
+                            节日倒计时
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </button>
+                        <div class="dropdown-menu" id="festivalMenu">
+                            <a href="festival-countdown.html" class="dropdown-item">
+                                <i class="fas fa-calendar-days"></i>
+                                重大节日倒计时
+                            </a>
+                            <a href="wedding-countdown.html" class="dropdown-item">
+                                <i class="fas fa-heart"></i>
+                                婚礼倒计时
+                            </a>
+                            <a href="exam-countdown.html" class="dropdown-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                考试倒计时
+                            </a>
+                            <a href="birthday-countdown.html" class="dropdown-item">
+                                <i class="fas fa-birthday-cake"></i>
+                                生日倒计时
+                            </a>
+                            <a href="how-to-create-countdown-timer.html" class="dropdown-item">
+                                <i class="fas fa-code"></i>
+                                制作教程
+                            </a>
+                            <a href="sitemap.html" class="dropdown-item">
+                                <i class="fas fa-sitemap"></i>
+                                网站地图
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-controls">
+                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main">
+            <div class="countdown-stage" aria-live="polite">
+                <div class="countdown-display">
+                    <div class="countdown-time" role="timer" aria-live="assertive">
+                        <span id="fsHours">00</span>
+                        <span class="separator">:</span>
+                        <span id="fsMinutes">00</span>
+                        <span class="separator">:</span>
+                        <span id="fsSeconds">00</span>
+                    </div>
+                    <div class="countdown-status" id="fsStatus">设置倒计时时间后开始</div>
+                </div>
+
+                <div class="countdown-controls">
+                    <div class="countdown-inputs" aria-label="自定义倒计时时间">
+                        <label>
+                            小时
+                            <input type="number" id="fsHourInput" min="0" max="23" value="0" inputmode="numeric" aria-label="小时">
+                        </label>
+                        <label>
+                            分钟
+                            <input type="number" id="fsMinuteInput" min="0" max="59" value="1" inputmode="numeric" aria-label="分钟">
+                        </label>
+                        <label>
+                            秒
+                            <input type="number" id="fsSecondInput" min="0" max="59" value="0" inputmode="numeric" aria-label="秒">
+                        </label>
+                    </div>
+
+                    <div class="preset-buttons" aria-label="快速选择倒计时预设">
+                        <button class="preset-button" type="button" data-seconds="60">1 分钟</button>
+                        <button class="preset-button" type="button" data-seconds="300">5 分钟</button>
+                        <button class="preset-button" type="button" data-seconds="600">10 分钟</button>
+                        <button class="preset-button" type="button" data-seconds="1200">20 分钟</button>
+                        <button class="preset-button" type="button" data-seconds="1800">30 分钟</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-button start" type="button" id="fsStart">
+                            <i class="fas fa-play"></i>
+                            开始
+                        </button>
+                        <button class="action-button pause" type="button" id="fsPause" disabled>
+                            <i class="fas fa-pause"></i>
+                            暂停
+                        </button>
+                        <button class="action-button reset" type="button" id="fsReset" disabled>
+                            <i class="fas fa-redo"></i>
+                            重置
+                        </button>
+                    </div>
+
+                    <div class="countdown-meta" id="fsMeta">
+                        <span>总时长：<strong id="fsTotalLabel">00:01:00</strong></span>
+                        <span id="fsEndTime">预计结束：--:--</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        (function() {
+            const hoursEl = document.getElementById('fsHours');
+            const minutesEl = document.getElementById('fsMinutes');
+            const secondsEl = document.getElementById('fsSeconds');
+            const statusEl = document.getElementById('fsStatus');
+            const totalLabel = document.getElementById('fsTotalLabel');
+            const endTimeLabel = document.getElementById('fsEndTime');
+
+            const hourInput = document.getElementById('fsHourInput');
+            const minuteInput = document.getElementById('fsMinuteInput');
+            const secondInput = document.getElementById('fsSecondInput');
+
+            const startBtn = document.getElementById('fsStart');
+            const pauseBtn = document.getElementById('fsPause');
+            const resetBtn = document.getElementById('fsReset');
+            const presetButtons = document.querySelectorAll('.preset-button');
+
+            let countdownTotalMs = 60000;
+            let remainingMs = countdownTotalMs;
+            let timerId = null;
+            let targetTimestamp = null;
+            let isRunning = false;
+            let isFinished = false;
+
+            function clamp(value, min, max) {
+                return Math.min(Math.max(value, min), max);
+            }
+
+            function formatTimeValue(value) {
+                return value.toString().padStart(2, '0');
+            }
+
+            function updateFromInputs() {
+                const hours = clamp(parseInt(hourInput.value, 10) || 0, 0, 23);
+                const minutes = clamp(parseInt(minuteInput.value, 10) || 0, 0, 59);
+                const seconds = clamp(parseInt(secondInput.value, 10) || 0, 0, 59);
+
+                hourInput.value = hours;
+                minuteInput.value = minutes;
+                secondInput.value = seconds;
+
+                countdownTotalMs = ((hours * 3600) + (minutes * 60) + seconds) * 1000;
+                remainingMs = countdownTotalMs;
+                isFinished = false;
+
+                updateDisplay(remainingMs);
+                updateMeta();
+                updateStatus('设置完成，准备开始');
+                toggleButtons(false);
+            }
+
+            function updateDisplay(ms) {
+                const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                hoursEl.textContent = formatTimeValue(hours);
+                minutesEl.textContent = formatTimeValue(minutes);
+                secondsEl.textContent = formatTimeValue(seconds);
+            }
+
+            function updateMeta() {
+                const totalSeconds = Math.floor(countdownTotalMs / 1000);
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                totalLabel.textContent = `${formatTimeValue(hours)}:${formatTimeValue(minutes)}:${formatTimeValue(seconds)}`;
+
+                if (isRunning && targetTimestamp) {
+                    const endDate = new Date(targetTimestamp);
+                    const endHours = formatTimeValue(endDate.getHours());
+                    const endMinutes = formatTimeValue(endDate.getMinutes());
+                    const endSeconds = formatTimeValue(endDate.getSeconds());
+                    endTimeLabel.textContent = `预计结束：${endHours}:${endMinutes}:${endSeconds}`;
+                } else {
+                    endTimeLabel.textContent = '预计结束：--:--';
+                }
+            }
+
+            function updateStatus(message) {
+                statusEl.textContent = message;
+            }
+
+            function toggleButtons(running) {
+                startBtn.disabled = running;
+                pauseBtn.disabled = !running;
+                resetBtn.disabled = countdownTotalMs === 0 && !running;
+            }
+
+            function tick() {
+                if (!isRunning || !targetTimestamp) return;
+
+                const now = Date.now();
+                remainingMs = Math.max(0, targetTimestamp - now);
+                updateDisplay(remainingMs);
+
+                if (remainingMs <= 0) {
+                    stopTimer(true);
+                    updateStatus('倒计时结束');
+                    return;
+                }
+
+                timerId = requestAnimationFrame(tick);
+            }
+
+            function startTimer() {
+                if (isRunning) return;
+
+                if (countdownTotalMs <= 0) {
+                    updateStatus('请输入大于 0 的倒计时时间');
+                    return;
+                }
+
+                if (isFinished && remainingMs <= 0) {
+                    remainingMs = countdownTotalMs;
+                }
+
+                targetTimestamp = Date.now() + remainingMs;
+                isRunning = true;
+                isFinished = false;
+                updateStatus('倒计时进行中');
+                toggleButtons(true);
+                updateMeta();
+                timerId = requestAnimationFrame(tick);
+            }
+
+            function pauseTimer() {
+                if (!isRunning) return;
+
+                isRunning = false;
+                cancelAnimationFrame(timerId);
+                remainingMs = Math.max(0, targetTimestamp - Date.now());
+                updateStatus('倒计时已暂停');
+                toggleButtons(false);
+                updateMeta();
+            }
+
+            function stopTimer(completed = false) {
+                isRunning = false;
+                cancelAnimationFrame(timerId);
+                remainingMs = completed ? 0 : countdownTotalMs;
+                targetTimestamp = null;
+                isFinished = completed;
+                toggleButtons(false);
+                updateMeta();
+            }
+
+            function resetTimer() {
+                stopTimer(false);
+                updateDisplay(countdownTotalMs);
+                updateStatus('倒计时已重置');
+            }
+
+            function applyPreset(seconds) {
+                const totalSeconds = clamp(seconds, 0, 23 * 3600 + 59 * 60 + 59);
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                hourInput.value = hours;
+                minuteInput.value = minutes;
+                secondInput.value = secs;
+                countdownTotalMs = totalSeconds * 1000;
+                remainingMs = countdownTotalMs;
+                isFinished = false;
+                updateDisplay(remainingMs);
+                updateMeta();
+                updateStatus('已应用预设，请点击开始');
+                toggleButtons(false);
+            }
+
+            startBtn.addEventListener('click', startTimer);
+            pauseBtn.addEventListener('click', pauseTimer);
+            resetBtn.addEventListener('click', resetTimer);
+
+            [hourInput, minuteInput, secondInput].forEach(input => {
+                input.addEventListener('change', updateFromInputs);
+                input.addEventListener('input', () => {
+                    const value = input.value.replace(/[^0-9]/g, '');
+                    input.value = value;
+                });
+            });
+
+            presetButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const seconds = parseInt(button.dataset.seconds, 10) || 0;
+                    applyPreset(seconds);
+                });
+            });
+
+            document.addEventListener('visibilitychange', () => {
+                if (!isRunning || !targetTimestamp) return;
+                if (document.hidden) return;
+
+                const now = Date.now();
+                remainingMs = Math.max(0, targetTimestamp - now);
+                updateDisplay(remainingMs);
+                if (remainingMs <= 0) {
+                    stopTimer(true);
+                    updateStatus('倒计时结束');
+                }
+            });
+
+            updateDisplay(remainingMs);
+            updateMeta();
+        })();
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>
