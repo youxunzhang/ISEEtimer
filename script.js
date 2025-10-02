@@ -192,8 +192,16 @@ function initializeEventListeners() {
     // 标签页切换
     elements.navItems.forEach(item => {
         item.addEventListener('click', () => {
+            const link = item.dataset.link;
+            if (link) {
+                window.location.href = link;
+                return;
+            }
+
             const tab = item.dataset.tab;
-            switchTab(tab);
+            if (tab) {
+                switchTab(tab);
+            }
         });
     });
     

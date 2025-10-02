@@ -90,7 +90,7 @@
                 <span>TimeMaster - 专业在线倒计时器</span>
             </div>
             <div class="nav-menu">
-                <button class="nav-item" data-tab="timer" id="timer-tab" aria-controls="timer">在线计时器</button>
+                <button class="nav-item" data-link="fullscreen-countdown.html" id="fullscreen-countdown-link" type="button" onclick="window.location.href='fullscreen-countdown.html'">全屏倒计时器</button>
                 <button class="nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown">倒计时器</button>
                 <button class="nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro">番茄钟计时器</button>
                 <button class="nav-item active" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch">秒表计时</button>
@@ -161,7 +161,7 @@
         <!-- 主要内容区域 -->
         <main class="main-content" role="main">
             <!-- 计时器面板 -->
-            <section class="tab-panel" id="timer" aria-labelledby="timer-tab">
+            <section class="tab-panel" id="timer" aria-labelledby="fullscreen-countdown-link">
                 <div class="timer-container">
                     <div class="timer-display">
                         <div class="time-display">
@@ -171,7 +171,7 @@
                             <span class="separator">:</span>
                             <span id="seconds">00</span>
                         </div>
-                        <div class="timer-label">在线计时器 - 自定义时间设置</div>
+                        <div class="timer-label">正计时器 - 自定义时间设置</div>
                     </div>
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startTimer">
@@ -394,7 +394,7 @@
         
         <h3>主要功能特色：</h3>
         <ul>
-            <li><span class="highlight">在线计时器</span> - 支持自定义时间的正计时功能，适合各种计时需求</li>
+            <li><span class="highlight">全屏倒计时器</span> - 提供极简、醒目的倒计时体验，支持自定义与快捷预设</li>
             <li><span class="highlight">倒计时器</span> - 专为生日倒计时、考试倒计时、截止日期等场景设计</li>
             <li><span class="highlight">番茄钟计时器</span> - 基于番茄工作法的时间管理工具，提高工作效率</li>
             <li><span class="highlight">秒表计时</span> - 精确到毫秒的秒表功能，支持计圈记录</li>

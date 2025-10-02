@@ -12,6 +12,14 @@
         <priority>1.0</priority>
     </url>
 
+    <!-- 全屏倒计时器 -->
+    <url>
+        <loc>https://iseetimer.com/fullscreen-countdown.html</loc>
+        <lastmod>2024-05-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+
     <!-- 世界时间工具 -->
     <url>
         <loc>https://iseetimer.com/world-time-tools.html</loc>
