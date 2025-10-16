@@ -1,83 +1,132 @@
 // 下拉菜单功能
 function initializeDropdown() {
-    const dropdownToggle = document.getElementById('festivalDropdown');
-    const dropdownMenu = document.getElementById('festivalMenu');
-    
-    if (!dropdownToggle || !dropdownMenu) return;
-    
-    // 点击切换下拉菜单
-    dropdownToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const isOpen = dropdownMenu.classList.contains('show');
-        
-        // 关闭所有其他下拉菜单
-        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-            if (menu !== dropdownMenu) {
-                menu.classList.remove('show');
-                menu.previousElementSibling.classList.remove('active');
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+    if (!dropdowns.length) return;
+
+    const closeAll = (exception = null) => {
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector('.dropdown-toggle');
+            const menu = dropdown.querySelector('.dropdown-menu');
+
+            if (!menu || menu === exception) return;
+
+            menu.classList.remove('show');
+            if (toggle) {
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
             }
         });
-        
-        // 切换当前下拉菜单
-        if (isOpen) {
-            dropdownMenu.classList.remove('show');
-            dropdownToggle.classList.remove('active');
-        } else {
-            dropdownMenu.classList.add('show');
-            dropdownToggle.classList.add('active');
-        }
+    };
+
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        const menu = dropdown.querySelector('.dropdown-menu');
+
+        if (!toggle || !menu) return;
+
+        toggle.setAttribute('aria-expanded', 'false');
+
+        // 点击切换下拉菜单
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isOpen = menu.classList.contains('show');
+
+            if (isOpen) {
+                menu.classList.remove('show');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            } else {
+                closeAll(menu);
+                menu.classList.add('show');
+                toggle.classList.add('active');
+                toggle.setAttribute('aria-expanded', 'true');
+
+                const firstItem = menu.querySelector('.dropdown-item');
+                if (firstItem) {
+                    firstItem.focus();
+                }
+            }
+        });
+
+        // 下拉菜单项点击后关闭
+        menu.addEventListener('click', (e) => {
+            if (e.target.closest('.dropdown-item')) {
+                menu.classList.remove('show');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // 键盘交互
+        toggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle.click();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (!menu.classList.contains('show')) {
+                    toggle.click();
+                } else {
+                    const firstItem = menu.querySelector('.dropdown-item');
+                    if (firstItem) {
+                        firstItem.focus();
+                    }
+                }
+            } else if (e.key === 'Escape') {
+                menu.classList.remove('show');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        menu.addEventListener('keydown', (e) => {
+            const items = Array.from(menu.querySelectorAll('.dropdown-item'));
+            const currentIndex = items.indexOf(e.target);
+
+            if (!items.length) return;
+
+            switch(e.key) {
+                case 'ArrowDown': {
+                    e.preventDefault();
+                    const nextIndex = (currentIndex + 1) % items.length;
+                    items[nextIndex].focus();
+                    break;
+                }
+                case 'ArrowUp': {
+                    e.preventDefault();
+                    const prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+                    items[prevIndex].focus();
+                    break;
+                }
+                case 'Home': {
+                    e.preventDefault();
+                    items[0].focus();
+                    break;
+                }
+                case 'End': {
+                    e.preventDefault();
+                    items[items.length - 1].focus();
+                    break;
+                }
+                case 'Escape': {
+                    menu.classList.remove('show');
+                    toggle.classList.remove('active');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    toggle.focus();
+                    break;
+                }
+            }
+        });
     });
-    
+
     // 点击外部关闭下拉菜单
     document.addEventListener('click', (e) => {
-        if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.classList.remove('show');
-            dropdownToggle.classList.remove('active');
-        }
-    });
-    
-    // 点击下拉菜单项后关闭菜单
-    dropdownMenu.addEventListener('click', (e) => {
-        if (e.target.closest('.dropdown-item')) {
-            dropdownMenu.classList.remove('show');
-            dropdownToggle.classList.remove('active');
-        }
-    });
-    
-    // 键盘导航支持
-    dropdownToggle.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            dropdownToggle.click();
-        } else if (e.key === 'Escape') {
-            dropdownMenu.classList.remove('show');
-            dropdownToggle.classList.remove('active');
-        }
-    });
-    
-    // 下拉菜单项键盘导航
-    dropdownMenu.addEventListener('keydown', (e) => {
-        const items = Array.from(dropdownMenu.querySelectorAll('.dropdown-item'));
-        const currentIndex = items.indexOf(e.target);
-        
-        switch(e.key) {
-            case 'ArrowDown':
-                e.preventDefault();
-                const nextIndex = (currentIndex + 1) % items.length;
-                items[nextIndex].focus();
-                break;
-            case 'ArrowUp':
-                e.preventDefault();
-                const prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
-                items[prevIndex].focus();
-                break;
-            case 'Escape':
-                dropdownMenu.classList.remove('show');
-                dropdownToggle.classList.remove('active');
-                dropdownToggle.focus();
-                break;
+        const isInsideDropdown = Array.from(dropdowns).some(dropdown => dropdown.contains(e.target));
+        if (!isInsideDropdown) {
+            closeAll();
         }
     });
 }
