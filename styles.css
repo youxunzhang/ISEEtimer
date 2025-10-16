@@ -197,6 +197,12 @@ body {
     font-size: 0.9rem;
     transition: all 0.2s ease;
     border-bottom: 1px solid var(--border-color);
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
 }
 
 .dropdown-item:last-child {
@@ -214,7 +220,8 @@ body {
     color: #ffffff;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover,
+.dropdown-item:focus {
     background: var(--bg-tertiary);
     color: var(--accent-color);
 }
