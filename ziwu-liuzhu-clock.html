@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子午流注时钟 | 中国传统时辰与经络养生指南 | TimeMaster</title>
+    <meta name="description" content="TimeMaster 子午流注时钟，展示十二时辰与经络运行规律，实时显示当前时辰与养生建议，帮助您顺应昼夜节律安排作息。">
+    <meta name="keywords" content="子午流注,十二时辰,经络养生,中医时钟,中国传统时辰,人体生物钟">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/ziwu-liuzhu-clock.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/ziwu-liuzhu-clock.html">
+    <meta property="og:title" content="子午流注时钟 | TimeMaster">
+    <meta property="og:description" content="实时子午流注时钟，配合经络养生建议，助您顺势养身。">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/ziwu-liuzhu-clock.html">
+    <meta property="twitter:title" content="子午流注时钟 | TimeMaster">
+    <meta property="twitter:description" content="掌握中国传统子午流注时钟，顺应经络运行安排作息。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "子午流注时钟",
+      "description": "可视化呈现十二时辰子午流注时钟，并提供对应经络的养生建议。",
+      "url": "https://yourdomain.com/ziwu-liuzhu-clock.html"
+    }
+    </script>
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .ziwu-hero {
+            background: linear-gradient(135deg, #312e81 0%, #6366f1 50%, #a855f7 100%);
+            padding: 72px 24px;
+            border-radius: 28px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 48px;
+            box-shadow: 0 32px 60px rgba(79, 70, 229, 0.35);
+        }
+
+        .ziwu-hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .ziwu-hero p {
+            font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+            margin: 0 auto;
+            max-width: 760px;
+            line-height: 1.9;
+            opacity: 0.92;
+        }
+
+        .ziwu-clock-section {
+            background: #ffffff;
+            border-radius: 26px;
+            padding: 40px;
+            box-shadow: 0 22px 45px rgba(15, 23, 42, 0.15);
+            margin-bottom: 48px;
+        }
+
+        .ziwu-clock-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            align-items: center;
+            gap: 40px;
+        }
+
+        .ziwu-clock-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ziwu-clock-face {
+            position: relative;
+            width: min(420px, 80vw);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background: conic-gradient(from -90deg,
+                #312e81 0deg 30deg,
+                #3730a3 30deg 60deg,
+                #4338ca 60deg 90deg,
+                #4f46e5 90deg 120deg,
+                #6366f1 120deg 150deg,
+                #7c3aed 150deg 180deg,
+                #a855f7 180deg 210deg,
+                #d946ef 210deg 240deg,
+                #ec4899 240deg 270deg,
+                #f97316 270deg 300deg,
+                #f59e0b 300deg 330deg,
+                #facc15 330deg 360deg
+            );
+            box-shadow: inset 0 0 40px rgba(15, 23, 42, 0.25), 0 20px 40px rgba(79, 70, 229, 0.18);
+            border: 12px solid rgba(255, 255, 255, 0.85);
+        }
+
+        .ziwu-clock-face::before {
+            content: "";
+            position: absolute;
+            inset: 16px;
+            border-radius: 50%;
+            background: rgba(248, 250, 252, 0.92);
+            box-shadow: inset 0 10px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .ziwu-clock-pointer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 42%;
+            background: linear-gradient(180deg, #1e1b4b 0%, #4338ca 40%, #facc15 100%);
+            transform-origin: 50% 88%;
+            border-radius: 999px;
+            box-shadow: 0 12px 18px rgba(15, 23, 42, 0.28);
+            transform: translate(-50%, -88%) rotate(-90deg);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 3;
+        }
+
+        .ziwu-clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #312e81, #6366f1);
+            border-radius: 24px;
+            padding: 20px 28px;
+            text-align: center;
+            color: #ffffff;
+            z-index: 4;
+            box-shadow: 0 18px 30px rgba(79, 70, 229, 0.35);
+        }
+
+        .ziwu-clock-center .current-time {
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .ziwu-clock-center .current-phrase {
+            font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+            margin-top: 6px;
+            opacity: 0.9;
+        }
+
+        .ziwu-clock-center .current-segment {
+            margin-top: 10px;
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            font-weight: 600;
+        }
+
+        .ziwu-clock-labels {
+            position: absolute;
+            inset: 0;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .ziwu-clock-labels li {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: rotate(var(--angle)) translate(0, calc(-50% + 24px)) rotate(calc(-1 * var(--angle)));
+            transform-origin: center center;
+            font-weight: 600;
+            color: #111827;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .ziwu-clock-labels li span {
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .ziwu-clock-labels li small {
+            display: block;
+            font-size: 0.75rem;
+            color: #6b7280;
+            letter-spacing: 0.02em;
+        }
+
+        .ziwu-clock-legend {
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .ziwu-clock-legend h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #312e81;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ziwu-clock-legend p {
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .current-segment-card {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(236, 72, 153, 0.12));
+            border-radius: 18px;
+            padding: 24px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .current-segment-card h3 {
+            margin: 0;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1e1b4b;
+        }
+
+        .current-segment-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            color: #4338ca;
+            font-weight: 600;
+        }
+
+        .current-segment-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.14);
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+
+        .current-suggestion {
+            margin: 0;
+            color: #374151;
+            line-height: 1.8;
+        }
+
+        .ziwu-segment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .segment-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+        }
+
+        .segment-card.active {
+            border-color: rgba(79, 70, 229, 0.65);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.18);
+        }
+
+        .segment-card h3 {
+            margin: 0 0 12px;
+            font-size: 1.4rem;
+            color: #312e81;
+        }
+
+        .segment-card h3 span {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin-left: 6px;
+        }
+
+        .segment-time-range {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.05);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .segment-meta {
+            display: grid;
+            gap: 10px;
+            margin: 16px 0;
+            color: #4b5563;
+        }
+
+        .segment-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .segment-meta span i {
+            color: #6366f1;
+        }
+
+        .segment-description {
+            margin: 0;
+            color: #374151;
+            line-height: 1.75;
+        }
+
+        .ziwu-guide {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 32px;
+            box-shadow: 0 18px 32px rgba(15, 23, 42, 0.12);
+            margin-bottom: 48px;
+        }
+
+        .ziwu-guide h2 {
+            margin-top: 0;
+            font-size: 1.9rem;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .guide-list {
+            display: grid;
+            gap: 18px;
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .guide-list li {
+            display: grid;
+            gap: 8px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: rgba(79, 70, 229, 0.07);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .guide-list li strong {
+            font-size: 1.05rem;
+            color: #312e81;
+        }
+
+        .guide-list li p {
+            margin: 0;
+            color: #374151;
+            line-height: 1.75;
+        }
+
+        .ziwu-faq {
+            background: linear-gradient(135deg, rgba(49, 46, 129, 0.1), rgba(124, 58, 237, 0.12));
+            border-radius: 24px;
+            padding: 32px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .ziwu-faq h2 {
+            margin: 0;
+            font-size: 1.85rem;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            padding: 20px 22px;
+            box-shadow: 0 12px 28px rgba(99, 102, 241, 0.15);
+        }
+
+        .faq-item h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+            color: #312e81;
+        }
+
+        .faq-item p {
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .ziwu-clock-section {
+                padding: 28px;
+            }
+
+            .ziwu-clock-pointer {
+                height: 44%;
+            }
+
+            .ziwu-clock-labels li {
+                min-width: 48px;
+                font-size: 0.95rem;
+            }
+
+            .ziwu-guide {
+                padding: 24px;
+            }
+
+            .ziwu-faq {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .ziwu-hero {
+                padding: 56px 20px;
+            }
+
+            .ziwu-clock-section {
+                padding: 24px;
+            }
+
+            .ziwu-clock-face {
+                width: min(320px, 85vw);
+            }
+
+            .ziwu-clock-center {
+                padding: 16px 20px;
+            }
+
+            .current-segment-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .segment-card {
+                padding: 20px;
+            }
+
+            .guide-list li {
+                padding: 16px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <header>
+        <nav class="navbar" role="navigation" aria-label="主导航">
+            <div class="nav-brand">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <span>TimeMaster</span>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-toolbox" aria-hidden="true"></i>
+                        计时工具
+                        <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" id="toolsMenu" role="menu">
+                        <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-desktop"></i>
+                            全屏倒计时器
+                        </a>
+                        <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
+                            <i class="fas fa-hourglass-start"></i>
+                            倒计时器
+                        </button>
+                        <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
+                            <i class="fas fa-seedling"></i>
+                            番茄钟计时器
+                        </button>
+                        <button class="dropdown-item nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
+                            <i class="fas fa-stopwatch"></i>
+                            秒表计时
+                        </button>
+                        <a href="game.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-gamepad"></i>
+                            时间守护者游戏
+                        </a>
+                        <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-globe"></i>
+                            世界时间工具
+                        </a>
+                        <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-calendar-days"></i>
+                            重大节日倒计时
+                        </a>
+                        <a href="ziwu-liuzhu-clock.html" class="dropdown-item active" role="menuitem" aria-current="page">
+                            <i class="fas fa-yin-yang"></i>
+                            子午流注时钟
+                        </a>
+                        <a href="countdown-game.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-hourglass-half"></i>
+                            倒计时挑战
+                        </a>
+                        <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-calendar-alt"></i>
+                            节日倒计时
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    主页
+                </a>
+                <a href="articles.html" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    文章专栏
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content" role="main">
+            <section class="ziwu-hero">
+                <h1><i class="fas fa-yin-yang"></i> 子午流注时钟</h1>
+                <p>中国传统医学认为，人体十二经络在昼夜之间依次旺盛，被称为“子午流注”。TimeMaster 将这一古老的时间观念以现代可视化方式呈现，实时显示当前所处的时辰、对应经络以及顺应节律的作息建议，帮助您把握一天之中的黄金调养窗口。</p>
+            </section>
+
+            <section class="ziwu-clock-section" aria-labelledby="ziwuClockTitle">
+                <div class="ziwu-clock-layout">
+                    <div class="ziwu-clock-wrapper" aria-live="polite">
+                        <div class="ziwu-clock-face" role="img" aria-labelledby="ziwuClockTitle">
+                            <div class="ziwu-clock-pointer" id="ziwuPointer" aria-hidden="true"></div>
+                            <div class="ziwu-clock-center">
+                                <div class="current-time" id="ziwuCurrentTime">00:00:00</div>
+                                <div class="current-phrase" id="ziwuCurrentPhrase">当前时辰</div>
+                                <div class="current-segment" id="ziwuCurrentSegment">--</div>
+                            </div>
+                            <ul class="ziwu-clock-labels">
+                                <li style="--angle: -90deg;"><span>子</span><small>23:00-01:00</small></li>
+                                <li style="--angle: -60deg;"><span>丑</span><small>01:00-03:00</small></li>
+                                <li style="--angle: -30deg;"><span>寅</span><small>03:00-05:00</small></li>
+                                <li style="--angle: 0deg;"><span>卯</span><small>05:00-07:00</small></li>
+                                <li style="--angle: 30deg;"><span>辰</span><small>07:00-09:00</small></li>
+                                <li style="--angle: 60deg;"><span>巳</span><small>09:00-11:00</small></li>
+                                <li style="--angle: 90deg;"><span>午</span><small>11:00-13:00</small></li>
+                                <li style="--angle: 120deg;"><span>未</span><small>13:00-15:00</small></li>
+                                <li style="--angle: 150deg;"><span>申</span><small>15:00-17:00</small></li>
+                                <li style="--angle: 180deg;"><span>酉</span><small>17:00-19:00</small></li>
+                                <li style="--angle: 210deg;"><span>戌</span><small>19:00-21:00</small></li>
+                                <li style="--angle: 240deg;"><span>亥</span><small>21:00-23:00</small></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ziwu-clock-legend">
+                        <h2 id="ziwuClockTitle"><i class="fas fa-circle-notch"></i> 子午流注实时解读</h2>
+                        <p>子午流注将 24 小时划分为十二个时辰，每个时辰持续两小时，对应一条经络的气血最旺。顺应这一节律作息，可以让身体的调节能力发挥到最佳状态。</p>
+                        <div class="current-segment-card" id="ziwuCurrentCard">
+                            <h3><i class="fas fa-clock"></i> 当前时段：<span id="ziwuCurrentTitle">--</span></h3>
+                            <div class="current-segment-meta" id="ziwuCurrentMeta"></div>
+                            <p class="current-suggestion" id="ziwuCurrentAdvice">请稍候，正在计算当前时辰…</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="ziwuTableTitle">
+                <h2 id="ziwuTableTitle"><i class="fas fa-list"></i> 十二时辰与经络旺盛时段</h2>
+                <p>下表总结了每个时辰的现代时间范围、对应经络以及作息建议。子午流注强调“顺时而养”，在恰当的时间做恰当的事情，身体就能借助自然节律恢复活力。</p>
+                <div class="ziwu-segment-grid" id="ziwuSegmentGrid"></div>
+            </section>
+
+            <section class="ziwu-guide" aria-labelledby="ziwuGuideTitle">
+                <h2 id="ziwuGuideTitle"><i class="fas fa-leaf"></i> 如何将子午流注应用到日常生活？</h2>
+                <ul class="guide-list">
+                    <li>
+                        <strong>建立与太阳同步的作息节律</strong>
+                        <p>保持固定的入睡与起床时间，尽量在子时前进入深睡，卯时顺势起床，让身体顺着胆肝到肺大肠的换班节奏自然过渡。</p>
+                    </li>
+                    <li>
+                        <strong>用餐与活动顺应经络高峰</strong>
+                        <p>辰时胃经旺，适合吃丰富营养的早餐；巳时脾经旺，有助于消化；午时心经旺，安排短暂午休守护心脏；申、酉时关注肾与膀胱，多喝温水协助代谢。</p>
+                    </li>
+                    <li>
+                        <strong>晚间渐进式放松，守护夜间修复</strong>
+                        <p>戌时心包经旺，可进行冥想、阅读等舒缓活动；亥时三焦经负责调度全身气机，此时应降低光线和声音刺激，为高质量睡眠做准备。</p>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="ziwu-faq" aria-labelledby="ziwuFaqTitle">
+                <h2 id="ziwuFaqTitle"><i class="fas fa-question-circle"></i> 常见问题</h2>
+                <article class="faq-item">
+                    <h3>子午流注是否需要严格按照整点执行？</h3>
+                    <p>经络的旺盛是一段时间范围，并非瞬间切换。保持规律的作息、饮食和休息习惯，在对应时段内完成适宜的活动，即可顺势而为。</p>
+                </article>
+                <article class="faq-item">
+                    <h3>现代工作节奏与子午流注冲突怎么办？</h3>
+                    <p>可从“小调整”开始：例如在巳时安排水果加餐，在午时进行 15 分钟闭目休息，戌时减少屏幕时间。逐步建立身体对节律的感知，自然会形成稳定的生物钟。</p>
+                </article>
+                <article class="faq-item">
+                    <h3>经络养生是否等同于中药调理？</h3>
+                    <p>经络调养更强调生活方式的配合，包括作息、饮食、运动与情志。需要中药或针灸时，应咨询专业的中医师，根据个人体质定制方案。</p>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const ziwuSegments = [
+            {
+                key: 'zi',
+                name: '子时',
+                alias: '夜半',
+                range: '23:00 - 00:59',
+                startMinutes: 23 * 60,
+                endMinutes: 1 * 60,
+                meridian: '胆经旺',
+                element: '木',
+                focus: '入睡与肝胆排毒',
+                advice: '子时胆经当令，适合处于熟睡状态，让胆汁顺利分泌，协助第二天的消化与排毒。建议在 23:00 前入睡，保持卧室安静昏暗。'
+            },
+            {
+                key: 'chou',
+                name: '丑时',
+                alias: '鸡鸣',
+                range: '01:00 - 02:59',
+                startMinutes: 1 * 60,
+                endMinutes: 3 * 60,
+                meridian: '肝经旺',
+                element: '木',
+                focus: '深度修复与情绪调节',
+                advice: '肝主疏泄，丑时肝血充盈。保持熟睡，让肝气完成解毒与情绪调节，若常在此时醒来，可适当调整饮食与睡前放松。'
+            },
+            {
+                key: 'yin',
+                name: '寅时',
+                alias: '平旦',
+                range: '03:00 - 04:59',
+                startMinutes: 3 * 60,
+                endMinutes: 5 * 60,
+                meridian: '肺经旺',
+                element: '金',
+                focus: '呼吸与元气蓄积',
+                advice: '寅时肺气最盛，保证卧室空气流通，避免烟酒刺激。此段浅睡是身体吸纳清气、宣发津液的重要时刻。'
+            },
+            {
+                key: 'mao',
+                name: '卯时',
+                alias: '日出',
+                range: '05:00 - 06:59',
+                startMinutes: 5 * 60,
+                endMinutes: 7 * 60,
+                meridian: '大肠经旺',
+                element: '金',
+                focus: '排毒排便',
+                advice: '卯时大肠传导功能最佳，起床后喝温水、进行排便训练，有助于排出宿便，轻松开启一天。'
+            },
+            {
+                key: 'chen',
+                name: '辰时',
+                alias: '食时',
+                range: '07:00 - 08:59',
+                startMinutes: 7 * 60,
+                endMinutes: 9 * 60,
+                meridian: '胃经旺',
+                element: '土',
+                focus: '早餐与能量补给',
+                advice: '胃喜欢温暖有序，辰时进食温热、易消化的早餐，补充优质蛋白与碳水，为上午工作打好基础。'
+            },
+            {
+                key: 'si',
+                name: '巳时',
+                alias: '隅中',
+                range: '09:00 - 10:59',
+                startMinutes: 9 * 60,
+                endMinutes: 11 * 60,
+                meridian: '脾经旺',
+                element: '土',
+                focus: '思维与运化',
+                advice: '脾主运化，巳时是专注学习与处理复杂事务的高效时段。适度补充水果或坚果，帮助脾脏转换营养。'
+            },
+            {
+                key: 'wu',
+                name: '午时',
+                alias: '日中',
+                range: '11:00 - 12:59',
+                startMinutes: 11 * 60,
+                endMinutes: 13 * 60,
+                meridian: '心经旺',
+                element: '火',
+                focus: '循序缓冲与午休',
+                advice: '午时阳气最盛，心经主神志。保持情绪平和，可安排 15-30 分钟的小憩，避免暴怒或高强度运动，守护心脏。'
+            },
+            {
+                key: 'wei',
+                name: '未时',
+                alias: '日昳',
+                range: '13:00 - 14:59',
+                startMinutes: 13 * 60,
+                endMinutes: 15 * 60,
+                meridian: '小肠经旺',
+                element: '火',
+                focus: '营养吸收与分配',
+                advice: '小肠主受盛化物，未时消化午餐的营养。选择清淡、易消化的午餐，饭后稍作步行，帮助营养输布全身。'
+            },
+            {
+                key: 'shen',
+                name: '申时',
+                alias: '哺时',
+                range: '15:00 - 16:59',
+                startMinutes: 15 * 60,
+                endMinutes: 17 * 60,
+                meridian: '膀胱经旺',
+                element: '水',
+                focus: '代谢排泄',
+                advice: '膀胱经行于背部，申时适当起身伸展、补充温水，有助于排出代谢废物，缓解久坐疲劳。'
+            },
+            {
+                key: 'you',
+                name: '酉时',
+                alias: '日入',
+                range: '17:00 - 18:59',
+                startMinutes: 17 * 60,
+                endMinutes: 19 * 60,
+                meridian: '肾经旺',
+                element: '水',
+                focus: '蓄养精气',
+                advice: '肾为先天之本。酉时宜进食清淡的晚餐，避免过咸与大量饮酒，同时安排舒缓活动，养护肾气。'
+            },
+            {
+                key: 'xu',
+                name: '戌时',
+                alias: '黄昏',
+                range: '19:00 - 20:59',
+                startMinutes: 19 * 60,
+                endMinutes: 21 * 60,
+                meridian: '心包经旺',
+                element: '火',
+                focus: '情绪疏导与放松',
+                advice: '戌时心包护卫心神，适合与家人交流、散步、听轻音乐，舒缓白天积累的压力，为睡眠做情绪准备。'
+            },
+            {
+                key: 'hai',
+                name: '亥时',
+                alias: '人定',
+                range: '21:00 - 22:59',
+                startMinutes: 21 * 60,
+                endMinutes: 23 * 60,
+                meridian: '三焦经旺',
+                element: '火',
+                focus: '气机调度与入睡准备',
+                advice: '三焦统管诸气，亥时宜沐浴、泡脚、冥想，减少蓝光刺激，让身体进入平缓节奏，顺势过渡到子时睡眠。'
+            }
+        ];
+
+        function formatTimeUnit(value) {
+            return value.toString().padStart(2, '0');
+        }
+
+        function updateCurrentTimeDisplay() {
+            const now = new Date();
+            const hours = formatTimeUnit(now.getHours());
+            const minutes = formatTimeUnit(now.getMinutes());
+            const seconds = formatTimeUnit(now.getSeconds());
+            const timeDisplay = document.getElementById('ziwuCurrentTime');
+            if (timeDisplay) {
+                timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+            }
+        }
+
+        function resolveCurrentSegment() {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+            for (let i = 0; i < ziwuSegments.length; i++) {
+                const segment = ziwuSegments[i];
+                let start = segment.startMinutes;
+                let end = segment.endMinutes;
+                let minutes = currentMinutes;
+
+                if (end <= start) {
+                    end += 1440;
+                    if (minutes < start) {
+                        minutes += 1440;
+                    }
+                }
+
+                if (minutes >= start && minutes < end) {
+                    const elapsed = minutes - start;
+                    const duration = end - start;
+                    const progress = duration > 0 ? elapsed / duration : 0;
+                    return { segment, index: i, progress };
+                }
+            }
+
+            return null;
+        }
+
+        function renderSegmentCards() {
+            const grid = document.getElementById('ziwuSegmentGrid');
+            if (!grid) return;
+
+            const fragment = document.createDocumentFragment();
+            ziwuSegments.forEach(segment => {
+                const card = document.createElement('article');
+                card.className = 'segment-card';
+                card.setAttribute('data-segment', segment.key);
+                card.innerHTML = `
+                    <h3>${segment.name} <span>${segment.alias}</span></h3>
+                    <div class="segment-time-range"><i class="fas fa-clock"></i>${segment.range}</div>
+                    <div class="segment-meta">
+                        <span><i class="fas fa-wave-square"></i>${segment.meridian}</span>
+                        <span><i class="fas fa-fan"></i>五行：${segment.element}</span>
+                        <span><i class="fas fa-bullseye"></i>要点：${segment.focus}</span>
+                    </div>
+                    <p class="segment-description">${segment.advice}</p>
+                `;
+                fragment.appendChild(card);
+            });
+
+            grid.appendChild(fragment);
+        }
+
+        function updateCurrentSegmentCard() {
+            const result = resolveCurrentSegment();
+            const titleElement = document.getElementById('ziwuCurrentTitle');
+            const phraseElement = document.getElementById('ziwuCurrentPhrase');
+            const segmentElement = document.getElementById('ziwuCurrentSegment');
+            const metaContainer = document.getElementById('ziwuCurrentMeta');
+            const adviceElement = document.getElementById('ziwuCurrentAdvice');
+            const pointer = document.getElementById('ziwuPointer');
+            const cards = document.querySelectorAll('.segment-card');
+
+            cards.forEach(card => card.classList.remove('active'));
+
+            if (!result) {
+                if (titleElement) titleElement.textContent = '--';
+                if (phraseElement) phraseElement.textContent = '当前时辰';
+                if (segmentElement) segmentElement.textContent = '--';
+                if (metaContainer) metaContainer.innerHTML = '';
+                if (adviceElement) adviceElement.textContent = '暂时无法获取当前时辰，请检查系统时间设置。';
+                return;
+            }
+
+            const { segment, index, progress } = result;
+            if (titleElement) {
+                titleElement.textContent = `${segment.name}（${segment.alias}）`;
+            }
+            if (phraseElement) {
+                phraseElement.textContent = segment.focus;
+            }
+            if (segmentElement) {
+                segmentElement.textContent = segment.range;
+            }
+            if (metaContainer) {
+                metaContainer.innerHTML = `
+                    <span><i class="fas fa-wave-square"></i>${segment.meridian}</span>
+                    <span><i class="fas fa-fan"></i>五行：${segment.element}</span>
+                `;
+            }
+            if (adviceElement) {
+                adviceElement.textContent = segment.advice;
+            }
+
+            const activeCard = document.querySelector(`.segment-card[data-segment="${segment.key}"]`);
+            if (activeCard) {
+                activeCard.classList.add('active');
+            }
+
+            if (pointer) {
+                const degreesPerSegment = 360 / ziwuSegments.length;
+                const baseRotation = -90;
+                const rotation = baseRotation + (index + progress) * degreesPerSegment;
+                pointer.style.transform = `translate(-50%, -88%) rotate(${rotation}deg)`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSegmentCards();
+            updateCurrentTimeDisplay();
+            updateCurrentSegmentCard();
+            setInterval(() => {
+                updateCurrentTimeDisplay();
+                updateCurrentSegmentCard();
+            }, 1000);
+        });
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>

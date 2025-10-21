@@ -29,6 +29,14 @@
         <priority>0.9</priority>
     </url>
 
+    <!-- 子午流注时钟 -->
+    <url>
+        <loc>https://www.iseetime.online/ziwu-liuzhu-clock.html</loc>
+        <lastmod>2024-05-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.88</priority>
+    </url>
+
     <!-- 重大节日倒计时 -->
     <url>
         <loc>https://www.iseetime.online/festival-countdown.html</loc>
