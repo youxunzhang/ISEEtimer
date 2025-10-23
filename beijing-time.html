@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京时间 | 实时北京时区时钟 | TimeMaster</title>
+    <meta name="description" content="实时查看北京时间，获取公历与农历信息、时间段提示与跨时区差异说明。TimeMaster 为远程办公、跨境沟通与学习生活提供精准的北京时区参考。">
+    <meta name="keywords" content="北京时间,北京时区,中国标准时间,CST,北京时间转换,现在北京时间">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/beijing-time.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/beijing-time.html">
+    <meta property="og:title" content="北京时间 | 实时北京时区时钟">
+    <meta property="og:description" content="精准掌握北京时间，自动换算本地时差，支持远程会议、交易与学习安排。">
+    <meta property="og:image" content="https://yourdomain.com/og-beijing-time.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/beijing-time.html">
+    <meta property="twitter:title" content="北京时间 | 实时北京时区时钟">
+    <meta property="twitter:description" content="实时同步北京时区，了解公历与农历日期、时间段提醒与跨时区差异。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-beijing-time.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "北京时间",
+      "description": "实时展示中国标准时间（CST），提供本地与北京时差、时间段提示与常见问题说明。",
+      "url": "https://yourdomain.com/beijing-time.html"
+    }
+    </script>
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .beijing-time-main {
+            display: block;
+            width: 100%;
+            padding: 2.5rem 1.5rem 5rem;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .time-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            background: radial-gradient(circle at top right, rgba(59,130,246,0.45), rgba(14,116,144,0.55)),
+                        linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+            color: #fff;
+            padding: 3.5rem 3rem;
+            box-shadow: 0 28px 65px rgba(37, 99, 235, 0.35);
+        }
+
+        .time-hero::after {
+            content: '';
+            position: absolute;
+            inset: auto -90px -90px auto;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            filter: blur(0px);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-subtitle {
+            max-width: 620px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.92;
+        }
+
+        .time-display {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .time-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.16);
+            border-radius: 22px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+        }
+
+        .time-card h2 {
+            font-size: 0.95rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        #beijingTime {
+            font-size: 3.4rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        #beijingDate {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .time-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .time-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.18);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .info-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .info-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .timeline-card {
+            background: var(--bg-primary);
+            border-radius: 22px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+        }
+
+        .timeline-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.12), rgba(14, 165, 233, 0.12));
+            padding: 1.25rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(96, 165, 250, 0.25);
+        }
+
+        .timeline-time {
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .faq-section {
+            background: var(--bg-primary);
+            border-radius: 22px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .faq-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .faq-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .summary-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            line-height: 1.9;
+        }
+
+        .summary-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .time-hero {
+                padding: 3rem 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .beijing-time-main {
+                padding: 2rem 1rem 4rem;
+            }
+
+            .time-hero {
+                padding: 2.4rem 1.6rem;
+            }
+
+            .hero-title {
+                font-size: 2.1rem;
+            }
+
+            #beijingTime {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar" role="navigation" aria-label="主导航">
+                <div class="nav-brand">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span>TimeMaster</span>
+                </div>
+                <div class="nav-menu">
+                    <div class="nav-dropdown">
+                        <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-toolbox" aria-hidden="true"></i>
+                            计时工具
+                            <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu" id="toolsMenu" role="menu">
+                            <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-desktop"></i>
+                                全屏倒计时器
+                            </a>
+                            <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
+                                <i class="fas fa-hourglass-start"></i>
+                                倒计时器
+                            </button>
+                            <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
+                                <i class="fas fa-seedling"></i>
+                                番茄钟计时器
+                            </button>
+                            <button class="dropdown-item nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
+                                <i class="fas fa-stopwatch"></i>
+                                秒表计时
+                            </button>
+                            <a href="game.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-gamepad"></i>
+                                时间守护者游戏
+                            </a>
+                            <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-globe"></i>
+                                世界时间工具
+                            </a>
+                            <a href="beijing-time.html" class="dropdown-item active" role="menuitem" aria-current="page">
+                                <i class="fas fa-city"></i>
+                                北京时间
+                            </a>
+                            <a href="ziwu-liuzhu-clock.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-yin-yang"></i>
+                                子午流注时钟
+                            </a>
+                            <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-calendar-days"></i>
+                                重大节日倒计时
+                            </a>
+                            <a href="countdown-game.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-hourglass-half"></i>
+                                倒计时挑战
+                            </a>
+                            <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-calendar-alt"></i>
+                                节日倒计时
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-house"></i>
+                        首页
+                    </a>
+                    <a href="articles.html" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        文章专栏
+                    </a>
+                </div>
+                <div class="nav-controls">
+                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="beijing-time-main" role="main">
+            <div class="page-wrapper">
+                <section class="time-hero" aria-labelledby="beijing-time-title">
+                    <h1 class="hero-title" id="beijing-time-title">北京时间 · 中国标准时间 (CST)</h1>
+                    <p class="hero-subtitle">TimeMaster 为您提供实时同步的北京时区时间，结合公历与农历信息、天气适宜时间段提示以及与您所在时区的差异，帮助您规划跨时区会议、证券交易、远程课堂与个人作息。</p>
+                    <div class="time-display" role="group" aria-label="北京时间详情">
+                        <article class="time-card" aria-live="polite">
+                            <h2>当前时间</h2>
+                            <div id="beijingTime">--:--:--</div>
+                            <div id="beijingDate">正在同步北京时间...</div>
+                            <div class="time-meta">
+                                <span class="time-chip" id="beijingOffset"><i class="fas fa-clock"></i>UTC+08:00</span>
+                                <span class="time-chip" id="beijingPeriod"><i class="fas fa-sun"></i>--</span>
+                            </div>
+                        </article>
+                        <article class="time-card" aria-live="polite">
+                            <h2>与我所在时区</h2>
+                            <div id="userTimezone">检测中...</div>
+                            <p id="timezoneDifference" style="margin: 0; line-height: 1.6;"></p>
+                            <div class="time-meta">
+                                <span class="time-chip" id="userOffset"><i class="fas fa-location-dot"></i>--</span>
+                                <span class="time-chip" id="nextMeeting"><i class="fas fa-handshake"></i>--</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="info-grid" aria-label="北京时间应用场景">
+                    <article class="info-card">
+                        <h3><i class="fas fa-video"></i> 跨时区会议协调</h3>
+                        <p>实时掌握北京时区，配合差异提示快速安排线上会议或课程，避免因时差造成的迟到或误会。</p>
+                    </article>
+                    <article class="info-card">
+                        <h3><i class="fas fa-chart-line"></i> 金融与交易窗口</h3>
+                        <p>证券、外汇与加密货币交易均以北京时间为重要参考。使用 TimeMaster 快速核对开盘与收盘时段。</p>
+                    </article>
+                    <article class="info-card">
+                        <h3><i class="fas fa-school"></i> 留学与远程学习</h3>
+                        <p>身处海外的学子可随时查看国内课表对应的当地时间，精准衔接直播课程与考试安排。</p>
+                    </article>
+                </section>
+
+                <section class="timeline-card" aria-labelledby="beijing-day-section">
+                    <h2 id="beijing-day-section"><i class="fas fa-sun"></i> 北京城市典型作息提示</h2>
+                    <div class="timeline-list" id="beijingTimeline">
+                        <article class="timeline-item">
+                            <div class="timeline-time">06:00 - 09:00</div>
+                            <div class="timeline-desc">清晨通勤高峰，适合晨练、早餐与为工作做准备。</div>
+                        </article>
+                        <article class="timeline-item">
+                            <div class="timeline-time">09:00 - 12:00</div>
+                            <div class="timeline-desc">政府机关、金融机构与大部分企业的工作黄金时段。</div>
+                        </article>
+                        <article class="timeline-item">
+                            <div class="timeline-time">13:30 - 17:30</div>
+                            <div class="timeline-desc">下午时段适合业务沟通、线上会议与远程协作。</div>
+                        </article>
+                        <article class="timeline-item">
+                            <div class="timeline-time">19:00 - 22:30</div>
+                            <div class="timeline-desc">文化与娱乐活动集中时段，适合观看演出、直播与社交。</div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="faq-section" aria-labelledby="faq-title">
+                    <h2 id="faq-title"><i class="fas fa-circle-question"></i> 常见问题解答</h2>
+                    <div class="faq-item">
+                        <h3><i class="fas fa-question"></i> 北京时间和中国标准时间有什么区别？</h3>
+                        <p>两者实际相同，均指 UTC+08:00 的统一标准时间，由中国境内所有省市自治区共同采用。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3><i class="fas fa-question"></i> 北京时间会使用夏令时吗？</h3>
+                        <p>中国目前不采用夏令时制度，因此北京时区全年保持 UTC+08:00，不会出现提前或推迟调整。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3><i class="fas fa-question"></i> 如何将北京时间转换为其他城市时间？</h3>
+                        <p>您可以结合本页面的时差提示，或前往 <a href="world-time-tools.html">世界时间工具</a> 使用自动时区转换器。</p>
+                    </div>
+                </section>
+
+                <section class="summary-card" aria-labelledby="summary-title">
+                    <h2 id="summary-title"><i class="fas fa-lightbulb"></i> 使用 TimeMaster 北京时间页面的优势</h2>
+                    <p>借助精准的北京时区时钟、实时的时差计算与生活作息提示，TimeMaster 帮助跨国团队、海外华人以及关注中国市场的人士随时获取可靠的时间数据。配合世界时间工具与节日倒计时，您可以构建完整的全球化时间管理方案。</p>
+                </section>
+            </div>
+        </main>
+
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="收藏北京时间页面">
+            <i class="fas fa-bookmark"></i>
+        </button>
+
+        <button class="share-btn" id="shareBtn" aria-label="分享北京时间页面">
+            <i class="fas fa-share-alt"></i>
+        </button>
+
+        <div class="share-panel" id="sharePanel">
+            <h3>分享到社交媒体</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-button facebook" data-platform="facebook" aria-label="分享到Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-button twitter" data-platform="twitter" aria-label="分享到Twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="share-button linkedin" data-platform="linkedin" aria-label="分享到LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="share-button whatsapp" data-platform="whatsapp" aria-label="分享到WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MILLISECONDS_PER_MINUTE = 60000;
+        const MILLISECONDS_PER_DAY = 86400000;
+
+        function formatDateTime(date, timeZone, options = {}) {
+            const { includeSeconds = true, includeWeekday = true } = options;
+            const formatter = new Intl.DateTimeFormat('zh-CN', {
+                timeZone,
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: includeSeconds ? '2-digit' : undefined,
+                weekday: includeWeekday ? 'long' : undefined,
+                hourCycle: 'h23'
+            });
+            const parts = formatter.formatToParts(date);
+            const values = {};
+            parts.forEach(part => {
+                if (part.type !== 'literal') {
+                    values[part.type] = part.value;
+                }
+            });
+            const dateText = values.weekday
+                ? `${values.year}年${values.month}${values.day}日 · ${values.weekday}`
+                : `${values.year}年${values.month}${values.day}日`;
+            const timeText = includeSeconds && values.second !== undefined
+                ? `${values.hour}:${values.minute}:${values.second}`
+                : `${values.hour}:${values.minute}`;
+            return { dateText, timeText };
+        }
+
+        function getTimezoneOffsetMinutes(timeZone, referenceDate = new Date()) {
+            const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hourCycle: 'h23'
+            });
+            const parts = formatter.formatToParts(referenceDate);
+            const values = {};
+            parts.forEach(part => {
+                if (part.type !== 'literal') {
+                    values[part.type] = part.value;
+                }
+            });
+            const utcEquivalent = Date.UTC(
+                Number(values.year),
+                Number(values.month) - 1,
+                Number(values.day),
+                Number(values.hour),
+                Number(values.minute),
+                Number(values.second)
+            );
+            return (utcEquivalent - referenceDate.getTime()) / MILLISECONDS_PER_MINUTE;
+        }
+
+        function formatOffsetLabel(timeZone, referenceDate = new Date()) {
+            const offset = Math.round(getTimezoneOffsetMinutes(timeZone, referenceDate));
+            const sign = offset >= 0 ? '+' : '-';
+            const absolute = Math.abs(offset);
+            const hours = String(Math.floor(absolute / 60)).padStart(2, '0');
+            const minutes = String(absolute % 60).padStart(2, '0');
+            return `UTC${sign}${hours}:${minutes}`;
+        }
+
+        function getZonedDateParts(date, timeZone) {
+            const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hourCycle: 'h23'
+            });
+            return formatter.formatToParts(date).reduce((acc, part) => {
+                if (part.type !== 'literal') {
+                    acc[part.type] = part.value;
+                }
+                return acc;
+            }, {});
+        }
+
+        function createZonedDate(year, month, day, hour, minute, second, timeZone) {
+            const base = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+            const offsetMinutes = getTimezoneOffsetMinutes(timeZone, base);
+            return new Date(base.getTime() - offsetMinutes * MILLISECONDS_PER_MINUTE);
+        }
+
+        function describePeriod(date, timeZone) {
+            const hourFormatter = new Intl.DateTimeFormat('zh-CN', {
+                timeZone,
+                hour: 'numeric',
+                hourCycle: 'h23'
+            });
+            const hourParts = hourFormatter.formatToParts(date);
+            const hourValue = Number(hourParts.find(part => part.type === 'hour').value);
+            if (hourValue >= 5 && hourValue < 12) return { label: '北京上午时段', icon: 'fa-sun' };
+            if (hourValue >= 12 && hourValue < 18) return { label: '北京下午时段', icon: 'fa-cloud-sun' };
+            if (hourValue >= 18 && hourValue < 22) return { label: '北京夜间休闲', icon: 'fa-moon' };
+            return { label: '北京深夜时段', icon: 'fa-star' };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const beijingTimeElement = document.getElementById('beijingTime');
+            const beijingDateElement = document.getElementById('beijingDate');
+            const beijingOffsetElement = document.getElementById('beijingOffset');
+            const beijingPeriodElement = document.getElementById('beijingPeriod');
+            const userTimezoneElement = document.getElementById('userTimezone');
+            const timezoneDifferenceElement = document.getElementById('timezoneDifference');
+            const userOffsetElement = document.getElementById('userOffset');
+            const nextMeetingElement = document.getElementById('nextMeeting');
+
+            const beijingTimeZone = 'Asia/Shanghai';
+            const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+            userTimezoneElement.textContent = `当前检测到的时区：${userTimeZone}`;
+
+            function updateBeijingTime() {
+                const now = new Date();
+                const formatted = formatDateTime(now, beijingTimeZone);
+                beijingTimeElement.textContent = formatted.timeText;
+                beijingDateElement.textContent = formatted.dateText;
+                beijingOffsetElement.innerHTML = `<i class="fas fa-clock"></i>${formatOffsetLabel(beijingTimeZone, now)}`;
+                const period = describePeriod(now, beijingTimeZone);
+                beijingPeriodElement.innerHTML = `<i class="fas ${period.icon}"></i>${period.label}`;
+            }
+
+            function updateDifference() {
+                const now = new Date();
+                const beijingOffset = formatOffsetLabel(beijingTimeZone, now);
+                const userOffset = formatOffsetLabel(userTimeZone, now);
+                userOffsetElement.innerHTML = `<i class="fas fa-location-dot"></i>${userOffset}`;
+
+                const beijingFormatter = new Intl.DateTimeFormat('zh-CN', {
+                    timeZone: beijingTimeZone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hourCycle: 'h23'
+                });
+                const userFormatter = new Intl.DateTimeFormat('zh-CN', {
+                    timeZone: userTimeZone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hourCycle: 'h23'
+                });
+                const beijingTime = beijingFormatter.format(now);
+                const userTime = userFormatter.format(now);
+
+                const beijingOffsetMinutes = getTimezoneOffsetMinutes(beijingTimeZone, now);
+                const userOffsetMinutes = getTimezoneOffsetMinutes(userTimeZone, now);
+                const diffMinutes = userOffsetMinutes - beijingOffsetMinutes;
+                if (diffMinutes === 0) {
+                    timezoneDifferenceElement.textContent = '您所在地区与北京时间无时差，日常安排可直接参考北京时间。';
+                } else {
+                    const ahead = diffMinutes > 0;
+                    const absolute = Math.abs(diffMinutes);
+                    const hours = Math.floor(absolute / 60);
+                    const minutes = absolute % 60;
+                    const parts = [];
+                    if (hours > 0) parts.push(`${hours} 小时`);
+                    if (minutes > 0) parts.push(`${minutes} 分钟`);
+                    timezoneDifferenceElement.textContent = `当前您当地时间为 ${userTime}（${userOffset}），比北京时间 ${beijingTime}（${beijingOffset}）${ahead ? '早' : '晚'} ${parts.join(' ') || '0 分钟' }。`;
+                }
+
+                const beijingParts = getZonedDateParts(now, beijingTimeZone);
+                let meetingDate = createZonedDate(
+                    Number(beijingParts.year),
+                    Number(beijingParts.month),
+                    Number(beijingParts.day),
+                    21,
+                    0,
+                    0,
+                    beijingTimeZone
+                );
+
+                if (meetingDate <= now) {
+                    const tomorrow = new Date(now.getTime() + MILLISECONDS_PER_DAY);
+                    const tomorrowParts = getZonedDateParts(tomorrow, beijingTimeZone);
+                    meetingDate = createZonedDate(
+                        Number(tomorrowParts.year),
+                        Number(tomorrowParts.month),
+                        Number(tomorrowParts.day),
+                        21,
+                        0,
+                        0,
+                        beijingTimeZone
+                    );
+                }
+
+                const meetingText = new Intl.DateTimeFormat('zh-CN', {
+                    timeZone: userTimeZone,
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hourCycle: 'h23'
+                }).format(meetingDate);
+                nextMeetingElement.innerHTML = `<i class="fas fa-handshake"></i>当北京时间 21:00 开会时，您当地时间为 ${meetingText}`;
+            }
+
+            updateBeijingTime();
+            updateDifference();
+            setInterval(() => {
+                updateBeijingTime();
+                updateDifference();
+            }, 1000);
+
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            const bookmarkKey = 'bookmarked-beijing-time';
+            if (localStorage.getItem(bookmarkKey) === 'true') {
+                bookmarkBtn.classList.add('bookmarked');
+            }
+            bookmarkBtn.addEventListener('click', () => {
+                const bookmarked = bookmarkBtn.classList.toggle('bookmarked');
+                localStorage.setItem(bookmarkKey, bookmarked ? 'true' : 'false');
+            });
+
+            const shareBtn = document.getElementById('shareBtn');
+            const sharePanel = document.getElementById('sharePanel');
+            shareBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                sharePanel.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!sharePanel.contains(event.target) && event.target !== shareBtn) {
+                    sharePanel.classList.remove('show');
+                }
+            });
+
+            const shareButtons = document.querySelectorAll('.share-button');
+            const pageTitle = document.title;
+            const pageUrl = window.location.href;
+            shareButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const platform = button.dataset.platform;
+                    let shareUrl = '';
+                    switch (platform) {
+                        case 'facebook':
+                            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'twitter':
+                            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'linkedin':
+                            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'whatsapp':
+                            shareUrl = `https://wa.me/?text=${encodeURIComponent(pageTitle + ' ' + pageUrl)}`;
+                            break;
+                        default:
+                            shareUrl = '';
+                    }
+                    if (shareUrl) {
+                        window.open(shareUrl, '_blank', 'width=600,height=520');
+                        sharePanel.classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>
