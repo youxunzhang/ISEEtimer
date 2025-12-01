@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5RTZHPKYDH"></script>
@@ -15,45 +15,45 @@
 <meta name="google-adsense-account" content="ca-pub-8794607118520437">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在线倒计时器 | 专业计时器 | TimeMaster - 免费倒计时时钟</title>
-    <meta name="description" content="专业的在线倒计时器，支持自定义倒计时、番茄钟、秒表功能。免费使用，无需下载，支持移动端。适用于生日倒计时、考试倒计时、项目截止日期等场景。">
-    <meta name="keywords" content="倒计时器,在线倒计时,倒计时时钟,计时器,番茄钟,秒表,免费倒计时器,生日倒计时,考试倒计时,截止日期倒计时">
+    <title>Online Countdown Timer | Professional Timers | TimeMaster - Free Countdown Clock</title>
+    <meta name="description" content="A professional online countdown timer with custom timers, pomodoro mode, and stopwatch features. Free to use, no downloads required, and optimized for mobile.">
+    <meta name="keywords" content="countdown timer, online timer, countdown clock, pomodoro timer, stopwatch, free timer, birthday countdown, exam countdown, deadline countdown">
     <meta name="author" content="TimeMaster">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://yourdomain.com/">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:title" content="在线倒计时器 | 专业计时器 | TimeMaster">
-    <meta property="og:description" content="专业的在线倒计时器，支持自定义倒计时、番茄钟、秒表功能。免费使用，无需下载，支持移动端。">
+    <meta property="og:title" content="Online Countdown Timer | Professional Timers | TimeMaster">
+    <meta property="og:description" content="A professional online countdown timer with custom timers, pomodoro mode, and stopwatch features. Free to use, no downloads required, and optimized for mobile.">
     <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
-    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="TimeMaster">
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yourdomain.com/">
-    <meta property="twitter:title" content="在线倒计时器 | 专业计时器 | TimeMaster">
-    <meta property="twitter:description" content="专业的在线倒计时器，支持自定义倒计时、番茄钟、秒表功能。免费使用，无需下载，支持移动端。">
+    <meta property="twitter:title" content="Online Countdown Timer | Professional Timers | TimeMaster">
+    <meta property="twitter:description" content="A professional online countdown timer with custom timers, pomodoro mode, and stopwatch features. Free to use, no downloads required, and optimized for mobile.">
     <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    
+
     <!-- Web App Manifest -->
     <link rel="manifest" href="/manifest.json">
-    
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "TimeMaster - 在线倒计时器",
-      "description": "专业的在线倒计时器，支持自定义倒计时、番茄钟、秒表功能",
+      "name": "TimeMaster - Online Countdown Timer",
+      "description": "A professional online countdown timer with custom timers, pomodoro mode, and stopwatch features",
       "url": "https://yourdomain.com",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "Any",
@@ -63,11 +63,11 @@
         "priceCurrency": "USD"
       },
       "featureList": [
-        "自定义倒计时器",
-        "番茄钟功能",
-        "秒表计时",
-        "移动端适配",
-        "免费使用"
+        "Custom countdown timer",
+        "Pomodoro focus timer",
+        "Stopwatch timing",
+        "Mobile friendly",
+        "Free to use"
       ],
       "screenshot": "https://yourdomain.com/screenshot.jpg"
     }
@@ -82,64 +82,64 @@
 </head>
 <body>
     <div class="container">
-        <!-- 导航栏 -->
+        <!-- Navigation -->
         <header>
-        <nav class="navbar" role="navigation" aria-label="主导航">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="nav-brand">
                 <i class="fas fa-clock" aria-hidden="true"></i>
-                <span>试金石 时间管理</span>
+                <span>TimeMaster Timers</span>
             </div>
             <div class="nav-menu">
                 <div class="nav-dropdown">
                     <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-toolbox" aria-hidden="true"></i>
-                        计时工具
+                        Timing Tools
                         <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu" id="toolsMenu" role="menu">
                         <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-desktop"></i>
-                            全屏倒计时器
+                            Fullscreen Countdown
                         </a>
                         <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
                             <i class="fas fa-hourglass-start"></i>
-                            倒计时器
+                            Countdown Timer
                         </button>
                         <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
                             <i class="fas fa-seedling"></i>
-                            番茄钟计时器
+                            Pomodoro Timer
                         </button>
                         <button class="dropdown-item nav-item active" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
                             <i class="fas fa-stopwatch"></i>
-                            秒表计时
+                            Stopwatch
                         </button>
                         <a href="game.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-gamepad"></i>
-                            时间守护者游戏
+                            Time Guardian Game
                         </a>
                         <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-globe"></i>
-                            世界时间工具
+                            World Time Tools
                         </a>
                         <a href="beijing-time.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-city"></i>
-                            北京时间
+                            Beijing Time
                         </a>
                         <a href="ziwu-liuzhu-clock.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-yin-yang"></i>
-                            子午流注时钟
+                            Zi Wu Liu Zhu Clock
                         </a>
                         <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-calendar-days"></i>
-                            重大节日倒计时
+                            Festival Countdown
                         </a>
                         <a href="countdown-game.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-hourglass-half"></i>
-                            倒计时挑战
+                            Countdown Challenge
                         </a>
                         <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
                             <i class="fas fa-calendar-alt"></i>
-                            节日倒计时
+                            Holiday Countdown
                         </a>
                     </div>
                 </div>
@@ -147,24 +147,24 @@
             <div class="nav-links">
                 <a href="articles.html" class="nav-link">
                     <i class="fas fa-newspaper"></i>
-                    文章专栏
+                    Articles
                 </a>
                 <a href="https://seodog.cn/" class="nav-link" target="_blank" rel="noopener">
                     <i class="fas fa-robot"></i>
-                    AI tools
+                    AI Tools
                 </a>
             </div>
             <div class="nav-controls">
-                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <i class="fas fa-moon" aria-hidden="true"></i>
                 </button>
             </div>
         </nav>
         </header>
 
-        <!-- 主要内容区域 -->
+        <!-- Main content -->
         <main class="main-content" role="main">
-            <!-- 计时器面板 -->
+            <!-- Timer panel -->
             <section class="tab-panel" id="timer" aria-labelledby="fullscreen-countdown-link">
                 <div class="timer-container">
                     <div class="timer-display">
@@ -175,40 +175,40 @@
                             <span class="separator">:</span>
                             <span id="seconds">00</span>
                         </div>
-                        <div class="timer-label">正计时器 - 自定义时间设置</div>
+                        <div class="timer-label">Elapsed Timer - Custom Setup</div>
                     </div>
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startTimer">
                             <i class="fas fa-play"></i>
-                            开始
+                            Start
                         </button>
                         <button class="btn btn-secondary" id="pauseTimer">
                             <i class="fas fa-pause"></i>
-                            暂停
+                            Pause
                         </button>
                         <button class="btn btn-danger" id="resetTimer">
                             <i class="fas fa-redo"></i>
-                            重置
+                            Reset
                         </button>
                     </div>
                     <div class="timer-settings">
                         <div class="setting-group">
-                            <label>小时</label>
+                            <label>Hours</label>
                             <input type="number" id="hourInput" min="0" max="23" value="0">
                         </div>
                         <div class="setting-group">
-                            <label>分钟</label>
+                            <label>Minutes</label>
                             <input type="number" id="minuteInput" min="0" max="59" value="0">
                         </div>
                         <div class="setting-group">
-                            <label>秒</label>
+                            <label>Seconds</label>
                             <input type="number" id="secondInput" min="0" max="59" value="0">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 倒计时面板 -->
+            <!-- Countdown panel -->
             <section class="tab-panel" id="countdown" aria-labelledby="countdown-tab">
                 <div class="timer-container">
                     <div class="timer-display">
@@ -219,40 +219,40 @@
                             <span class="separator">:</span>
                             <span id="countdownSeconds">00</span>
                         </div>
-                        <div class="timer-label">倒计时器 - 生日考试截止日期倒计时</div>
+                        <div class="timer-label">Countdown Timer - Birthdays, Exams, and Deadlines</div>
                     </div>
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startCountdown">
                             <i class="fas fa-play"></i>
-                            开始
+                            Start
                         </button>
                         <button class="btn btn-secondary" id="pauseCountdown">
                             <i class="fas fa-pause"></i>
-                            暂停
+                            Pause
                         </button>
                         <button class="btn btn-danger" id="resetCountdown">
                             <i class="fas fa-redo"></i>
-                            重置
+                            Reset
                         </button>
                     </div>
                     <div class="timer-settings">
                         <div class="setting-group">
-                            <label>小时</label>
+                            <label>Hours</label>
                             <input type="number" id="countdownHourInput" min="0" max="23" value="0">
                         </div>
                         <div class="setting-group">
-                            <label>分钟</label>
+                            <label>Minutes</label>
                             <input type="number" id="countdownMinuteInput" min="0" max="59" value="25">
                         </div>
                         <div class="setting-group">
-                            <label>秒</label>
+                            <label>Seconds</label>
                             <input type="number" id="countdownSecondInput" min="0" max="59" value="0">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 番茄钟面板 -->
+            <!-- Pomodoro panel -->
             <section class="tab-panel" id="pomodoro" aria-labelledby="pomodoro-tab">
                 <div class="timer-container">
                     <div class="timer-display">
@@ -261,46 +261,46 @@
                             <span class="separator">:</span>
                             <span id="pomodoroSeconds">00</span>
                         </div>
-                        <div class="timer-label" id="pomodoroLabel">番茄钟计时器 - 专注时间管理</div>
+                        <div class="timer-label" id="pomodoroLabel">Pomodoro Timer - Stay Focused</div>
                         <div class="pomodoro-progress">
                             <div class="progress-bar">
                                 <div class="progress-fill" id="pomodoroProgress"></div>
                             </div>
-                            <span class="progress-text" id="pomodoroProgressText">第 1 轮 - 番茄钟工作法</span>
+                            <span class="progress-text" id="pomodoroProgressText">Round 1 - Pomodoro Technique</span>
                         </div>
                     </div>
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startPomodoro">
                             <i class="fas fa-play"></i>
-                            开始
+                            Start
                         </button>
                         <button class="btn btn-secondary" id="pausePomodoro">
                             <i class="fas fa-pause"></i>
-                            暂停
+                            Pause
                         </button>
                         <button class="btn btn-danger" id="resetPomodoro">
                             <i class="fas fa-redo"></i>
-                            重置
+                            Reset
                         </button>
                     </div>
                     <div class="pomodoro-settings">
                         <div class="setting-group">
-                            <label>专注时间 (分钟)</label>
+                            <label>Focus Time (minutes)</label>
                             <input type="number" id="workTime" min="1" max="60" value="25">
                         </div>
                         <div class="setting-group">
-                            <label>休息时间 (分钟)</label>
+                            <label>Break Time (minutes)</label>
                             <input type="number" id="breakTime" min="1" max="30" value="5">
                         </div>
                         <div class="setting-group">
-                            <label>长休息时间 (分钟)</label>
+                            <label>Long Break (minutes)</label>
                             <input type="number" id="longBreakTime" min="1" max="60" value="15">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 秒表面板 -->
+            <!-- Stopwatch panel -->
             <section class="tab-panel active" id="stopwatch" aria-labelledby="stopwatch-tab">
                 <div class="timer-container">
                     <div class="timer-display">
@@ -313,35 +313,35 @@
                             <span class="separator">.</span>
                             <span id="stopwatchMilliseconds">00</span>
                         </div>
-                        <div class="timer-label">秒表计时 - 精确计时测量</div>
+                        <div class="timer-label">Stopwatch - Precise Lap Timing</div>
                     </div>
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startStopwatch">
                             <i class="fas fa-play"></i>
-                            开始
+                            Start
                         </button>
                         <button class="btn btn-secondary" id="pauseStopwatch">
                             <i class="fas fa-pause"></i>
-                            暂停
+                            Pause
                         </button>
                         <button class="btn btn-warning" id="lapStopwatch">
                             <i class="fas fa-flag"></i>
-                            计圈
+                            Lap
                         </button>
                         <button class="btn btn-danger" id="resetStopwatch">
                             <i class="fas fa-redo"></i>
-                            重置
+                            Reset
                         </button>
                     </div>
                     <div class="lap-times" id="lapTimes">
-                        <h3>计圈记录 - 秒表分段计时</h3>
+                        <h3>Lap Records - Split Timing</h3>
                         <div class="lap-list" id="lapList"></div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- 通知区域 -->
+        <!-- Notification -->
         <div class="notification" id="notification">
             <div class="notification-content">
                 <span id="notificationText"></span>
@@ -349,77 +349,77 @@
         </div>
     </div>
 
-    <!-- 收藏按钮 -->
-    <button class="bookmark-btn" id="bookmarkBtn" aria-label="收藏此页面">
+    <!-- Bookmark button -->
+    <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark this page">
         <i class="fas fa-bookmark"></i>
     </button>
 
-    <!-- 分享按钮 -->
-    <button class="share-btn" id="shareBtn" aria-label="分享此页面">
+    <!-- Share button -->
+    <button class="share-btn" id="shareBtn" aria-label="Share this page">
         <i class="fas fa-share-alt"></i>
     </button>
 
-    <!-- 分享面板 -->
+    <!-- Share panel -->
     <div class="share-panel" id="sharePanel">
-        <h3>分享到社交媒体</h3>
+        <h3>Share to social media</h3>
         <div class="share-buttons">
-            <a href="#" class="share-button facebook" data-platform="facebook" aria-label="分享到Facebook">
+            <a href="#" class="share-button facebook" data-platform="facebook" aria-label="Share to Facebook">
                 <i class="fab fa-facebook-f"></i>
                 <span>Facebook</span>
             </a>
-            <a href="#" class="share-button twitter" data-platform="twitter" aria-label="分享到Twitter">
+            <a href="#" class="share-button twitter" data-platform="twitter" aria-label="Share to Twitter">
                 <i class="fab fa-twitter"></i>
                 <span>Twitter</span>
             </a>
-            <a href="#" class="share-button linkedin" data-platform="linkedin" aria-label="分享到LinkedIn">
+            <a href="#" class="share-button linkedin" data-platform="linkedin" aria-label="Share to LinkedIn">
                 <i class="fab fa-linkedin-in"></i>
                 <span>LinkedIn</span>
             </a>
-            <a href="#" class="share-button reddit" data-platform="reddit" aria-label="分享到Reddit">
+            <a href="#" class="share-button reddit" data-platform="reddit" aria-label="Share to Reddit">
                 <i class="fab fa-reddit-alien"></i>
                 <span>Reddit</span>
             </a>
-            <a href="#" class="share-button whatsapp" data-platform="whatsapp" aria-label="分享到WhatsApp">
+            <a href="#" class="share-button whatsapp" data-platform="whatsapp" aria-label="Share to WhatsApp">
                 <i class="fab fa-whatsapp"></i>
                 <span>WhatsApp</span>
             </a>
-            <a href="#" class="share-button telegram" data-platform="telegram" aria-label="分享到Telegram">
+            <a href="#" class="share-button telegram" data-platform="telegram" aria-label="Share to Telegram">
                 <i class="fab fa-telegram-plane"></i>
                 <span>Telegram</span>
             </a>
         </div>
     </div>
 
-    <!-- 页面内容概要 -->
+    <!-- Page summary -->
     <footer class="page-summary">
-        <h2><i class="fas fa-info-circle"></i> TimeMaster 在线倒计时器 - 页面概要</h2>
-        <p>欢迎使用 <span class="highlight">TimeMaster</span>，这是一款专业的在线倒计时器应用，为您提供全方位的计时解决方案。无论您是需要日常计时、工作专注，还是重要事件倒计时，TimeMaster 都能满足您的需求。</p>
-        
-        <h3>主要功能特色：</h3>
+        <h2><i class="fas fa-info-circle"></i> TimeMaster Online Countdown Timer - Overview</h2>
+        <p>Welcome to <span class="highlight">TimeMaster</span>, your professional online countdown timer that brings together every timing tool you need. Whether you want a daily timer, deep-focus pomodoro sessions, or a precise event countdown, TimeMaster keeps you on schedule.</p>
+
+        <h3>Key features:</h3>
         <ul>
-            <li><span class="highlight">全屏倒计时器</span> - 提供极简、醒目的倒计时体验，支持自定义与快捷预设</li>
-            <li><span class="highlight">倒计时器</span> - 专为生日倒计时、考试倒计时、截止日期等场景设计</li>
-            <li><span class="highlight">番茄钟计时器</span> - 基于番茄工作法的时间管理工具，提高工作效率</li>
-            <li><span class="highlight">秒表计时</span> - 精确到毫秒的秒表功能，支持计圈记录</li>
+            <li><span class="highlight">Fullscreen Countdown</span> - Minimal, bold countdown experience with custom presets</li>
+            <li><span class="highlight">Countdown Timer</span> - Perfect for birthday countdowns, exam prep, and deadline reminders</li>
+            <li><span class="highlight">Pomodoro Timer</span> - Time management powered by the Pomodoro Technique</li>
+            <li><span class="highlight">Stopwatch</span> - Millisecond accuracy with detailed lap tracking</li>
         </ul>
 
-        <h3>技术优势：</h3>
+        <h3>Technical advantages:</h3>
         <ul>
-            <li><span class="highlight">免费使用</span> - 无需注册，无需下载，即开即用</li>
-            <li><span class="highlight">移动端适配</span> - 完美支持手机、平板等移动设备</li>
-            <li><span class="highlight">响应式设计</span> - 自适应各种屏幕尺寸，体验流畅</li>
-            <li><span class="highlight">暗黑模式</span> - 支持明暗主题切换，保护眼睛健康</li>
+            <li><span class="highlight">Free to use</span> - No sign-up, no downloads, just start timing</li>
+            <li><span class="highlight">Mobile ready</span> - Works beautifully on phones and tablets</li>
+            <li><span class="highlight">Responsive design</span> - Adapts smoothly to any screen size</li>
+            <li><span class="highlight">Dark mode</span> - Light and dark themes to keep your eyes comfortable</li>
         </ul>
 
-        <h3>适用场景：</h3>
+        <h3>Best for:</h3>
         <ul>
-            <li>学习工作：考试倒计时、项目截止日期、会议计时</li>
-            <li>生活娱乐：生日倒计时、假期倒计时、运动计时</li>
-            <li>专业用途：演讲计时、实验计时、运动训练</li>
-            <li>时间管理：番茄工作法、专注时间管理、任务规划</li>
+            <li>Study & work: exam countdowns, project deadlines, meeting timers</li>
+            <li>Everyday life: birthday and holiday countdowns, workout timing</li>
+            <li>Professional use: presentation timers, lab timing, athletic training</li>
+            <li>Time management: Pomodoro sessions, focus blocks, task planning</li>
         </ul>
 
-        <p>TimeMaster 致力于为用户提供最便捷、最专业的在线计时服务。无论您是学生、职场人士还是自由职业者，都能在这里找到适合的计时工具，让时间管理变得更加高效和有趣。</p>
+        <p>TimeMaster is built to deliver convenient, reliable timing tools for everyone—students, professionals, and freelancers alike. Find the timer that fits your routine and make time management simple and enjoyable.</p>
     </footer>
 
     <script src="script.js" defer></script>
