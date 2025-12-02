@@ -42,8 +42,6 @@ let stopwatchRunning = false;
 let stopwatchTime = 0;
 let stopwatchStartTime = 0;
 let stopwatchPausedTime = 0;
-let lapTimes = [];
-let lastStopwatchUpdate = 0;
 
 // 计时精度控制
 const TIMER_PRECISION = 1000; // 1秒
@@ -104,10 +102,8 @@ const elements = {
     stopwatchMilliseconds: document.getElementById('stopwatchMilliseconds'),
     startStopwatch: document.getElementById('startStopwatch'),
     pauseStopwatch: document.getElementById('pauseStopwatch'),
-    lapStopwatch: document.getElementById('lapStopwatch'),
     resetStopwatch: document.getElementById('resetStopwatch'),
-    lapList: document.getElementById('lapList'),
-    
+
     // 通知
     notification: document.getElementById('notification'),
     notificationText: document.getElementById('notificationText')
@@ -222,11 +218,10 @@ function initializeEventListeners() {
     elements.startPomodoro.addEventListener('click', startPomodoro);
     elements.pausePomodoro.addEventListener('click', pausePomodoro);
     elements.resetPomodoro.addEventListener('click', resetPomodoro);
-    
+
     // 秒表事件
     elements.startStopwatch.addEventListener('click', startStopwatch);
     elements.pauseStopwatch.addEventListener('click', pauseStopwatch);
-    elements.lapStopwatch.addEventListener('click', lapStopwatch);
     elements.resetStopwatch.addEventListener('click', resetStopwatch);
     
     // 输入框事件
@@ -648,16 +643,13 @@ function initializeStopwatch() {
     stopwatchTime = 0;
     stopwatchStartTime = 0;
     stopwatchPausedTime = 0;
-    lapTimes = [];
-    
+
     // 设置按钮初始状态
     elements.startStopwatch.disabled = false;
     elements.pauseStopwatch.disabled = true;
-    elements.lapStopwatch.disabled = true;
-    
+
     // 更新显示
     updateStopwatchDisplay();
-    updateLapList();
 }
 
 function startStopwatch() {
@@ -679,15 +671,14 @@ function startStopwatch() {
         stopwatchTime = Date.now() - stopwatchStartTime;
         updateStopwatchDisplay();
     }, 16); // 约60fps更新频率，提供更流畅的显示
-    
+
     elements.startStopwatch.disabled = true;
     elements.pauseStopwatch.disabled = false;
-    elements.lapStopwatch.disabled = false;
 }
 
 function pauseStopwatch() {
     if (!stopwatchRunning) return;
-    
+
     stopwatchRunning = false;
     clearInterval(stopwatchInterval);
     stopwatchPausedTime = stopwatchTime; // 保存暂停时的时间
@@ -701,31 +692,6 @@ function pauseStopwatch() {
     
     elements.startStopwatch.disabled = false;
     elements.pauseStopwatch.disabled = true;
-    elements.lapStopwatch.disabled = true; // 暂停时禁用计圈按钮
-}
-
-function lapStopwatch() {
-    if (!stopwatchRunning) return;
-    
-    const currentTime = stopwatchTime;
-    const lapNumber = lapTimes.length + 1;
-    
-    // 计算圈间时间差
-    let lapDuration = currentTime;
-    if (lapTimes.length > 0) {
-        lapDuration = currentTime - lapTimes[lapTimes.length - 1].time;
-    }
-    
-    const lapTime = {
-        number: lapNumber,
-        time: currentTime,
-        duration: lapDuration,
-        display: formatStopwatchTime(currentTime),
-        lapDisplay: formatStopwatchTime(lapDuration)
-    };
-    
-    lapTimes.push(lapTime);
-    updateLapList();
 }
 
 function resetStopwatch() {
@@ -734,21 +700,18 @@ function resetStopwatch() {
     stopwatchTime = 0;
     stopwatchStartTime = 0;
     stopwatchPausedTime = 0;
-    lapTimes = [];
-    
+
     // 通知Web Worker重置秒表
     if (timerWorker) {
         timerWorker.postMessage({
             type: 'RESET_STOPWATCH'
         });
     }
-    
+
     updateStopwatchDisplay();
-    updateLapList();
-    
+
     elements.startStopwatch.disabled = false;
     elements.pauseStopwatch.disabled = true;
-    elements.lapStopwatch.disabled = true;
 }
 
 function updateStopwatchDisplay() {
@@ -772,26 +735,6 @@ function formatStopwatchTime(milliseconds) {
         seconds: seconds.toString().padStart(2, '0'),
         milliseconds: ms.toString().padStart(2, '0')
     };
-}
-
-function updateLapList() {
-    elements.lapList.innerHTML = '';
-    
-    lapTimes.forEach((lap, index) => {
-        const lapItem = document.createElement('div');
-        lapItem.className = 'lap-item';
-        
-        // 显示圈间时间和总时间
-        const lapTimeText = index === 0 ? 
-            `总时间: ${lap.display}` : 
-            `圈间: ${lap.lapDisplay} | 总时间: ${lap.display}`;
-        
-        lapItem.innerHTML = `
-            <span class="lap-number">第 ${lap.number} 圈</span>
-            <span class="lap-time">${lapTimeText}</span>
-        `;
-        elements.lapList.appendChild(lapItem);
-    });
 }
 
 // 通知声音
@@ -842,12 +785,6 @@ document.addEventListener('keydown', function(event) {
                 else if (activeTab === 'countdown') resetCountdown();
                 else if (activeTab === 'pomodoro') resetPomodoro();
                 else if (activeTab === 'stopwatch') resetStopwatch();
-            }
-            break;
-        case 'KeyL':
-            if (activeTab === 'stopwatch' && stopwatchRunning) {
-                event.preventDefault();
-                lapStopwatch();
             }
             break;
     }

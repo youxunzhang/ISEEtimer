@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Minute Countdown Timer | TimeMaster</title>
+    <meta name="description" content="Dedicated 30-minute countdown timer for quick focus sessions, workouts, and meetings.">
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar" aria-label="Secondary navigation">
+                <div class="nav-brand">
+                    <i class="fas fa-hourglass-end" aria-hidden="true"></i>
+                    <span>30-Minute Countdown</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                        Home
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content" role="main">
+            <section class="tab-panel active" aria-labelledby="thirty-minute-timer">
+                <div class="timer-container">
+                    <div class="timer-display">
+                        <div class="time-display">
+                            <span id="thirtyMinutes">30</span>
+                            <span class="separator">:</span>
+                            <span id="thirtySeconds">00</span>
+                            <span class="separator">:</span>
+                            <span id="thirtyRemainingSeconds">00</span>
+                        </div>
+                        <div class="timer-label">Pre-set 30:00 timer for instant use</div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="btn btn-primary" id="startThirty">Start</button>
+                        <button class="btn btn-secondary" id="pauseThirty">Pause</button>
+                        <button class="btn btn-danger" id="resetThirty">Reset</button>
+                    </div>
+                    <div class="timer-settings">
+                        <div class="setting-group">
+                            <label>Current status</label>
+                            <div id="thirtyStatus" class="timer-label">Ready to start</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const THIRTY_MINUTES = 30 * 60;
+        let thirtyInterval = null;
+        let thirtyRunning = false;
+        let thirtyRemaining = THIRTY_MINUTES;
+        let thirtyStartTimestamp = 0;
+
+        const minuteEl = document.getElementById('thirtyMinutes');
+        const secondEl = document.getElementById('thirtySeconds');
+        const remainingSecondEl = document.getElementById('thirtyRemainingSeconds');
+        const statusEl = document.getElementById('thirtyStatus');
+        const startBtn = document.getElementById('startThirty');
+        const pauseBtn = document.getElementById('pauseThirty');
+        const resetBtn = document.getElementById('resetThirty');
+
+        function formatThirty(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            const remainingMs = Math.floor((seconds % 1) * 100);
+            return {
+                minutes: minutes.toString().padStart(2, '0'),
+                seconds: secs.toString().padStart(2, '0'),
+                hundredths: remainingMs.toString().padStart(2, '0')
+            };
+        }
+
+        function updateThirtyDisplay() {
+            const time = formatThirty(thirtyRemaining);
+            minuteEl.textContent = time.minutes;
+            secondEl.textContent = time.seconds;
+            remainingSecondEl.textContent = time.hundredths;
+        }
+
+        function startThirtyCountdown() {
+            if (thirtyRunning) return;
+            thirtyRunning = true;
+            statusEl.textContent = 'Counting down';
+            thirtyStartTimestamp = performance.now() - (THIRTY_MINUTES - thirtyRemaining) * 1000;
+
+            thirtyInterval = requestAnimationFrame(runThirtyCountdown);
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+        }
+
+        function runThirtyCountdown(now) {
+            const elapsedSeconds = (now - thirtyStartTimestamp) / 1000;
+            thirtyRemaining = Math.max(0, THIRTY_MINUTES - elapsedSeconds);
+            updateThirtyDisplay();
+
+            if (thirtyRemaining <= 0) {
+                finishThirtyCountdown();
+                return;
+            }
+
+            thirtyInterval = requestAnimationFrame(runThirtyCountdown);
+        }
+
+        function pauseThirtyCountdown() {
+            if (!thirtyRunning) return;
+            thirtyRunning = false;
+            cancelAnimationFrame(thirtyInterval);
+            statusEl.textContent = 'Paused';
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        function resetThirtyCountdown() {
+            thirtyRunning = false;
+            cancelAnimationFrame(thirtyInterval);
+            thirtyRemaining = THIRTY_MINUTES;
+            statusEl.textContent = 'Ready to start';
+            updateThirtyDisplay();
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        function finishThirtyCountdown() {
+            thirtyRunning = false;
+            cancelAnimationFrame(thirtyInterval);
+            thirtyRemaining = 0;
+            statusEl.textContent = 'Time is up!';
+            updateThirtyDisplay();
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        startBtn.addEventListener('click', startThirtyCountdown);
+        pauseBtn.addEventListener('click', pauseThirtyCountdown);
+        resetBtn.addEventListener('click', resetThirtyCountdown);
+
+        pauseBtn.disabled = true;
+        updateThirtyDisplay();
+    </script>
+</body>
+</html>

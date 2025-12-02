@@ -97,6 +97,10 @@
                         <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
                     </button>
                     <div class="dropdown-menu" id="toolsMenu" role="menu">
+                        <a href="30-minute-countdown.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-hourglass-end"></i>
+                            30-Minute Countdown
+                        </a>
                         <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
                             <i class="fas fa-desktop"></i>
                             Fullscreen Countdown
@@ -313,7 +317,7 @@
                             <span class="separator">.</span>
                             <span id="stopwatchMilliseconds">00</span>
                         </div>
-                        <div class="timer-label">Stopwatch - Precise Lap Timing</div>
+                        <div class="timer-label">Stopwatch - Precision Timing</div>
                     </div>
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startStopwatch">
@@ -324,18 +328,10 @@
                             <i class="fas fa-pause"></i>
                             Pause
                         </button>
-                        <button class="btn btn-warning" id="lapStopwatch">
-                            <i class="fas fa-flag"></i>
-                            Lap
-                        </button>
                         <button class="btn btn-danger" id="resetStopwatch">
                             <i class="fas fa-redo"></i>
                             Reset
                         </button>
-                    </div>
-                    <div class="lap-times" id="lapTimes">
-                        <h3>Lap Records - Split Timing</h3>
-                        <div class="lap-list" id="lapList"></div>
                     </div>
                 </div>
             </section>
@@ -400,7 +396,7 @@
             <li><span class="highlight">Fullscreen Countdown</span> - Minimal, bold countdown experience with custom presets</li>
             <li><span class="highlight">Countdown Timer</span> - Perfect for birthday countdowns, exam prep, and deadline reminders</li>
             <li><span class="highlight">Pomodoro Timer</span> - Time management powered by the Pomodoro Technique</li>
-            <li><span class="highlight">Stopwatch</span> - Millisecond accuracy with detailed lap tracking</li>
+            <li><span class="highlight">Stopwatch</span> - Millisecond accuracy for precise timing</li>
         </ul>
 
         <h3>Technical advantages:</h3>
