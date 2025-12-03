@@ -16,64 +16,64 @@
                             <i class="fas fa-clock"></i>
                         </span>
                         <div>
-                            <h3>TimeMaster 在线倒计时器</h3>
-                            <p>集在线计时、倒计时、番茄钟于一体的时间管理工具，让每一秒都更有价值。</p>
+                            <h3>TimeMaster Online Countdown Timer</h3>
+                            <p>An all-in-one timer suite with online timers, countdowns, and Pomodoro sessions to make every second count.</p>
                         </div>
                     </div>
                     <a class="footer-contact-link" href="mailto:hello@timemaster.com">
                         <i class="fas fa-envelope"></i>
                         hello@timemaster.com
                     </a>
-                    <div class="footer-social" aria-label="社交媒体">
-                        <span>关注我们</span>
+                    <div class="footer-social" aria-label="Social media">
+                        <span>Follow Us</span>
                         <div class="social-links">
-                            <a href="#" aria-label="关注 TimeMaster 微信社区">
+                            <a href="#" aria-label="Join the TimeMaster WeChat community">
                                 <i class="fab fa-weixin"></i>
                             </a>
-                            <a href="#" aria-label="关注 TimeMaster 微博">
+                            <a href="#" aria-label="Follow TimeMaster on Weibo">
                                 <i class="fab fa-weibo"></i>
                             </a>
-                            <a href="#" aria-label="加入 TimeMaster Telegram 社区">
+                            <a href="#" aria-label="Join the TimeMaster Telegram community">
                                 <i class="fab fa-telegram-plane"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="footer-column">
-                    <h4>核心工具</h4>
+                    <h4>Core Tools</h4>
                     <ul>
-                        <li><a href="fullscreen-countdown.html">全屏倒计时器</a></li>
-                        <li><a href="index.html#countdown">倒计时器</a></li>
-                        <li><a href="index.html#pomodoro">番茄钟计时</a></li>
-                        <li><a href="index.html#stopwatch">秒表功能</a></li>
+                        <li><a href="fullscreen-countdown.html">Fullscreen Countdown</a></li>
+                        <li><a href="index.html#countdown">Countdown Timer</a></li>
+                        <li><a href="index.html#pomodoro">Pomodoro Timer</a></li>
+                        <li><a href="index.html#stopwatch">Stopwatch</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>热门场景</h4>
+                    <h4>Popular Uses</h4>
                     <ul>
-                        <li><a href="wedding-countdown.html">婚礼倒计时</a></li>
-                        <li><a href="exam-countdown.html">考试倒计时</a></li>
-                        <li><a href="birthday-countdown.html">生日倒计时</a></li>
-                        <li><a href="festival-countdown.html">重大节日倒计时</a></li>
-                        <li><a href="game.html">时间守护者小游戏</a></li>
+                        <li><a href="wedding-countdown.html">Wedding Countdown</a></li>
+                        <li><a href="exam-countdown.html">Exam Countdown</a></li>
+                        <li><a href="birthday-countdown.html">Birthday Countdown</a></li>
+                        <li><a href="festival-countdown.html">Holiday & Festival Countdowns</a></li>
+                        <li><a href="game.html">Time Guardian Mini Game</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>学习资源</h4>
+                    <h4>Learning Resources</h4>
                     <ul>
-                        <li><a href="articles.html">时间管理文章</a></li>
-                        <li><a href="article-time-planning.html">一天时间规划</a></li>
-                        <li><a href="article-website-planning.html">网站规划指南</a></li>
-                        <li><a href="how-to-create-countdown-timer.html">倒计时器制作教程</a></li>
+                        <li><a href="articles.html">Time Management Articles</a></li>
+                        <li><a href="article-time-planning.html">Daily Time Planning</a></li>
+                        <li><a href="article-website-planning.html">Website Planning Guide</a></li>
+                        <li><a href="how-to-create-countdown-timer.html">Countdown Timer Tutorial</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© <span id="currentYear"></span> TimeMaster · 专注打造优雅的在线倒计时体验。</p>
+                <p>© <span id="currentYear"></span> TimeMaster · Dedicated to crafting an elegant online countdown experience.</p>
                 <div class="footer-bottom-links">
-                    <a href="articles.html">文章专栏</a>
-                    <a href="sitemap.html">网站地图</a>
-                    <a href="mailto:hello@timemaster.com">联系我们</a>
+                    <a href="articles.html">Articles Hub</a>
+                    <a href="sitemap.html">Sitemap</a>
+                    <a href="mailto:hello@timemaster.com">Contact Us</a>
                 </div>
             </div>
         </div>
