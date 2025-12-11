@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市时区速览 | 北京、纽约、东京时间查询 | TimeMaster</title>
+    <meta name="description" content="实时查看北京现在几点、纽约几点，并了解东京与北京的时差。城市时区速览为跨国沟通、旅行与在线会议提供即时时间参考。">
+    <meta name="keywords" content="北京时间,纽约时间,东京时差,城市时区,跨国会议时间">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --card-bg: rgba(255,255,255,0.9);
+            --surface: rgba(15, 23, 42, 0.06);
+        }
+        body {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+        .city-time-main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        .hero-card {
+            background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 65px rgba(37, 99, 235, 0.28);
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            right: -70px;
+            top: -70px;
+            width: 220px;
+            height: 220px;
+            background: rgba(255,255,255,0.16);
+            border-radius: 50%;
+        }
+        .hero-card h1 {
+            font-size: 2.6rem;
+            margin-bottom: 0.6rem;
+        }
+        .hero-card p {
+            max-width: 640px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .time-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.6rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .time-card h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+        .time-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .date-value {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: var(--surface);
+            font-weight: 600;
+        }
+        .difference-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 1.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: var(--shadow-lg);
+        }
+        .difference-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .difference-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .difference-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 1rem;
+            border-radius: 14px;
+            background: var(--surface);
+        }
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="city-time-main">
+        <section class="hero-card">
+            <h1>城市时区速览：北京现在几点？</h1>
+            <p>实时查看北京、纽约、东京的当地时间，并快速确认东京与北京的时差。让跨国会议、交易或在线课程安排更高效。</p>
+        </section>
+
+        <section aria-label="三地时间" class="time-grid">
+            <article class="time-card" id="beijingCard">
+                <h2><i class="fas fa-location-dot" aria-hidden="true"></i> 北京 (CST)</h2>
+                <div class="time-value" id="beijingTime">--:--:--</div>
+                <div class="date-value" id="beijingDate">加载中...</div>
+                <div class="meta-row">
+                    <span class="badge"><i class="fas fa-bolt"></i> 中国标准时间</span>
+                    <span class="badge" id="beijingOffset">UTC+08:00</span>
+                </div>
+            </article>
+            <article class="time-card" id="newyorkCard">
+                <h2><i class="fas fa-city" aria-hidden="true"></i> 纽约 (ET)</h2>
+                <div class="time-value" id="newyorkTime">--:--:--</div>
+                <div class="date-value" id="newyorkDate">加载中...</div>
+                <div class="meta-row">
+                    <span class="badge"><i class="fas fa-clock"></i> 东部时间</span>
+                    <span class="badge" id="newyorkOffset">UTC</span>
+                </div>
+            </article>
+            <article class="time-card" id="tokyoCard">
+                <h2><i class="fas fa-torii-gate" aria-hidden="true"></i> 东京 (JST)</h2>
+                <div class="time-value" id="tokyoTime">--:--:--</div>
+                <div class="date-value" id="tokyoDate">加载中...</div>
+                <div class="meta-row">
+                    <span class="badge"><i class="fas fa-sun"></i> 日本标准时间</span>
+                    <span class="badge" id="tokyoOffset">UTC</span>
+                </div>
+            </article>
+        </section>
+
+        <section class="difference-card">
+            <h3><i class="fas fa-arrows-left-right" aria-hidden="true"></i> 时差速览</h3>
+            <div class="difference-list">
+                <div class="difference-item">
+                    <span>北京 vs 纽约</span>
+                    <strong id="diffBeijingNY">--</strong>
+                </div>
+                <div class="difference-item">
+                    <span>北京 vs 东京</span>
+                    <strong id="diffBeijingTokyo">--</strong>
+                </div>
+                <div class="difference-item">
+                    <span>东京 vs 纽约</span>
+                    <strong id="diffTokyoNY">--</strong>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>数据基于本地浏览器时间计算，自动考虑夏令时与时区切换。</footer>
+
+    <script>
+        const cities = {
+            beijing: { tz: 'Asia/Shanghai', timeEl: 'beijingTime', dateEl: 'beijingDate', offsetEl: 'beijingOffset' },
+            newyork: { tz: 'America/New_York', timeEl: 'newyorkTime', dateEl: 'newyorkDate', offsetEl: 'newyorkOffset' },
+            tokyo: { tz: 'Asia/Tokyo', timeEl: 'tokyoTime', dateEl: 'tokyoDate', offsetEl: 'tokyoOffset' }
+        };
+
+        function formatDateTime(tz) {
+            const now = new Date();
+            const time = now.toLocaleTimeString('zh-CN', { timeZone: tz, hour12: false });
+            const date = now.toLocaleDateString('zh-CN', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            return { time, date };
+        }
+
+        function getOffsetMinutes(tz) {
+            const now = new Date();
+            const localeStr = now.toLocaleString('en-US', { timeZone: tz });
+            const target = new Date(localeStr);
+            return (target.getTime() - now.getTime()) / 60000;
+        }
+
+        function formatOffset(minutes) {
+            const sign = minutes >= 0 ? '+' : '-';
+            const abs = Math.abs(minutes);
+            const hours = String(Math.floor(abs / 60)).padStart(2, '0');
+            const mins = String(Math.round(abs % 60)).padStart(2, '0');
+            return `UTC${sign}${hours}:${mins}`;
+        }
+
+        function updateTimes() {
+            Object.entries(cities).forEach(([key, cfg]) => {
+                const { time, date } = formatDateTime(cfg.tz);
+                document.getElementById(cfg.timeEl).textContent = time;
+                document.getElementById(cfg.dateEl).textContent = date;
+                document.getElementById(cfg.offsetEl).textContent = formatOffset(getOffsetMinutes(cfg.tz));
+            });
+            updateDifferences();
+        }
+
+        function describeDiff(minutes) {
+            const hours = minutes / 60;
+            if (Math.abs(hours) < 0.01) return '无时差';
+            const sign = hours > 0 ? '快' : '慢';
+            return `${Math.abs(hours).toFixed(1)} 小时（${sign}）`;
+        }
+
+        function updateDifferences() {
+            const beijingOffset = getOffsetMinutes(cities.beijing.tz);
+            const nyOffset = getOffsetMinutes(cities.newyork.tz);
+            const tokyoOffset = getOffsetMinutes(cities.tokyo.tz);
+
+            document.getElementById('diffBeijingNY').textContent = describeDiff(beijingOffset - nyOffset);
+            document.getElementById('diffBeijingTokyo').textContent = describeDiff(beijingOffset - tokyoOffset);
+            document.getElementById('diffTokyoNY').textContent = describeDiff(tokyoOffset - nyOffset);
+        }
+
+        updateTimes();
+        setInterval(updateTimes, 1000);
+    </script>
+</body>
+</html>

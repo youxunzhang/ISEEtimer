@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特别倒计时 | 2025 新年 & 高考倒计时 | TimeMaster</title>
+    <meta name="description" content="专属倒计时页面，实时显示 2025 新年和高考倒计时，支持天/小时/分钟/秒精确显示，帮助你保持目标感。">
+    <meta name="keywords" content="2025新年倒计时,高考倒计时,考试计时,新年跨年">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); }
+        .countdown-page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
+        .hero { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #22d3ee 100%); color: #fff; border-radius: 26px; padding: 3rem; box-shadow: 0 26px 60px rgba(99, 102, 241, 0.32); }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 0.6rem; }
+        .hero p { max-width: 700px; line-height: 1.8; opacity: 0.95; }
+        .countdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .countdown-card { background: var(--bg-primary); border-radius: 20px; padding: 1.8rem; border: 1px solid rgba(148, 163, 184, 0.2); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; gap: 1rem; }
+        .countdown-card h2 { display: flex; align-items: center; gap: 0.6rem; font-size: 1.4rem; margin: 0; }
+        .target-time { color: var(--text-secondary); font-weight: 600; }
+        .timer { font-size: 2.4rem; font-weight: 700; letter-spacing: 0.02em; }
+        .progress-bar { width: 100%; height: 10px; background: rgba(148, 163, 184, 0.25); border-radius: 999px; overflow: hidden; }
+        .progress-inner { height: 100%; background: linear-gradient(90deg, #22d3ee, #6366f1); width: 0%; transition: width 0.4s ease; }
+        .tips { color: var(--text-secondary); line-height: 1.7; }
+    </style>
+</head>
+<body>
+    <main class="countdown-page">
+        <section class="hero">
+            <h1>特别倒计时</h1>
+            <p>跟踪 2025 新年倒计时与高考倒计时，保持节奏与目标感。页面自动刷新，确保秒级精度。</p>
+        </section>
+
+        <section class="countdown-grid">
+            <article class="countdown-card" id="newYearCard">
+                <h2><i class="fas fa-fireworks" aria-hidden="true"></i> 2025 新年倒计时</h2>
+                <div class="target-time">目标时间：2025-01-01 00:00 (UTC+8)</div>
+                <div class="timer" id="newYearTimer">计算中...</div>
+                <div class="progress-bar"><div class="progress-inner" id="newYearProgress"></div></div>
+                <p class="tips">适合跨年活动、品牌营销节点提醒或年度目标复盘。</p>
+            </article>
+
+            <article class="countdown-card" id="gaokaoCard">
+                <h2><i class="fas fa-user-graduate" aria-hidden="true"></i> 高考倒计时</h2>
+                <div class="target-time">目标时间：2025-06-07 09:00 (UTC+8)</div>
+                <div class="timer" id="gaokaoTimer">计算中...</div>
+                <div class="progress-bar"><div class="progress-inner" id="gaokaoProgress"></div></div>
+                <p class="tips">为备考安排复习节奏，合理分配冲刺时间。</p>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        const targets = {
+            newYear: {
+                target: new Date('2024-12-31T16:00:00Z'), // UTC+8 2025-01-01 00:00
+                start: new Date('2024-01-01T00:00:00+08:00'),
+                timerEl: document.getElementById('newYearTimer'),
+                barEl: document.getElementById('newYearProgress')
+            },
+            gaokao: {
+                target: new Date('2025-06-07T01:00:00Z'), // UTC+8 09:00
+                start: new Date('2024-09-01T00:00:00+08:00'),
+                timerEl: document.getElementById('gaokaoTimer'),
+                barEl: document.getElementById('gaokaoProgress')
+            }
+        };
+
+        function formatDuration(ms) {
+            if (ms <= 0) return '已到达目标时间！';
+            const totalSeconds = Math.floor(ms / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            return `${days} 天 ${String(hours).padStart(2, '0')} 小时 ${String(minutes).padStart(2, '0')} 分 ${String(seconds).padStart(2, '0')} 秒`;
+        }
+
+        function updateCountdown(key) {
+            const cfg = targets[key];
+            const now = new Date();
+            const remaining = cfg.target.getTime() - now.getTime();
+            cfg.timerEl.textContent = formatDuration(remaining);
+
+            const totalWindow = cfg.target.getTime() - cfg.start.getTime();
+            const progress = Math.min(100, Math.max(0, ((totalWindow - remaining) / totalWindow) * 100));
+            cfg.barEl.style.width = `${progress.toFixed(2)}%`;
+        }
+
+        function tick() {
+            updateCountdown('newYear');
+            updateCountdown('gaokao');
+        }
+
+        tick();
+        setInterval(tick, 1000);
+    </script>
+</body>
+</html>
