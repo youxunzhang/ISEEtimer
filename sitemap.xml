@@ -133,6 +133,30 @@
         <priority>0.8</priority>
     </url>
 
+    <!-- 城市时区速览 -->
+    <url>
+        <loc>https://www.iseetime.online/city-time-zones.html</loc>
+        <lastmod>2024-05-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.78</priority>
+    </url>
+
+    <!-- 中国节假日速查 -->
+    <url>
+        <loc>https://www.iseetime.online/china-holidays.html</loc>
+        <lastmod>2024-05-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.72</priority>
+    </url>
+
+    <!-- 特别倒计时 -->
+    <url>
+        <loc>https://www.iseetime.online/featured-countdowns.html</loc>
+        <lastmod>2024-05-22</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.82</priority>
+    </url>
+
     <!-- 网站地图 -->
     <url>
         <loc>https://www.iseetime.online/sitemap.html</loc>
