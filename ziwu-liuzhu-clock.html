@@ -48,6 +48,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        .ziwu-page {
+            width: min(1200px, 100%);
+            margin: 0 auto;
+            display: grid;
+            gap: 36px;
+        }
+
         .ziwu-hero {
             background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2), transparent 35%), linear-gradient(135deg, #f9f1df 0%, #f6e8ca 50%, #f4e2bb 100%);
             padding: 72px 24px;
@@ -502,6 +509,10 @@
                 font-size: 0.95rem;
             }
 
+            .ziwu-page {
+                gap: 28px;
+            }
+
             .ziwu-guide {
                 padding: 24px;
             }
@@ -623,77 +634,79 @@
 
         <!-- 主要内容区域 -->
         <main class="main-content" role="main">
-            <section class="ziwu-hero">
-                <h1><i class="fas fa-yin-yang"></i> 子午流注时钟</h1>
-                <p>中国传统医学认为，人体十二经络在昼夜之间依次旺盛，被称为“子午流注”。TimeMaster 将这一古老的时间观念以现代可视化方式呈现，实时显示当前所处的时辰、对应经络以及顺应节律的作息建议，帮助您把握一天之中的黄金调养窗口。</p>
-            </section>
+            <div class="ziwu-page">
+                <section class="ziwu-hero">
+                    <h1><i class="fas fa-yin-yang"></i> 子午流注时钟</h1>
+                    <p>中国传统医学认为，人体十二经络在昼夜之间依次旺盛，被称为“子午流注”。TimeMaster 将这一古老的时间观念以现代可视化方式呈现，实时显示当前所处的时辰、对应经络以及顺应节律的作息建议，帮助您把握一天之中的黄金调养窗口。</p>
+                </section>
 
-            <section class="ziwu-clock-section" aria-labelledby="ziwuClockTitle">
-                <div class="ziwu-clock-layout">
-                    <div class="ziwu-clock-wrapper" aria-live="polite">
-                        <div class="ziwu-clock-face" role="img" aria-labelledby="ziwuClockTitle">
-                            <ul class="clock-hours" id="ziwuHourMarks"></ul>
-                            <ul class="clock-meridians" id="ziwuMeridianMarks"></ul>
-                            <div class="ziwu-yinyang" aria-hidden="true"></div>
-                            <div class="ziwu-clock-pointer" id="ziwuPointer" aria-hidden="true"></div>
-                            <div class="ziwu-clock-center">
-                                <div class="current-time" id="ziwuCurrentTime">00:00:00</div>
-                                <div class="current-phrase" id="ziwuCurrentPhrase">当前时辰</div>
-                                <div class="current-segment" id="ziwuCurrentSegment">--</div>
+                <section class="ziwu-clock-section" aria-labelledby="ziwuClockTitle">
+                    <div class="ziwu-clock-layout">
+                        <div class="ziwu-clock-wrapper" aria-live="polite">
+                            <div class="ziwu-clock-face" role="img" aria-labelledby="ziwuClockTitle">
+                                <ul class="clock-hours" id="ziwuHourMarks"></ul>
+                                <ul class="clock-meridians" id="ziwuMeridianMarks"></ul>
+                                <div class="ziwu-yinyang" aria-hidden="true"></div>
+                                <div class="ziwu-clock-pointer" id="ziwuPointer" aria-hidden="true"></div>
+                                <div class="ziwu-clock-center">
+                                    <div class="current-time" id="ziwuCurrentTime">00:00:00</div>
+                                    <div class="current-phrase" id="ziwuCurrentPhrase">当前时辰</div>
+                                    <div class="current-segment" id="ziwuCurrentSegment">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ziwu-clock-legend">
+                            <h2 id="ziwuClockTitle"><i class="fas fa-circle-notch"></i> 子午流注实时解读</h2>
+                            <p>子午流注将 24 小时划分为十二个时辰，每个时辰持续两小时，对应一条经络的气血最旺。顺应这一节律作息，可以让身体的调节能力发挥到最佳状态。</p>
+                            <div class="current-segment-card" id="ziwuCurrentCard">
+                                <h3><i class="fas fa-clock"></i> 当前时段：<span id="ziwuCurrentTitle">--</span></h3>
+                                <div class="current-segment-meta" id="ziwuCurrentMeta"></div>
+                                <p class="current-suggestion" id="ziwuCurrentAdvice">请稍候，正在计算当前时辰…</p>
                             </div>
                         </div>
                     </div>
-                    <div class="ziwu-clock-legend">
-                        <h2 id="ziwuClockTitle"><i class="fas fa-circle-notch"></i> 子午流注实时解读</h2>
-                        <p>子午流注将 24 小时划分为十二个时辰，每个时辰持续两小时，对应一条经络的气血最旺。顺应这一节律作息，可以让身体的调节能力发挥到最佳状态。</p>
-                        <div class="current-segment-card" id="ziwuCurrentCard">
-                            <h3><i class="fas fa-clock"></i> 当前时段：<span id="ziwuCurrentTitle">--</span></h3>
-                            <div class="current-segment-meta" id="ziwuCurrentMeta"></div>
-                            <p class="current-suggestion" id="ziwuCurrentAdvice">请稍候，正在计算当前时辰…</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                </section>
 
-            <section aria-labelledby="ziwuTableTitle">
-                <h2 id="ziwuTableTitle"><i class="fas fa-list"></i> 十二时辰与经络旺盛时段</h2>
-                <p>下表总结了每个时辰的现代时间范围、对应经络以及作息建议。子午流注强调“顺时而养”，在恰当的时间做恰当的事情，身体就能借助自然节律恢复活力。</p>
-                <div class="ziwu-segment-grid" id="ziwuSegmentGrid"></div>
-            </section>
+                <section aria-labelledby="ziwuTableTitle">
+                    <h2 id="ziwuTableTitle"><i class="fas fa-list"></i> 十二时辰与经络旺盛时段</h2>
+                    <p>下表总结了每个时辰的现代时间范围、对应经络以及作息建议。子午流注强调“顺时而养”，在恰当的时间做恰当的事情，身体就能借助自然节律恢复活力。</p>
+                    <div class="ziwu-segment-grid" id="ziwuSegmentGrid"></div>
+                </section>
 
-            <section class="ziwu-guide" aria-labelledby="ziwuGuideTitle">
-                <h2 id="ziwuGuideTitle"><i class="fas fa-leaf"></i> 如何将子午流注应用到日常生活？</h2>
-                <ul class="guide-list">
-                    <li>
-                        <strong>建立与太阳同步的作息节律</strong>
-                        <p>保持固定的入睡与起床时间，尽量在子时前进入深睡，卯时顺势起床，让身体顺着胆肝到肺大肠的换班节奏自然过渡。</p>
-                    </li>
-                    <li>
-                        <strong>用餐与活动顺应经络高峰</strong>
-                        <p>辰时胃经旺，适合吃丰富营养的早餐；巳时脾经旺，有助于消化；午时心经旺，安排短暂午休守护心脏；申、酉时关注肾与膀胱，多喝温水协助代谢。</p>
-                    </li>
-                    <li>
-                        <strong>晚间渐进式放松，守护夜间修复</strong>
-                        <p>戌时心包经旺，可进行冥想、阅读等舒缓活动；亥时三焦经负责调度全身气机，此时应降低光线和声音刺激，为高质量睡眠做准备。</p>
-                    </li>
-                </ul>
-            </section>
+                <section class="ziwu-guide" aria-labelledby="ziwuGuideTitle">
+                    <h2 id="ziwuGuideTitle"><i class="fas fa-leaf"></i> 如何将子午流注应用到日常生活？</h2>
+                    <ul class="guide-list">
+                        <li>
+                            <strong>建立与太阳同步的作息节律</strong>
+                            <p>保持固定的入睡与起床时间，尽量在子时前进入深睡，卯时顺势起床，让身体顺着胆肝到肺大肠的换班节奏自然过渡。</p>
+                        </li>
+                        <li>
+                            <strong>用餐与活动顺应经络高峰</strong>
+                            <p>辰时胃经旺，适合吃丰富营养的早餐；巳时脾经旺，有助于消化；午时心经旺，安排短暂午休守护心脏；申、酉时关注肾与膀胱，多喝温水协助代谢。</p>
+                        </li>
+                        <li>
+                            <strong>晚间渐进式放松，守护夜间修复</strong>
+                            <p>戌时心包经旺，可进行冥想、阅读等舒缓活动；亥时三焦经负责调度全身气机，此时应降低光线和声音刺激，为高质量睡眠做准备。</p>
+                        </li>
+                    </ul>
+                </section>
 
-            <section class="ziwu-faq" aria-labelledby="ziwuFaqTitle">
-                <h2 id="ziwuFaqTitle"><i class="fas fa-question-circle"></i> 常见问题</h2>
-                <article class="faq-item">
-                    <h3>子午流注是否需要严格按照整点执行？</h3>
-                    <p>经络的旺盛是一段时间范围，并非瞬间切换。保持规律的作息、饮食和休息习惯，在对应时段内完成适宜的活动，即可顺势而为。</p>
-                </article>
-                <article class="faq-item">
-                    <h3>现代工作节奏与子午流注冲突怎么办？</h3>
-                    <p>可从“小调整”开始：例如在巳时安排水果加餐，在午时进行 15 分钟闭目休息，戌时减少屏幕时间。逐步建立身体对节律的感知，自然会形成稳定的生物钟。</p>
-                </article>
-                <article class="faq-item">
-                    <h3>经络养生是否等同于中药调理？</h3>
-                    <p>经络调养更强调生活方式的配合，包括作息、饮食、运动与情志。需要中药或针灸时，应咨询专业的中医师，根据个人体质定制方案。</p>
-                </article>
-            </section>
+                <section class="ziwu-faq" aria-labelledby="ziwuFaqTitle">
+                    <h2 id="ziwuFaqTitle"><i class="fas fa-question-circle"></i> 常见问题</h2>
+                    <article class="faq-item">
+                        <h3>子午流注是否需要严格按照整点执行？</h3>
+                        <p>经络的旺盛是一段时间范围，并非瞬间切换。保持规律的作息、饮食和休息习惯，在对应时段内完成适宜的活动，即可顺势而为。</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3>现代工作节奏与子午流注冲突怎么办？</h3>
+                        <p>可从“小调整”开始：例如在巳时安排水果加餐，在午时进行 15 分钟闭目休息，戌时减少屏幕时间。逐步建立身体对节律的感知，自然会形成稳定的生物钟。</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3>经络养生是否等同于中药调理？</h3>
+                        <p>经络调养更强调生活方式的配合，包括作息、饮食、运动与情志。需要中药或针灸时，应咨询专业的中医师，根据个人体质定制方案。</p>
+                    </article>
+                </section>
+            </div>
         </main>
     </div>
 
