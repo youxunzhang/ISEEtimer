@@ -54,6 +54,7 @@
                         <li><a href="wedding-countdown.html">Wedding Countdown</a></li>
                         <li><a href="exam-countdown.html">Exam Countdown</a></li>
                         <li><a href="birthday-countdown.html">Birthday Countdown</a></li>
+                        <li><a href="holiday-background-countdown.html">Holiday Background Countdown</a></li>
                         <li><a href="festival-countdown.html">Holiday & Festival Countdowns</a></li>
                         <li><a href="game.html">Time Guardian Mini Game</a></li>
                     </ul>
