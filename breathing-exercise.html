@@ -128,6 +128,114 @@
             color: #3b82f6;
         }
 
+        .breathing-timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.75rem;
+            text-align: center;
+        }
+
+        .breathing-visual {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breathing-circle {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.35), rgba(59, 130, 246, 0.15));
+            box-shadow: 0 18px 45px rgba(59, 130, 246, 0.25);
+            transform: scale(0.95);
+            transition: transform 1s ease, background 1s ease;
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.08);
+            background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.45), rgba(14, 165, 233, 0.25));
+        }
+
+        .breathing-circle.hold {
+            transform: scale(1.08);
+            background: radial-gradient(circle at 30% 30%, rgba(148, 163, 184, 0.4), rgba(100, 116, 139, 0.25));
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(0.92);
+            background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.35), rgba(30, 64, 175, 0.2));
+        }
+
+        .breathing-status {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            z-index: 1;
+        }
+
+        .breathing-status span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .breathing-status strong {
+            font-size: 3rem;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .breathing-unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .breathing-meta {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .breathing-round-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .breathing-progress {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.15);
+            overflow: hidden;
+        }
+
+        .breathing-progress-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #38bdf8 0%, #3b82f6 100%);
+            transition: width 0.4s ease;
+        }
+
+        .breathing-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .breathing-controls .btn {
+            min-width: 140px;
+        }
+
         @media (max-width: 768px) {
             .breathing-hero {
                 padding: 2.2rem;
@@ -139,6 +247,11 @@
 
             .breathing-card {
                 padding: 2rem;
+            }
+
+            .breathing-visual {
+                width: 200px;
+                height: 200px;
             }
         }
     </style>
@@ -252,11 +365,161 @@
                         做 5 轮
                     </div>
                 </section>
+
+                <section class="breathing-card">
+                    <h2>呼吸计时</h2>
+                    <div class="breathing-timer" aria-live="polite">
+                        <div class="breathing-visual">
+                            <div class="breathing-circle" id="breathingCircle" aria-hidden="true"></div>
+                            <div class="breathing-status">
+                                <span id="breathingPhase">准备开始</span>
+                                <strong id="breathingCountdown">4</strong>
+                                <span class="breathing-unit">秒</span>
+                            </div>
+                        </div>
+                        <div class="breathing-meta">
+                            <div class="breathing-round-label">第 <span id="breathingRound">1</span> / 5 轮</div>
+                            <div class="breathing-progress" aria-hidden="true">
+                                <div class="breathing-progress-bar" id="breathingProgress"></div>
+                            </div>
+                        </div>
+                        <div class="breathing-controls">
+                            <button class="btn btn-primary" id="breathingStart" type="button">开始</button>
+                            <button class="btn btn-secondary" id="breathingReset" type="button">重置</button>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
 
     <script src="dropdown.js"></script>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const phases = [
+                { label: '吸气', duration: 4, className: 'inhale' },
+                { label: '屏息', duration: 2, className: 'hold' },
+                { label: '呼气', duration: 6, className: 'exhale' }
+            ];
+            const totalRounds = 5;
+            const totalCycleDuration = phases.reduce((sum, phase) => sum + phase.duration, 0);
+            const totalDuration = totalRounds * totalCycleDuration;
+
+            const ui = {
+                circle: document.getElementById('breathingCircle'),
+                phase: document.getElementById('breathingPhase'),
+                countdown: document.getElementById('breathingCountdown'),
+                round: document.getElementById('breathingRound'),
+                progress: document.getElementById('breathingProgress'),
+                start: document.getElementById('breathingStart'),
+                reset: document.getElementById('breathingReset')
+            };
+
+            const state = {
+                running: false,
+                started: false,
+                phaseIndex: 0,
+                round: 1,
+                remaining: phases[0].duration,
+                intervalId: null
+            };
+
+            const updateProgress = () => {
+                const elapsed =
+                    (state.round - 1) * totalCycleDuration +
+                    phases.slice(0, state.phaseIndex).reduce((sum, phase) => sum + phase.duration, 0) +
+                    (phases[state.phaseIndex].duration - state.remaining);
+                const percentage = Math.min(100, (elapsed / totalDuration) * 100);
+                ui.progress.style.width = `${percentage}%`;
+            };
+
+            const updateUI = () => {
+                if (!state.started) {
+                    ui.phase.textContent = '准备开始';
+                    ui.circle.className = 'breathing-circle';
+                } else {
+                    const phase = phases[state.phaseIndex];
+                    ui.phase.textContent = phase.label;
+                    ui.circle.className = `breathing-circle ${phase.className}`;
+                }
+                ui.countdown.textContent = state.remaining.toString();
+                ui.round.textContent = state.round.toString();
+                updateProgress();
+            };
+
+            const advancePhase = () => {
+                if (state.phaseIndex < phases.length - 1) {
+                    state.phaseIndex += 1;
+                } else {
+                    state.phaseIndex = 0;
+                    state.round += 1;
+                }
+                state.remaining = phases[state.phaseIndex].duration;
+            };
+
+            const stopTimer = (completed) => {
+                state.running = false;
+                clearInterval(state.intervalId);
+                state.intervalId = null;
+                ui.start.textContent = completed ? '重新开始' : '继续';
+            };
+
+            const tick = () => {
+                if (state.remaining > 1) {
+                    state.remaining -= 1;
+                    updateUI();
+                    return;
+                }
+
+                if (state.phaseIndex === phases.length - 1 && state.round === totalRounds) {
+                    state.remaining = 0;
+                    updateUI();
+                    ui.phase.textContent = '完成';
+                    ui.circle.className = 'breathing-circle';
+                    ui.progress.style.width = '100%';
+                    stopTimer(true);
+                    state.started = false;
+                    return;
+                }
+
+                advancePhase();
+                updateUI();
+            };
+
+            const startTimer = () => {
+                if (state.running) {
+                    stopTimer(false);
+                    return;
+                }
+
+                state.running = true;
+                if (!state.started) {
+                    state.started = true;
+                    state.phaseIndex = 0;
+                    state.round = 1;
+                    state.remaining = phases[0].duration;
+                }
+                ui.start.textContent = '暂停';
+                updateUI();
+                state.intervalId = setInterval(tick, 1000);
+            };
+
+            const resetTimer = () => {
+                clearInterval(state.intervalId);
+                state.running = false;
+                state.started = false;
+                state.phaseIndex = 0;
+                state.round = 1;
+                state.remaining = phases[0].duration;
+                ui.start.textContent = '开始';
+                updateUI();
+            };
+
+            ui.start.addEventListener('click', startTimer);
+            ui.reset.addEventListener('click', resetTimer);
+            updateUI();
+        });
+    </script>
 </body>
 </html>
