@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>呼吸练习 | TimeMaster</title>
-    <meta name="description" content="简单的呼吸练习页面，按照 4-2-6 节奏呼吸，完成 5 轮放松练习。">
-    <meta name="keywords" content="呼吸练习,冥想,放松,4-2-6 呼吸">
+    <title>Breathing Exercise | TimeMaster</title>
+    <meta name="description" content="Follow a simple 4-2-6 breathing rhythm and complete 5 relaxing rounds.">
+    <meta name="keywords" content="breathing exercise, meditation, relaxation, 4-2-6 breathing">
     <meta name="author" content="TimeMaster">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://yourdomain.com/breathing-exercise.html">
+    <link rel="canonical" href="https://www.iseetime.online/breathing-exercise">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourdomain.com/breathing-exercise.html">
-    <meta property="og:title" content="呼吸练习 | TimeMaster">
-    <meta property="og:description" content="跟随 4-2-6 呼吸节奏，完成 5 轮放松练习。">
-    <meta property="og:image" content="https://yourdomain.com/og-breathing.jpg">
+    <meta property="og:url" content="https://www.iseetime.online/breathing-exercise">
+    <meta property="og:title" content="Breathing Exercise | TimeMaster">
+    <meta property="og:description" content="Follow the 4-2-6 breathing rhythm and complete 5 calming rounds.">
+    <meta property="og:image" content="https://www.iseetime.online/og-breathing.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yourdomain.com/breathing-exercise.html">
-    <meta property="twitter:title" content="呼吸练习 | TimeMaster">
-    <meta property="twitter:description" content="跟随 4-2-6 呼吸节奏，完成 5 轮放松练习。">
-    <meta property="twitter:image" content="https://yourdomain.com/og-breathing.jpg">
+    <meta property="twitter:url" content="https://www.iseetime.online/breathing-exercise">
+    <meta property="twitter:title" content="Breathing Exercise | TimeMaster">
+    <meta property="twitter:description" content="Follow the 4-2-6 breathing rhythm and complete 5 calming rounds.">
+    <meta property="twitter:image" content="https://www.iseetime.online/og-breathing.jpg">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -43,32 +43,35 @@
         }
 
         .breathing-main {
-            padding: 3.5rem 1.5rem 5rem;
+            padding: 1.5rem 1.5rem 2.5rem;
+            min-height: calc(100vh - 96px);
+            display: flex;
+            align-items: center;
         }
 
         .breathing-wrapper {
-            max-width: 1000px;
+            max-width: 1080px;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
         }
 
         .breathing-hero {
             background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 100%);
             color: #fff;
             border-radius: 28px;
-            padding: 3rem;
+            padding: 2.25rem;
             box-shadow: 0 28px 70px rgba(56, 189, 248, 0.35);
         }
 
         .breathing-hero h1 {
-            font-size: 2.6rem;
+            font-size: 2.2rem;
             margin-bottom: 1rem;
         }
 
         .breathing-hero p {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             max-width: 620px;
         }
@@ -76,14 +79,14 @@
         .breathing-card {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 24px;
-            padding: 2.5rem;
+            padding: 2rem;
             box-shadow: 0 18px 40px rgba(60, 90, 140, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .breathing-card h2 {
-            font-size: 1.6rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.45rem;
+            margin-bottom: 1rem;
             color: var(--text-primary);
         }
 
@@ -113,7 +116,7 @@
         }
 
         .breathing-rounds {
-            margin-top: 1.5rem;
+            margin-top: 1.1rem;
             padding: 1.2rem 1.6rem;
             border-radius: 16px;
             background: rgba(59, 130, 246, 0.12);
@@ -236,7 +239,30 @@
             min-width: 140px;
         }
 
+        .breathing-timer-card {
+            grid-row: span 2;
+        }
+
+        .breathing-timer-card .breathing-card {
+            height: 100%;
+        }
+
+        .breathing-card .breathing-timer {
+            height: 100%;
+            justify-content: space-between;
+        }
+
         @media (max-width: 768px) {
+            .breathing-main {
+                min-height: auto;
+                align-items: stretch;
+            }
+
+            .breathing-wrapper {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
             .breathing-hero {
                 padding: 2.2rem;
             }
@@ -254,67 +280,77 @@
                 height: 200px;
             }
         }
+
+        @media (max-width: 1024px) {
+            .breathing-main {
+                min-height: auto;
+            }
+
+            .breathing-timer-card {
+                grid-row: auto;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <nav class="navbar" role="navigation" aria-label="主导航">
+            <nav class="navbar" role="navigation" aria-label="Main navigation">
                 <div class="nav-brand">
                     <i class="fas fa-clock" aria-hidden="true"></i>
-                    <span>试金石 时间管理</span>
+                    <span>TimeMaster Timers</span>
                 </div>
                 <div class="nav-menu">
                     <div class="nav-dropdown">
                         <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-toolbox" aria-hidden="true"></i>
-                            计时工具
+                            Timing Tools
                             <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
                         </button>
                         <div class="dropdown-menu" id="toolsMenu" role="menu">
                             <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-desktop"></i>
-                                全屏倒计时器
+                                Fullscreen Countdown
                             </a>
                             <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
                                 <i class="fas fa-hourglass-start"></i>
-                                倒计时器
+                                Countdown Timer
                             </button>
                             <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
                                 <i class="fas fa-seedling"></i>
-                                番茄钟计时器
+                                Pomodoro Timer
                             </button>
                             <button class="dropdown-item nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
                                 <i class="fas fa-stopwatch"></i>
-                                秒表计时
+                                Stopwatch
                             </button>
                             <a href="game.html" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-gamepad"></i>
-                                时间守护者游戏
+                                Time Guardian Game
                             </a>
                             <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-globe"></i>
-                                世界时间工具
+                                World Time Tools
                             </a>
                             <a href="beijing-time.html" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-city"></i>
-                                北京时间
+                                Beijing Time
                             </a>
                             <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-calendar-days"></i>
-                                重大节日倒计时
+                                Festival Countdown
                             </a>
                             <a href="countdown-game.html" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-hourglass-half"></i>
-                                倒计时挑战
+                                Countdown Challenge
                             </a>
                             <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
                                 <i class="fas fa-calendar-alt"></i>
-                                节日倒计时
+                                Holiday Countdown
                             </a>
                             <a href="breathing-exercise.html" class="dropdown-item active" role="menuitem" aria-current="page">
                                 <i class="fas fa-wind"></i>
-                                呼吸练习
+                                Breathing Exercise
                             </a>
                         </div>
                     </div>
@@ -322,15 +358,15 @@
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">
                         <i class="fas fa-home"></i>
-                        主页
+                        Home
                     </a>
                     <a href="articles.html" class="nav-link">
                         <i class="fas fa-newspaper"></i>
-                        文章专栏
+                        Articles
                     </a>
                 </div>
                 <div class="nav-controls">
-                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                         <i class="fas fa-moon" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -340,52 +376,52 @@
         <main class="breathing-main">
             <div class="breathing-wrapper">
                 <section class="breathing-hero">
-                    <h1>把注意力放在呼吸上</h1>
-                    <p>跟随简洁的节奏提示，让呼吸自然流动。你可以坐在舒适的位置，放松肩颈，闭上眼睛或柔和地注视前方。</p>
+                    <h1>Bring your attention to your breath</h1>
+                    <p>Follow the gentle rhythm prompts and let your breathing settle. Sit comfortably, relax your shoulders, and softly focus your gaze or close your eyes.</p>
                 </section>
 
                 <section class="breathing-card">
-                    <h2>练习节奏</h2>
+                    <h2>Practice rhythm</h2>
                     <div class="breathing-steps">
                         <div class="step-item">
-                            <span>第一步</span>
-                            <strong>吸气 4 秒</strong>
+                            <span>Step 1</span>
+                            <strong>Inhale 4 seconds</strong>
                         </div>
                         <div class="step-item">
-                            <span>第二步</span>
-                            <strong>停 2 秒</strong>
+                            <span>Step 2</span>
+                            <strong>Hold 2 seconds</strong>
                         </div>
                         <div class="step-item">
-                            <span>第三步</span>
-                            <strong>呼气 6 秒</strong>
+                            <span>Step 3</span>
+                            <strong>Exhale 6 seconds</strong>
                         </div>
                     </div>
                     <div class="breathing-rounds">
                         <i class="fas fa-repeat"></i>
-                        做 5 轮
+                        Complete 5 rounds
                     </div>
                 </section>
 
-                <section class="breathing-card">
-                    <h2>呼吸计时</h2>
+                <section class="breathing-card breathing-timer-card">
+                    <h2>Breathing timer</h2>
                     <div class="breathing-timer" aria-live="polite">
                         <div class="breathing-visual">
                             <div class="breathing-circle" id="breathingCircle" aria-hidden="true"></div>
                             <div class="breathing-status">
-                                <span id="breathingPhase">准备开始</span>
+                                <span id="breathingPhase">Ready</span>
                                 <strong id="breathingCountdown">4</strong>
-                                <span class="breathing-unit">秒</span>
+                                <span class="breathing-unit">seconds</span>
                             </div>
                         </div>
                         <div class="breathing-meta">
-                            <div class="breathing-round-label">第 <span id="breathingRound">1</span> / 5 轮</div>
+                            <div class="breathing-round-label">Round <span id="breathingRound">1</span> / 5</div>
                             <div class="breathing-progress" aria-hidden="true">
                                 <div class="breathing-progress-bar" id="breathingProgress"></div>
                             </div>
                         </div>
                         <div class="breathing-controls">
-                            <button class="btn btn-primary" id="breathingStart" type="button">开始</button>
-                            <button class="btn btn-secondary" id="breathingReset" type="button">重置</button>
+                            <button class="btn btn-primary" id="breathingStart" type="button">Start</button>
+                            <button class="btn btn-secondary" id="breathingReset" type="button">Reset</button>
                         </div>
                     </div>
                 </section>
@@ -398,9 +434,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const phases = [
-                { label: '吸气', duration: 4, className: 'inhale' },
-                { label: '屏息', duration: 2, className: 'hold' },
-                { label: '呼气', duration: 6, className: 'exhale' }
+                { label: 'Inhale', duration: 4, className: 'inhale' },
+                { label: 'Hold', duration: 2, className: 'hold' },
+                { label: 'Exhale', duration: 6, className: 'exhale' }
             ];
             const totalRounds = 5;
             const totalCycleDuration = phases.reduce((sum, phase) => sum + phase.duration, 0);
@@ -436,7 +472,7 @@
 
             const updateUI = () => {
                 if (!state.started) {
-                    ui.phase.textContent = '准备开始';
+                    ui.phase.textContent = 'Ready';
                     ui.circle.className = 'breathing-circle';
                 } else {
                     const phase = phases[state.phaseIndex];
@@ -462,7 +498,7 @@
                 state.running = false;
                 clearInterval(state.intervalId);
                 state.intervalId = null;
-                ui.start.textContent = completed ? '重新开始' : '继续';
+                ui.start.textContent = completed ? 'Restart' : 'Resume';
             };
 
             const tick = () => {
@@ -475,7 +511,7 @@
                 if (state.phaseIndex === phases.length - 1 && state.round === totalRounds) {
                     state.remaining = 0;
                     updateUI();
-                    ui.phase.textContent = '完成';
+                    ui.phase.textContent = 'Complete';
                     ui.circle.className = 'breathing-circle';
                     ui.progress.style.width = '100%';
                     stopTimer(true);
@@ -500,7 +536,7 @@
                     state.round = 1;
                     state.remaining = phases[0].duration;
                 }
-                ui.start.textContent = '暂停';
+                ui.start.textContent = 'Pause';
                 updateUI();
                 state.intervalId = setInterval(tick, 1000);
             };
@@ -512,7 +548,7 @@
                 state.phaseIndex = 0;
                 state.round = 1;
                 state.remaining = phases[0].duration;
-                ui.start.textContent = '开始';
+                ui.start.textContent = 'Start';
                 updateUI();
             };
 
