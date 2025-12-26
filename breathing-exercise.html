@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>呼吸练习 | TimeMaster</title>
+    <meta name="description" content="简单的呼吸练习页面，按照 4-2-6 节奏呼吸，完成 5 轮放松练习。">
+    <meta name="keywords" content="呼吸练习,冥想,放松,4-2-6 呼吸">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/breathing-exercise.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/breathing-exercise.html">
+    <meta property="og:title" content="呼吸练习 | TimeMaster">
+    <meta property="og:description" content="跟随 4-2-6 呼吸节奏，完成 5 轮放松练习。">
+    <meta property="og:image" content="https://yourdomain.com/og-breathing.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/breathing-exercise.html">
+    <meta property="twitter:title" content="呼吸练习 | TimeMaster">
+    <meta property="twitter:description" content="跟随 4-2-6 呼吸节奏，完成 5 轮放松练习。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-breathing.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: radial-gradient(circle at 20% 20%, rgba(227, 245, 255, 0.8) 0%, rgba(216, 236, 255, 0.6) 40%, rgba(204, 223, 246, 0.5) 100%);
+            min-height: 100vh;
+        }
+
+        .breathing-main {
+            padding: 3.5rem 1.5rem 5rem;
+        }
+
+        .breathing-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .breathing-hero {
+            background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 100%);
+            color: #fff;
+            border-radius: 28px;
+            padding: 3rem;
+            box-shadow: 0 28px 70px rgba(56, 189, 248, 0.35);
+        }
+
+        .breathing-hero h1 {
+            font-size: 2.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .breathing-hero p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            max-width: 620px;
+        }
+
+        .breathing-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 18px 40px rgba(60, 90, 140, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .breathing-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .breathing-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .step-item {
+            padding: 1.5rem;
+            border-radius: 18px;
+            background: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .step-item span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .step-item strong {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .breathing-rounds {
+            margin-top: 1.5rem;
+            padding: 1.2rem 1.6rem;
+            border-radius: 16px;
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .breathing-rounds i {
+            color: #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .breathing-hero {
+                padding: 2.2rem;
+            }
+
+            .breathing-hero h1 {
+                font-size: 2rem;
+            }
+
+            .breathing-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar" role="navigation" aria-label="主导航">
+                <div class="nav-brand">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span>试金石 时间管理</span>
+                </div>
+                <div class="nav-menu">
+                    <div class="nav-dropdown">
+                        <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-toolbox" aria-hidden="true"></i>
+                            计时工具
+                            <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu" id="toolsMenu" role="menu">
+                            <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-desktop"></i>
+                                全屏倒计时器
+                            </a>
+                            <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
+                                <i class="fas fa-hourglass-start"></i>
+                                倒计时器
+                            </button>
+                            <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
+                                <i class="fas fa-seedling"></i>
+                                番茄钟计时器
+                            </button>
+                            <button class="dropdown-item nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
+                                <i class="fas fa-stopwatch"></i>
+                                秒表计时
+                            </button>
+                            <a href="game.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-gamepad"></i>
+                                时间守护者游戏
+                            </a>
+                            <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-globe"></i>
+                                世界时间工具
+                            </a>
+                            <a href="beijing-time.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-city"></i>
+                                北京时间
+                            </a>
+                            <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-calendar-days"></i>
+                                重大节日倒计时
+                            </a>
+                            <a href="countdown-game.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-hourglass-half"></i>
+                                倒计时挑战
+                            </a>
+                            <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-calendar-alt"></i>
+                                节日倒计时
+                            </a>
+                            <a href="breathing-exercise.html" class="dropdown-item active" role="menuitem" aria-current="page">
+                                <i class="fas fa-wind"></i>
+                                呼吸练习
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        主页
+                    </a>
+                    <a href="articles.html" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        文章专栏
+                    </a>
+                </div>
+                <div class="nav-controls">
+                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="breathing-main">
+            <div class="breathing-wrapper">
+                <section class="breathing-hero">
+                    <h1>把注意力放在呼吸上</h1>
+                    <p>跟随简洁的节奏提示，让呼吸自然流动。你可以坐在舒适的位置，放松肩颈，闭上眼睛或柔和地注视前方。</p>
+                </section>
+
+                <section class="breathing-card">
+                    <h2>练习节奏</h2>
+                    <div class="breathing-steps">
+                        <div class="step-item">
+                            <span>第一步</span>
+                            <strong>吸气 4 秒</strong>
+                        </div>
+                        <div class="step-item">
+                            <span>第二步</span>
+                            <strong>停 2 秒</strong>
+                        </div>
+                        <div class="step-item">
+                            <span>第三步</span>
+                            <strong>呼气 6 秒</strong>
+                        </div>
+                    </div>
+                    <div class="breathing-rounds">
+                        <i class="fas fa-repeat"></i>
+                        做 5 轮
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="dropdown.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
