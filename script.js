@@ -176,6 +176,9 @@ function toggleTheme() {
 }
 
 function updateThemeIcon() {
+    if (!elements.themeToggle) {
+        return;
+    }
     const icon = elements.themeToggle.querySelector('i');
     icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 }
@@ -183,7 +186,9 @@ function updateThemeIcon() {
 // 事件监听器
 function initializeEventListeners() {
     // 主题切换
-    elements.themeToggle.addEventListener('click', toggleTheme);
+    if (elements.themeToggle) {
+        elements.themeToggle.addEventListener('click', toggleTheme);
+    }
     
     // 标签页切换
     elements.navItems.forEach(item => {
@@ -205,37 +210,79 @@ function initializeEventListeners() {
     initializeDropdown();
     
     // 计时器事件
-    elements.startTimer.addEventListener('click', startTimer);
-    elements.pauseTimer.addEventListener('click', pauseTimer);
-    elements.resetTimer.addEventListener('click', resetTimer);
+    if (elements.startTimer) {
+        elements.startTimer.addEventListener('click', startTimer);
+    }
+    if (elements.pauseTimer) {
+        elements.pauseTimer.addEventListener('click', pauseTimer);
+    }
+    if (elements.resetTimer) {
+        elements.resetTimer.addEventListener('click', resetTimer);
+    }
     
     // 倒计时事件
-    elements.startCountdown.addEventListener('click', startCountdown);
-    elements.pauseCountdown.addEventListener('click', pauseCountdown);
-    elements.resetCountdown.addEventListener('click', resetCountdown);
+    if (elements.startCountdown) {
+        elements.startCountdown.addEventListener('click', startCountdown);
+    }
+    if (elements.pauseCountdown) {
+        elements.pauseCountdown.addEventListener('click', pauseCountdown);
+    }
+    if (elements.resetCountdown) {
+        elements.resetCountdown.addEventListener('click', resetCountdown);
+    }
     
     // 番茄钟事件
-    elements.startPomodoro.addEventListener('click', startPomodoro);
-    elements.pausePomodoro.addEventListener('click', pausePomodoro);
-    elements.resetPomodoro.addEventListener('click', resetPomodoro);
+    if (elements.startPomodoro) {
+        elements.startPomodoro.addEventListener('click', startPomodoro);
+    }
+    if (elements.pausePomodoro) {
+        elements.pausePomodoro.addEventListener('click', pausePomodoro);
+    }
+    if (elements.resetPomodoro) {
+        elements.resetPomodoro.addEventListener('click', resetPomodoro);
+    }
 
     // 秒表事件
-    elements.startStopwatch.addEventListener('click', startStopwatch);
-    elements.pauseStopwatch.addEventListener('click', pauseStopwatch);
-    elements.resetStopwatch.addEventListener('click', resetStopwatch);
+    if (elements.startStopwatch) {
+        elements.startStopwatch.addEventListener('click', startStopwatch);
+    }
+    if (elements.pauseStopwatch) {
+        elements.pauseStopwatch.addEventListener('click', pauseStopwatch);
+    }
+    if (elements.resetStopwatch) {
+        elements.resetStopwatch.addEventListener('click', resetStopwatch);
+    }
     
     // 输入框事件
-    elements.hourInput.addEventListener('change', updateTimerFromInputs);
-    elements.minuteInput.addEventListener('change', updateTimerFromInputs);
-    elements.secondInput.addEventListener('change', updateTimerFromInputs);
+    if (elements.hourInput) {
+        elements.hourInput.addEventListener('change', updateTimerFromInputs);
+    }
+    if (elements.minuteInput) {
+        elements.minuteInput.addEventListener('change', updateTimerFromInputs);
+    }
+    if (elements.secondInput) {
+        elements.secondInput.addEventListener('change', updateTimerFromInputs);
+    }
     
-    elements.countdownHourInput.addEventListener('change', updateCountdownFromInputs);
-    elements.countdownMinuteInput.addEventListener('change', updateCountdownFromInputs);
-    elements.countdownSecondInput.addEventListener('change', updateCountdownFromInputs);
+    if (elements.countdownHourInput) {
+        elements.countdownHourInput.addEventListener('change', updateCountdownFromInputs);
+    }
+    if (elements.countdownMinuteInput) {
+        elements.countdownMinuteInput.addEventListener('change', updateCountdownFromInputs);
+    }
+    if (elements.countdownSecondInput) {
+        elements.countdownSecondInput.addEventListener('change', updateCountdownFromInputs);
+    }
     
-    elements.workTime.addEventListener('change', updatePomodoroFromInputs);
-    elements.breakTime.addEventListener('change', updatePomodoroFromInputs);
-    elements.longBreakTime.addEventListener('change', updatePomodoroFromInputs);
+    if (elements.workTime) {
+        elements.workTime.addEventListener('change', updatePomodoroFromInputs);
+    }
+    if (elements.breakTime) {
+        elements.breakTime.addEventListener('change', updatePomodoroFromInputs);
+    }
+    if (elements.longBreakTime) {
+        elements.longBreakTime.addEventListener('change', updatePomodoroFromInputs);
+    }
 }
 
 // 标签页切换
@@ -271,6 +318,9 @@ function formatMilliseconds(milliseconds) {
 }
 
 function showNotification(message, duration = 3000) {
+    if (!elements.notification || !elements.notificationText) {
+        return;
+    }
     elements.notificationText.textContent = message;
     elements.notification.classList.add('show');
     
@@ -357,6 +407,9 @@ function resetTimer() {
 }
 
 function updateTimerDisplay() {
+    if (!elements.hours || !elements.minutes || !elements.seconds) {
+        return;
+    }
     const time = formatTime(timerTime);
     elements.hours.textContent = time.hours;
     elements.minutes.textContent = time.minutes;
@@ -451,6 +504,9 @@ function resetCountdown() {
 }
 
 function updateCountdownDisplay() {
+    if (!elements.countdownHours || !elements.countdownMinutes || !elements.countdownSeconds) {
+        return;
+    }
     const time = formatTime(countdownTime);
     elements.countdownHours.textContent = time.hours;
     elements.countdownMinutes.textContent = time.minutes;
@@ -605,29 +661,41 @@ function handlePomodoroComplete() {
 }
 
 function updatePomodoroDisplay() {
+    if (!elements.pomodoroMinutes || !elements.pomodoroSeconds || !elements.pomodoroLabel) {
+        return;
+    }
     const time = formatTime(pomodoroTime);
     elements.pomodoroMinutes.textContent = time.minutes;
     elements.pomodoroSeconds.textContent = time.seconds;
     
     // 更新进度条
     const progress = pomodoroTotal > 0 ? ((pomodoroTotal - pomodoroTime) / pomodoroTotal) * 100 : 0;
-    elements.pomodoroProgress.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+    if (elements.pomodoroProgress) {
+        elements.pomodoroProgress.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+    }
     
     // 更新进度文本
     const phaseText = pomodoroPhase === 'work' ? '专注' : pomodoroPhase === 'break' ? '休息' : '长休息';
-    elements.pomodoroProgressText.textContent = `第 ${pomodoroRound} 轮 - ${phaseText}`;
+    if (elements.pomodoroProgressText) {
+        elements.pomodoroProgressText.textContent = `第 ${pomodoroRound} 轮 - ${phaseText}`;
+    }
     
     // 根据剩余时间改变进度条颜色
-    if (progress > 80) {
-        elements.pomodoroProgress.style.backgroundColor = 'var(--success-color)';
-    } else if (progress > 50) {
-        elements.pomodoroProgress.style.backgroundColor = 'var(--warning-color)';
-    } else {
-        elements.pomodoroProgress.style.backgroundColor = 'var(--danger-color)';
+    if (elements.pomodoroProgress) {
+        if (progress > 80) {
+            elements.pomodoroProgress.style.backgroundColor = 'var(--success-color)';
+        } else if (progress > 50) {
+            elements.pomodoroProgress.style.backgroundColor = 'var(--warning-color)';
+        } else {
+            elements.pomodoroProgress.style.backgroundColor = 'var(--danger-color)';
+        }
     }
 }
 
 function updatePomodoroFromInputs() {
+    if (!elements.workTime) {
+        return;
+    }
     const workMinutes = parseInt(elements.workTime.value) || 25;
     pomodoroTotal = workMinutes * 60;
     pomodoroTime = pomodoroTotal;
@@ -638,6 +706,9 @@ function updatePomodoroFromInputs() {
 
 // 秒表功能
 function initializeStopwatch() {
+    if (!elements.startStopwatch || !elements.pauseStopwatch) {
+        return;
+    }
     // 确保秒表初始状态正确
     stopwatchRunning = false;
     stopwatchTime = 0;
@@ -715,6 +786,9 @@ function resetStopwatch() {
 }
 
 function updateStopwatchDisplay() {
+    if (!elements.stopwatchHours || !elements.stopwatchMinutes || !elements.stopwatchSeconds || !elements.stopwatchMilliseconds) {
+        return;
+    }
     const time = formatStopwatchTime(stopwatchTime);
     elements.stopwatchHours.textContent = time.hours;
     elements.stopwatchMinutes.textContent = time.minutes;
