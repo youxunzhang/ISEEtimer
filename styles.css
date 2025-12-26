@@ -96,11 +96,11 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.75rem;
     border-radius: 0.5rem;
     text-decoration: none;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     transition: all 0.3s ease;
     border: 1px solid transparent;
 }
@@ -124,7 +124,7 @@ body {
 }
 
 .nav-link i {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 /* 下拉菜单样式 */
