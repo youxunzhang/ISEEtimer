@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Countdown Hub | Global Holiday Timers | TimeMaster</title>
+    <meta name="description" content="Track the countdown to New Year's Day, Valentine's Day, Easter, Thanksgiving, Christmas, and more. Plan your celebrations with clear, real-time holiday timers.">
+    <meta name="keywords" content="holiday countdown, New Year countdown, Christmas countdown, Thanksgiving countdown, Easter countdown, Valentine's Day countdown">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/holiday-countdown-en.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/holiday-countdown-en.html">
+    <meta property="og:title" content="Holiday Countdown Hub | TimeMaster">
+    <meta property="og:description" content="Live holiday countdowns for New Year's, Easter, Thanksgiving, Christmas, and more.">
+    <meta property="og:image" content="https://yourdomain.com/og-holiday-countdown.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/holiday-countdown-en.html">
+    <meta property="twitter:title" content="Holiday Countdown Hub | TimeMaster">
+    <meta property="twitter:description" content="Plan every celebration with precise, real-time holiday countdowns.">
+    <meta property="twitter:image" content="https://yourdomain.com/og-holiday-countdown.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Holiday Countdown Hub",
+      "description": "Live countdowns to the most popular global holidays, with future dates and planning tips.",
+      "url": "https://yourdomain.com/holiday-countdown-en.html"
+    }
+    </script>
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .festival-hero {
+            background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 50%, #14b8a6 100%);
+            padding: 70px 20px;
+            border-radius: 24px;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 48px;
+            box-shadow: 0 25px 45px rgba(37, 99, 235, 0.35);
+        }
+
+        .festival-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .festival-hero p {
+            font-size: 1.25rem;
+            opacity: 0.92;
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .festival-intro {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
+            margin-bottom: 40px;
+        }
+
+        .festival-intro h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.75rem;
+            margin-bottom: 18px;
+            color: #1d4ed8;
+        }
+
+        .festival-intro p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            color: #4b5563;
+        }
+
+        .festival-category-nav {
+            position: sticky;
+            top: 92px;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 40px;
+            background: linear-gradient(120deg, rgba(59, 130, 246, 0.12), rgba(20, 184, 166, 0.12));
+            padding: 18px 22px;
+            border-radius: 22px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.08);
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .festival-category-nav::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .festival-category-nav::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.4);
+            border-radius: 999px;
+        }
+
+        .festival-category-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: #1d4ed8;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.2s ease;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            flex: 1 1 280px;
+            min-width: 240px;
+        }
+
+        .festival-category-link:focus-visible {
+            outline: 3px solid rgba(59, 130, 246, 0.35);
+            outline-offset: 4px;
+        }
+
+        .festival-category-link:hover,
+        .festival-category-link:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(37, 99, 235, 0.2);
+        }
+
+        .festival-category-link.active {
+            background: linear-gradient(135deg, #2563eb, #14b8a6);
+            color: #ffffff;
+            box-shadow: 0 20px 35px rgba(30, 64, 175, 0.4);
+            border-color: transparent;
+        }
+
+        .festival-category-link.active .category-meta {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .category-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.12);
+            color: #2563eb;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .festival-category-link.active .category-icon {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .category-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .category-title {
+            font-size: 1.05rem;
+            white-space: nowrap;
+        }
+
+        .category-meta {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e40af;
+            white-space: nowrap;
+        }
+
+        .category-arrow {
+            margin-left: auto;
+            color: #93c5fd;
+        }
+
+        .festival-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            margin-bottom: 40px;
+        }
+
+        .festival-category-section {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 26px;
+            padding: 32px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        .festival-category-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .festival-category-title {
+            font-size: 1.8rem;
+            color: #1e3a8a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .festival-category-description {
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .festival-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .festival-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .festival-card-header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .festival-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(37, 99, 235, 0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #2563eb;
+        }
+
+        .festival-card h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #111827;
+        }
+
+        .festival-tagline {
+            margin: 4px 0 0;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .festival-description {
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
+        .festival-countdown {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .countdown-block {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .countdown-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .countdown-label {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .festival-next-date {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .festival-upcoming {
+            background: rgba(59, 130, 246, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .festival-upcoming h4 {
+            margin: 0 0 12px;
+            color: #1e3a8a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .festival-upcoming-list {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 8px;
+            color: #4b5563;
+        }
+
+        .festival-tips,
+        .festival-faq {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+            margin-bottom: 32px;
+        }
+
+        .festival-tips h2,
+        .festival-faq h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1e3a8a;
+        }
+
+        .festival-tips ul {
+            margin: 18px 0 0;
+            padding-left: 20px;
+            display: grid;
+            gap: 12px;
+            color: #4b5563;
+        }
+
+        .festival-faq-item {
+            margin-top: 16px;
+        }
+
+        .festival-faq-item h3 {
+            margin-bottom: 8px;
+            color: #1d4ed8;
+        }
+
+        .festival-faq-item p {
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .festival-countdown {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .festival-category-section {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="nav-brand">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <span>TimeMaster</span>
+            </div>
+            <div class="nav-links">
+                <a href="holiday-countdown-en.html" class="nav-link active" aria-current="page">
+                    <i class="fas fa-calendar-days"></i>
+                    Holiday Countdown
+                </a>
+                <a href="exam-countdown.html" class="nav-link">
+                    <i class="fas fa-pen-ruler"></i>
+                    Exam Countdown
+                </a>
+                <a href="birthday-countdown.html" class="nav-link">
+                    <i class="fas fa-cake-candles"></i>
+                    Birthday Countdown
+                </a>
+                <a href="wedding-countdown.html" class="nav-link">
+                    <i class="fas fa-ring"></i>
+                    Wedding Countdown
+                </a>
+                <a href="fullscreen-countdown.html" class="nav-link">
+                    <i class="fas fa-desktop"></i>
+                    Fullscreen Countdown
+                </a>
+                <a href="world-time-tools.html" class="nav-link">
+                    <i class="fas fa-globe"></i>
+                    World Time Tools
+                </a>
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-hourglass-start"></i>
+                    Countdown Timer
+                </a>
+                <a href="festival-countdown.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    Festival Countdown (CN)
+                </a>
+                <a href="articles.html" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    Articles
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+        </header>
+
+        <main class="main-content" role="main">
+            <section class="festival-hero">
+                <h1><i class="fas fa-calendar-week"></i> Holiday Countdown Hub</h1>
+                <p>Count down to the biggest moments of the year—from New Year's Day to Christmas Eve. Plan travel, gifting, and celebrations with real-time holiday timers.</p>
+            </section>
+
+            <section class="festival-intro">
+                <h2><i class="fas fa-hourglass-half"></i> Why plan with holiday countdowns?</h2>
+                <p>Major holidays arrive fast. By tracking the days, hours, and minutes until each celebration, you can lock in travel, reserve venues, and schedule reminders early.</p>
+                <p>This hub bundles the most searched global celebrations, with future dates and a live countdown for every holiday.</p>
+            </section>
+
+            <nav class="festival-category-nav" id="festivalCategoryNav" aria-label="Holiday category navigation"></nav>
+
+            <div id="festivalSections" class="festival-sections" aria-live="polite"></div>
+
+            <section class="festival-tips">
+                <h2><i class="fas fa-lightbulb"></i> Smart planning tips</h2>
+                <ul>
+                    <li><i class="fas fa-plane"></i> Book flights and hotels 6–10 weeks ahead for the best holiday prices.</li>
+                    <li><i class="fas fa-gift"></i> Create a gift list early to avoid last-minute shipping stress.</li>
+                    <li><i class="fas fa-utensils"></i> Reserve dining and event venues before the seasonal rush begins.</li>
+                    <li><i class="fas fa-camera"></i> Plan content, family photos, or brand activations around the countdown peaks.</li>
+                    <li><i class="fas fa-bell"></i> Add reminders for task deadlines (decorations, invitations, travel checklists).</li>
+                </ul>
+            </section>
+
+            <section class="festival-faq">
+                <h2>FAQ</h2>
+                <div class="festival-faq-item">
+                    <h3>How are holiday dates calculated?</h3>
+                    <p>Fixed-date holidays (like Christmas) stay on the same calendar day each year. Moveable holidays (like Easter and Thanksgiving) follow official calendar rules and are updated for the next five years.</p>
+                </div>
+                <div class="festival-faq-item">
+                    <h3>Can I use this countdown in my own planning?</h3>
+                    <p>Absolutely. Save this page, or copy key dates into your calendar so you can get notifications ahead of each event.</p>
+                </div>
+                <div class="festival-faq-item">
+                    <h3>Will this work in my time zone?</h3>
+                    <p>Yes. The countdown runs on your local device time, so the timer always reflects your local time zone.</p>
+                </div>
+            </section>
+        </main>
+
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark this page">
+            <i class="fas fa-bookmark"></i>
+        </button>
+
+        <button class="share-btn" id="shareBtn" aria-label="Share this page">
+            <i class="fas fa-share-alt"></i>
+        </button>
+
+        <div class="share-panel" id="sharePanel">
+            <h3>Share on social media</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-button" data-platform="wechat" aria-label="Share on WeChat">
+                    <i class="fab fa-weixin"></i>
+                    <span>WeChat</span>
+                </a>
+                <a href="#" class="share-button" data-platform="weibo" aria-label="Share on Weibo">
+                    <i class="fab fa-weibo"></i>
+                    <span>Weibo</span>
+                </a>
+                <a href="#" class="share-button" data-platform="qq" aria-label="Share on QQ">
+                    <i class="fab fa-qq"></i>
+                    <span>QQ</span>
+                </a>
+                <a href="#" class="share-button" data-platform="facebook" aria-label="Share on Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-button" data-platform="twitter" aria-label="Share on Twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>X (Twitter)</span>
+                </a>
+                <a href="#" class="share-button" data-platform="linkedin" aria-label="Share on LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const festivalCategories = [
+            {
+                id: 'global',
+                title: 'Global Highlights',
+                description: 'Universally celebrated holidays that anchor the global calendar and inspire travel, gifting, and reflection.',
+                icon: 'fa-earth-americas'
+            },
+            {
+                id: 'family',
+                title: 'Family & Friends',
+                description: 'Moments built around loved ones, heartfelt traditions, and community gatherings.',
+                icon: 'fa-heart'
+            },
+            {
+                id: 'seasonal',
+                title: 'Seasonal Moments',
+                description: 'Seasonal anchors that shape campaigns, travel plans, and year-end festivities.',
+                icon: 'fa-snowflake'
+            }
+        ];
+
+        const festivals = [
+            {
+                id: 'newYear',
+                name: "New Year's Day",
+                icon: 'fa-fireworks',
+                tagline: 'Fresh start for a brand-new year',
+                description: 'Kick off the year with resolutions, celebrations, and the excitement of a clean slate.',
+                category: 'global',
+                occurrences: [
+                    { date: '2024-01-01T00:00:00', label: '2024: January 1 (Monday)' },
+                    { date: '2025-01-01T00:00:00', label: '2025: January 1 (Wednesday)' },
+                    { date: '2026-01-01T00:00:00', label: '2026: January 1 (Thursday)' },
+                    { date: '2027-01-01T00:00:00', label: '2027: January 1 (Friday)' },
+                    { date: '2028-01-01T00:00:00', label: '2028: January 1 (Saturday)' }
+                ]
+            },
+            {
+                id: 'christmas',
+                name: 'Christmas Day',
+                icon: 'fa-tree',
+                tagline: 'The season of giving and celebration',
+                description: 'Plan gift exchanges, family reunions, and winter getaways around this global favorite holiday.',
+                category: 'global',
+                occurrences: [
+                    { date: '2024-12-25T00:00:00', label: '2024: December 25 (Wednesday)' },
+                    { date: '2025-12-25T00:00:00', label: '2025: December 25 (Thursday)' },
+                    { date: '2026-12-25T00:00:00', label: '2026: December 25 (Friday)' },
+                    { date: '2027-12-25T00:00:00', label: '2027: December 25 (Saturday)' },
+                    { date: '2028-12-25T00:00:00', label: '2028: December 25 (Monday)' }
+                ]
+            },
+            {
+                id: 'valentines',
+                name: "Valentine's Day",
+                icon: 'fa-heart',
+                tagline: 'A day for love notes and meaningful gestures',
+                description: 'Ideal for planning dates, campaigns, and heartfelt surprises for the people you care about.',
+                category: 'family',
+                occurrences: [
+                    { date: '2024-02-14T00:00:00', label: '2024: February 14 (Wednesday)' },
+                    { date: '2025-02-14T00:00:00', label: '2025: February 14 (Friday)' },
+                    { date: '2026-02-14T00:00:00', label: '2026: February 14 (Saturday)' },
+                    { date: '2027-02-14T00:00:00', label: '2027: February 14 (Sunday)' },
+                    { date: '2028-02-14T00:00:00', label: '2028: February 14 (Monday)' }
+                ]
+            },
+            {
+                id: 'mothersDay',
+                name: "Mother's Day",
+                icon: 'fa-people-group',
+                tagline: 'Celebrate moms, mentors, and caregivers',
+                description: 'A heartfelt reminder to plan brunches, calls, and special gifts for the people who raised you.',
+                category: 'family',
+                occurrences: [
+                    { date: '2024-05-12T00:00:00', label: '2024: May 12 (Sunday)' },
+                    { date: '2025-05-11T00:00:00', label: '2025: May 11 (Sunday)' },
+                    { date: '2026-05-10T00:00:00', label: '2026: May 10 (Sunday)' },
+                    { date: '2027-05-09T00:00:00', label: '2027: May 9 (Sunday)' },
+                    { date: '2028-05-14T00:00:00', label: '2028: May 14 (Sunday)' }
+                ]
+            },
+            {
+                id: 'easter',
+                name: 'Easter Sunday',
+                icon: 'fa-egg',
+                tagline: 'Spring celebrations and fresh beginnings',
+                description: 'Plan egg hunts, spring brunches, and seasonal promotions around Easter weekend.',
+                category: 'seasonal',
+                occurrences: [
+                    { date: '2024-03-31T00:00:00', label: '2024: March 31 (Sunday)' },
+                    { date: '2025-04-20T00:00:00', label: '2025: April 20 (Sunday)' },
+                    { date: '2026-04-05T00:00:00', label: '2026: April 5 (Sunday)' },
+                    { date: '2027-03-28T00:00:00', label: '2027: March 28 (Sunday)' },
+                    { date: '2028-04-16T00:00:00', label: '2028: April 16 (Sunday)' }
+                ]
+            },
+            {
+                id: 'independenceDay',
+                name: 'Independence Day (US)',
+                icon: 'fa-flag-usa',
+                tagline: 'Fireworks, parades, and summer gatherings',
+                description: 'A major summer milestone for travel plans, outdoor events, and seasonal campaigns.',
+                category: 'seasonal',
+                occurrences: [
+                    { date: '2024-07-04T00:00:00', label: '2024: July 4 (Thursday)' },
+                    { date: '2025-07-04T00:00:00', label: '2025: July 4 (Friday)' },
+                    { date: '2026-07-04T00:00:00', label: '2026: July 4 (Saturday)' },
+                    { date: '2027-07-04T00:00:00', label: '2027: July 4 (Sunday)' },
+                    { date: '2028-07-04T00:00:00', label: '2028: July 4 (Tuesday)' }
+                ]
+            },
+            {
+                id: 'halloween',
+                name: 'Halloween',
+                icon: 'fa-ghost',
+                tagline: 'Costumes, candy, and spooky season energy',
+                description: 'Perfect for costume planning, autumn events, and seasonal content calendars.',
+                category: 'seasonal',
+                occurrences: [
+                    { date: '2024-10-31T00:00:00', label: '2024: October 31 (Thursday)' },
+                    { date: '2025-10-31T00:00:00', label: '2025: October 31 (Friday)' },
+                    { date: '2026-10-31T00:00:00', label: '2026: October 31 (Saturday)' },
+                    { date: '2027-10-31T00:00:00', label: '2027: October 31 (Sunday)' },
+                    { date: '2028-10-31T00:00:00', label: '2028: October 31 (Tuesday)' }
+                ]
+            },
+            {
+                id: 'thanksgiving',
+                name: 'Thanksgiving (US)',
+                icon: 'fa-drumstick-bite',
+                tagline: 'Gratitude, family dinners, and travel season',
+                description: 'A key holiday for reunions and end-of-year planning, especially for travel and retail.',
+                category: 'seasonal',
+                occurrences: [
+                    { date: '2024-11-28T00:00:00', label: '2024: November 28 (Thursday)' },
+                    { date: '2025-11-27T00:00:00', label: '2025: November 27 (Thursday)' },
+                    { date: '2026-11-26T00:00:00', label: '2026: November 26 (Thursday)' },
+                    { date: '2027-11-25T00:00:00', label: '2027: November 25 (Thursday)' },
+                    { date: '2028-11-23T00:00:00', label: '2028: November 23 (Thursday)' }
+                ]
+            }
+        ];
+
+        const festivalNav = document.getElementById('festivalCategoryNav');
+        const festivalSectionsContainer = document.getElementById('festivalSections');
+
+        function createFestivalSections() {
+            if (!festivalNav || !festivalSectionsContainer) {
+                return;
+            }
+            festivalCategories.forEach(category => {
+                const navLink = document.createElement('a');
+                navLink.className = 'festival-category-link';
+                navLink.href = `#category-${category.id}`;
+                navLink.setAttribute('data-category', category.id);
+                const categoryFestivalCount = festivals.filter(festival => festival.category === category.id).length;
+                navLink.innerHTML = `
+                    <span class="category-icon" aria-hidden="true">
+                        <i class="fas ${category.icon}"></i>
+                    </span>
+                    <span class="category-text">
+                        <span class="category-title">${category.title}</span>
+                        <span class="category-meta">${categoryFestivalCount} holidays</span>
+                    </span>
+                    <span class="category-arrow" aria-hidden="true">
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                `;
+                navLink.addEventListener('click', () => {
+                    festivalNav.querySelectorAll('.festival-category-link').forEach(link => link.classList.remove('active'));
+                    navLink.classList.add('active');
+                });
+                festivalNav.appendChild(navLink);
+
+                const section = document.createElement('section');
+                section.className = 'festival-category-section';
+                section.id = `category-${category.id}`;
+                section.setAttribute('aria-labelledby', `heading-${category.id}`);
+                section.innerHTML = `
+                    <div class="festival-category-header">
+                        <h2 class="festival-category-title" id="heading-${category.id}">
+                            <i class="fas ${category.icon}" aria-hidden="true"></i>
+                            ${category.title}
+                        </h2>
+                        <p class="festival-category-description">${category.description}</p>
+                    </div>
+                    <div class="festival-grid" data-category-grid="${category.id}" role="list"></div>
+                `;
+                festivalSectionsContainer.appendChild(section);
+            });
+
+            const firstLink = festivalNav.querySelector('.festival-category-link');
+            if (firstLink) {
+                firstLink.classList.add('active');
+            }
+        }
+
+        function renderFestivalCards() {
+            festivals.forEach(festival => {
+                const card = document.createElement('article');
+                card.className = 'festival-card';
+                card.setAttribute('data-festival', festival.id);
+                card.setAttribute('role', 'listitem');
+                card.innerHTML = `
+                    <div class="festival-card-header">
+                        <div class="festival-icon" aria-hidden="true">
+                            <i class="fas ${festival.icon}"></i>
+                        </div>
+                        <div>
+                            <h3>${festival.name}</h3>
+                            <p class="festival-tagline">${festival.tagline}</p>
+                        </div>
+                    </div>
+                    <p class="festival-description">${festival.description}</p>
+                    <div class="festival-countdown" role="group" aria-label="${festival.name} countdown">
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="days">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="hours">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="minutes">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-block">
+                            <span class="countdown-value" data-unit="seconds">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                    <div class="festival-next-date">Next date: <span class="next-date-text">Calculating...</span></div>
+                    <div class="festival-upcoming">
+                        <h4><i class="fas fa-calendar-alt"></i> Upcoming dates</h4>
+                        <ul class="festival-upcoming-list">
+                            ${festival.occurrences.map(occurrence => `<li><i class=\"fas fa-clock\"></i>${occurrence.label}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                const targetGrid = document.querySelector(`[data-category-grid="${festival.category}"]`);
+                if (targetGrid) {
+                    targetGrid.appendChild(card);
+                }
+            });
+        }
+
+        function setupCategoryObserver() {
+            if (!festivalNav) {
+                return;
+            }
+            if (!('IntersectionObserver' in window)) {
+                return;
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const targetId = entry.target.id.replace('category-', '');
+                    const activeLink = festivalNav.querySelector('.festival-category-link.active');
+                    if (activeLink && activeLink.dataset.category === targetId) return;
+                    festivalNav.querySelectorAll('.festival-category-link').forEach(link => link.classList.remove('active'));
+                    const matchedLink = festivalNav.querySelector(`.festival-category-link[data-category="${targetId}"]`);
+                    if (matchedLink) {
+                        matchedLink.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            document.querySelectorAll('.festival-category-section').forEach(section => observer.observe(section));
+        }
+
+        function getNextOccurrence(festival) {
+            const now = new Date();
+            for (const occurrence of festival.occurrences) {
+                const occurrenceDate = new Date(occurrence.date);
+                if (occurrenceDate.getTime() - now.getTime() > 0) {
+                    return { target: occurrenceDate, label: occurrence.label };
+                }
+            }
+            const lastOccurrence = festival.occurrences[festival.occurrences.length - 1];
+            return lastOccurrence ? { target: new Date(lastOccurrence.date), label: lastOccurrence.label } : null;
+        }
+
+        function padNumber(value) {
+            return value.toString().padStart(2, '0');
+        }
+
+        function updateCountdowns() {
+            festivals.forEach(festival => {
+                const card = document.querySelector(`[data-festival="${festival.id}"]`);
+                if (!card) return;
+
+                if (!festival.currentTarget || festival.currentTarget.getTime() - Date.now() <= 0) {
+                    const next = getNextOccurrence(festival);
+                    festival.currentTarget = next ? next.target : null;
+                    festival.currentLabel = next ? next.label : 'Awaiting updates';
+                }
+
+                const nextDateElement = card.querySelector('.next-date-text');
+                if (festival.currentLabel) {
+                    nextDateElement.textContent = festival.currentLabel;
+                }
+
+                if (!festival.currentTarget) {
+                    const values = card.querySelectorAll('.countdown-value');
+                    values.forEach(value => value.textContent = '--');
+                    return;
+                }
+
+                const now = new Date();
+                const diff = festival.currentTarget.getTime() - now.getTime();
+
+                if (diff <= 0) {
+                    const values = card.querySelectorAll('.countdown-value');
+                    values.forEach(value => value.textContent = '00');
+                    nextDateElement.textContent = 'Happening now — check back for the next date.';
+                    festival.currentTarget = null;
+                    return;
+                }
+
+                const totalSeconds = Math.floor(diff / 1000);
+                const days = Math.floor(totalSeconds / (24 * 3600));
+                const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                card.querySelector('[data-unit="days"]').textContent = padNumber(days);
+                card.querySelector('[data-unit="hours"]').textContent = padNumber(hours);
+                card.querySelector('[data-unit="minutes"]').textContent = padNumber(minutes);
+                card.querySelector('[data-unit="seconds"]').textContent = padNumber(seconds);
+            });
+        }
+
+        function initializeCountdowns() {
+            createFestivalSections();
+            renderFestivalCards();
+            setupCategoryObserver();
+            festivals.forEach(festival => {
+                const next = getNextOccurrence(festival);
+                festival.currentTarget = next ? next.target : null;
+                festival.currentLabel = next ? next.label : 'Awaiting updates';
+            });
+            updateCountdowns();
+            setInterval(updateCountdowns, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCountdowns();
+
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const sharePanel = document.getElementById('sharePanel');
+            const shareButtons = document.querySelectorAll('.share-button');
+
+            if (localStorage.getItem('bookmarked-holiday') === 'true') {
+                bookmarkBtn.classList.add('bookmarked');
+            }
+
+            bookmarkBtn.addEventListener('click', () => {
+                const isBookmarked = bookmarkBtn.classList.toggle('bookmarked');
+                localStorage.setItem('bookmarked-holiday', isBookmarked.toString());
+            });
+
+            shareBtn.addEventListener('click', () => {
+                sharePanel.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!sharePanel.contains(event.target) && !shareBtn.contains(event.target)) {
+                    sharePanel.classList.remove('show');
+                }
+            });
+
+            const pageTitle = document.title;
+            const pageUrl = window.location.href;
+
+            shareButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const platform = button.getAttribute('data-platform');
+                    let shareUrl = '';
+
+                    switch(platform) {
+                        case 'wechat':
+                            alert('Use your browser share option or copy the link into WeChat.');
+                            break;
+                        case 'weibo':
+                            shareUrl = `https://service.weibo.com/share/share.php?title=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'qq':
+                            shareUrl = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`;
+                            break;
+                        case 'facebook':
+                            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'twitter':
+                            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                        case 'linkedin':
+                            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+                            break;
+                    }
+
+                    if (shareUrl) {
+                        window.open(shareUrl, '_blank', 'width=640,height=480');
+                        sharePanel.classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>
