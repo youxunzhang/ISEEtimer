@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5RTZHPKYDH"></script>
@@ -15,9 +15,9 @@
     <meta name="google-adsense-account" content="ca-pub-8794607118520437">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2027 新年倒计时 | TimeMaster</title>
-    <meta name="description" content="2027 新年倒计时页面，支持多种背景切换，实时显示距离 2027 年的剩余时间。">
-    <meta name="keywords" content="2027 新年倒计时,跨年倒计时,新年倒计时,背景切换">
+    <title>2027 New Year Countdown | TimeMaster</title>
+    <meta name="description" content="Count down to New Year 2027 with live time remaining and mood-setting background themes.">
+    <meta name="keywords" content="2027 New Year countdown, New Year countdown, background themes, TimeMaster">
     <meta name="author" content="TimeMaster">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://yourdomain.com/">
@@ -25,15 +25,15 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:title" content="2027 新年倒计时 | TimeMaster">
-    <meta property="og:description" content="2027 新年倒计时页面，支持多种背景切换，实时显示距离 2027 年的剩余时间。">
+    <meta property="og:title" content="2027 New Year Countdown | TimeMaster">
+    <meta property="og:description" content="Count down to New Year 2027 with live time remaining and mood-setting background themes.">
     <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yourdomain.com/">
-    <meta property="twitter:title" content="2027 新年倒计时 | TimeMaster">
-    <meta property="twitter:description" content="2027 新年倒计时页面，支持多种背景切换，实时显示距离 2027 年的剩余时间。">
+    <meta property="twitter:title" content="2027 New Year Countdown | TimeMaster">
+    <meta property="twitter:description" content="Count down to New Year 2027 with live time remaining and mood-setting background themes.">
     <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
 
     <!-- Favicon -->
@@ -45,12 +45,14 @@
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "2027 新年倒计时",
-      "description": "2027 新年倒计时页面，支持多种背景切换。",
+      "name": "2027 New Year Countdown",
+      "description": "A New Year 2027 countdown page with background themes.",
       "url": "https://yourdomain.com/"
     }
     </script>
 
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -78,17 +80,48 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            padding: 24px 20px 40px;
+        }
+
+        .page-wrapper {
+            width: min(1200px, 100%);
+            margin: 0 auto;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
+            flex-direction: column;
+            gap: 28px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            width: 100%;
         }
 
         .page-shell {
-            width: min(1200px, 100%);
             display: grid;
             gap: 24px;
             grid-template-columns: minmax(0, 1fr);
+        }
+
+        .navbar {
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-link.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .nav-link.active:hover {
+            background-color: #4c51bf;
+        }
+
+        .dropdown-toggle:hover,
+        .nav-link:hover {
+            color: var(--accent);
         }
 
         .hero {
@@ -236,51 +269,125 @@
     </style>
 </head>
 <body>
-    <main class="page-shell">
-        <div class="hero">
-            <section class="countdown-card" aria-live="polite">
-                <h1>距离 2027 新年还有</h1>
-                <p>珍惜时间，把握当下，一起迎接全新的 2027 年。</p>
-                <div class="countdown-grid">
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="days">00</span>
-                        <span class="countdown-label">天</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="hours">00</span>
-                        <span class="countdown-label">时</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="minutes">00</span>
-                        <span class="countdown-label">分</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="seconds">00</span>
-                        <span class="countdown-label">秒</span>
+    <div class="page-wrapper">
+        <header class="page-header">
+            <nav class="navbar" role="navigation" aria-label="Main navigation">
+                <div class="nav-brand">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span>TimeMaster</span>
+                </div>
+                <div class="nav-menu">
+                    <div class="nav-dropdown">
+                        <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-toolbox" aria-hidden="true"></i>
+                            Time Tools
+                            <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu" id="toolsMenu" role="menu">
+                            <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-desktop"></i>
+                                Fullscreen Countdown
+                            </a>
+                            <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
+                                <i class="fas fa-hourglass-start"></i>
+                                Countdown Timer
+                            </button>
+                            <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
+                                <i class="fas fa-seedling"></i>
+                                Pomodoro Timer
+                            </button>
+                            <button class="dropdown-item nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
+                                <i class="fas fa-stopwatch"></i>
+                                Stopwatch
+                            </button>
+                            <a href="game.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-gamepad"></i>
+                                Time Guardian Game
+                            </a>
+                            <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-globe"></i>
+                                World Time Tools
+                            </a>
+                            <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-calendar-days"></i>
+                                Major Holiday Countdown
+                            </a>
+                            <a href="countdown-game.html" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-hourglass-half"></i>
+                                Countdown Challenge
+                            </a>
+                            <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-calendar-alt"></i>
+                                Holiday Countdowns
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="countdown-footer">
-                    <i class="fas fa-fireworks" aria-hidden="true"></i>
-                    Happy New Year 2027!
-                    <i class="fas fa-fireworks" aria-hidden="true"></i>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <a href="articles.html" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        Articles
+                    </a>
                 </div>
-            </section>
+                <div class="nav-controls">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
 
-            <aside class="background-panel" aria-label="背景选择">
-                <h2>选择背景</h2>
-                <p>根据心情切换背景主题，营造不同的跨年氛围。</p>
-                <div class="background-options" role="list">
-                    <button class="background-option active" type="button" data-background="default">默认</button>
-                    <button class="background-option" type="button" data-background="nature">自然</button>
-                    <button class="background-option" type="button" data-background="city">城市</button>
-                    <button class="background-option" type="button" data-background="space">太空</button>
-                    <button class="background-option" type="button" data-background="ocean">海洋</button>
-                </div>
-            </aside>
-        </div>
-        <p class="page-note">2027 年 1 月 1 日 00:00:00（本地时间）准时跨年。</p>
-    </main>
+        <main class="page-shell">
+            <div class="hero">
+                <section class="countdown-card" aria-live="polite">
+                    <h1>Time until New Year 2027</h1>
+                    <p>Celebrate every moment and ring in 2027 together.</p>
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="days">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="hours">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="minutes">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="seconds">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                    <div class="countdown-footer">
+                        <i class="fas fa-fireworks" aria-hidden="true"></i>
+                        Happy New Year 2027!
+                        <i class="fas fa-fireworks" aria-hidden="true"></i>
+                    </div>
+                </section>
 
+                <aside class="background-panel" aria-label="Background selection">
+                    <h2>Pick a background</h2>
+                    <p>Switch themes to match the mood for your New Year countdown.</p>
+                    <div class="background-options" role="list">
+                        <button class="background-option active" type="button" data-background="default">Default</button>
+                        <button class="background-option" type="button" data-background="nature">Nature</button>
+                        <button class="background-option" type="button" data-background="city">City</button>
+                        <button class="background-option" type="button" data-background="space">Space</button>
+                        <button class="background-option" type="button" data-background="ocean">Ocean</button>
+                    </div>
+                </aside>
+            </div>
+            <p class="page-note">Counting down to Jan 1, 2027 at 00:00:00 (local time).</p>
+        </main>
+    </div>
+
+    <script src="dropdown.js" defer></script>
     <script>
         const backgrounds = {
             default: "linear-gradient(135deg, #1f2937 0%, #0f172a 100%)",
