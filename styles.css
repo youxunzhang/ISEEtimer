@@ -65,6 +65,8 @@ body {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .nav-brand {
@@ -83,13 +85,17 @@ body {
 .nav-menu {
     display: flex;
     gap: 0.5rem;
+    flex: 1 1 220px;
+    justify-content: center;
 }
 
 .nav-links {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    margin-left: 2rem;
+    flex: 1 1 220px;
+    justify-content: flex-end;
+    margin-left: 0;
 }
 
 .nav-link {
@@ -257,6 +263,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex: 0 0 auto;
 }
 
 .theme-toggle {
