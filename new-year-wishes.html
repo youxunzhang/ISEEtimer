@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新年祝福页 | New Year Wishes | TimeMaster</title>
+    <meta name="description" content="新年祝福页提供新年倒计时、祝福生成器、心愿墙与停留挑战，帮助你写下专属新年祝福。">
+    <meta name="keywords" content="新年祝福,新年愿望,祝福生成器,新年倒计时,心愿墙">
+    <meta name="author" content="TimeMaster">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/new-year-wishes.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/new-year-wishes.html">
+    <meta property="og:title" content="新年祝福页 | TimeMaster">
+    <meta property="og:description" content="写下你的新年愿望、生成祝福卡片、参与心愿墙互动，让祝福更有仪式感。">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/new-year-wishes.html">
+    <meta property="twitter:title" content="新年祝福页 | TimeMaster">
+    <meta property="twitter:description" content="新年倒计时、祝福生成器、心愿墙互动，一站式新年祝福体验。">
+    <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "新年祝福页",
+      "description": "包含新年倒计时、祝福生成器、心愿墙与停留挑战的新年祝福页面。",
+      "url": "https://yourdomain.com/new-year-wishes.html"
+    }
+    </script>
+
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: var(--wish-bg, linear-gradient(135deg, #0f172a 0%, #312e81 45%, #f97316 100%));
+            background-attachment: fixed;
+        }
+
+        .main-content {
+            align-items: stretch;
+            padding: 2.5rem clamp(1.5rem, 3vw, 3.5rem) 4rem;
+        }
+
+        .newyear-shell {
+            width: min(1200px, 100%);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            padding: clamp(28px, 4vw, 50px);
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            color: #1e1b4b;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            color: #475569;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .hero-card {
+            background: rgba(248, 250, 252, 0.9);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.1);
+        }
+
+        .hero-card h3 {
+            font-size: 1.1rem;
+            color: #4c1d95;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px 10px;
+            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .countdown-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f97316;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .theme-switcher {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .theme-button {
+            border: none;
+            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            background: #e2e8f0;
+            color: #334155;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .theme-button.active {
+            background: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 12px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .theme-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 24px 45px rgba(15, 23, 42, 0.18);
+        }
+
+        .panel h2 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel p {
+            color: #475569;
+        }
+
+        .wish-form {
+            display: grid;
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-control input,
+        .form-control select,
+        .form-control textarea {
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-size: 1rem;
+            background: #f8fafc;
+        }
+
+        .form-control textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .action-button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #4f46e5;
+            color: #ffffff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .action-button.secondary {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(79, 70, 229, 0.25);
+        }
+
+        .wish-wall {
+            display: grid;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .wish-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 18px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .wish-card h4 {
+            margin-bottom: 8px;
+            color: #4338ca;
+        }
+
+        .wish-meta {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 12px;
+        }
+
+        .stay-tasks {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stay-task {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stay-task.completed {
+            background: #ecfdf5;
+            border-color: #34d399;
+            color: #047857;
+            font-weight: 600;
+        }
+
+        .stay-time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f97316;
+        }
+
+        .toast {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            background: rgba(15, 23, 42, 0.92);
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 999px;
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.3);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 720px) {
+            .countdown-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .button-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body data-wish-theme="warm">
+    <div class="container">
+        <header>
+        <nav class="navbar" role="navigation" aria-label="主导航">
+            <div class="nav-brand">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <span>试金石 时间管理</span>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <button class="dropdown-toggle" id="toolsDropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-toolbox" aria-hidden="true"></i>
+                        计时工具
+                        <i class="fas fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" id="toolsMenu" role="menu">
+                        <a href="fullscreen-countdown.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-desktop"></i>
+                            全屏倒计时器
+                        </a>
+                        <button class="dropdown-item nav-item" data-tab="countdown" id="countdown-tab" aria-controls="countdown" type="button" role="menuitem">
+                            <i class="fas fa-hourglass-start"></i>
+                            倒计时器
+                        </button>
+                        <button class="dropdown-item nav-item" data-tab="pomodoro" id="pomodoro-tab" aria-controls="pomodoro" type="button" role="menuitem">
+                            <i class="fas fa-seedling"></i>
+                            番茄钟计时器
+                        </button>
+                        <button class="dropdown-item nav-item" data-tab="stopwatch" id="stopwatch-tab" aria-controls="stopwatch" type="button" role="menuitem">
+                            <i class="fas fa-stopwatch"></i>
+                            秒表计时
+                        </button>
+                        <a href="game.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-gamepad"></i>
+                            时间守护者游戏
+                        </a>
+                        <a href="world-time-tools.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-globe"></i>
+                            世界时间工具
+                        </a>
+                        <a href="festival-countdown.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-calendar-days"></i>
+                            重大节日倒计时
+                        </a>
+                        <a href="countdown-game.html" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-hourglass-half"></i>
+                            倒计时挑战
+                        </a>
+                        <a href="festival-countdown.html#festivalCategoryNav" class="dropdown-item" role="menuitem">
+                            <i class="fas fa-calendar-alt"></i>
+                            节日倒计时
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    主页
+                </a>
+                <a href="new-year-wishes.html" class="nav-link active">
+                    <i class="fas fa-snowflake"></i>
+                    新年祝福
+                </a>
+                <a href="articles.html" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    文章专栏
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+        </header>
+
+        <main class="main-content" role="main">
+            <div class="newyear-shell">
+                <section class="hero">
+                    <div>
+                        <h1>新年祝福页：写下你的心愿与祝福</h1>
+                        <p>在这里生成专属的新年祝福语、参与心愿墙互动，并通过停留挑战让新年的仪式感持续在线。让祝福不仅被写下，也被记住。</p>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-hourglass-half"></i> 距离下一次跨年</h3>
+                        <div class="countdown-grid" id="countdownGrid">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="daysValue">00</span>
+                                <span class="countdown-label">天</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="hoursValue">00</span>
+                                <span class="countdown-label">小时</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="minutesValue">00</span>
+                                <span class="countdown-label">分钟</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="secondsValue">00</span>
+                                <span class="countdown-label">秒</span>
+                            </div>
+                        </div>
+                        <p id="countdownNote">保持在线，见证每一秒的靠近。</p>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-palette"></i> 新年氛围主题</h3>
+                        <div class="theme-switcher" id="themeSwitcher">
+                            <button class="theme-button active" data-theme="warm">暖光烟火</button>
+                            <button class="theme-button" data-theme="midnight">午夜星河</button>
+                            <button class="theme-button" data-theme="gold">金色祝福</button>
+                        </div>
+                        <p>切换背景氛围，为祝福注入不同的情绪温度。</p>
+                    </div>
+                </section>
+
+                <section class="content-grid">
+                    <div class="panel">
+                        <h2><i class="fas fa-pen-fancy"></i> 祝福生成器</h2>
+                        <p>选择对象与关键词，快速生成暖心祝福，并一键保存到心愿墙。</p>
+                        <form class="wish-form" id="wishForm">
+                            <div class="form-row">
+                                <label class="form-control">
+                                    祝福对象
+                                    <select id="recipientSelect">
+                                        <option value="friend">朋友</option>
+                                        <option value="family">家人</option>
+                                        <option value="lover">爱人</option>
+                                        <option value="colleague">同事</option>
+                                        <option value="self">自己</option>
+                                    </select>
+                                </label>
+                                <label class="form-control">
+                                    祝福语气
+                                    <select id="toneSelect">
+                                        <option value="warm">温暖治愈</option>
+                                        <option value="energetic">元气鼓励</option>
+                                        <option value="classic">传统经典</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="form-row">
+                                <label class="form-control">
+                                    称呼昵称
+                                    <input type="text" id="nameInput" placeholder="例如：小雅" />
+                                </label>
+                                <label class="form-control">
+                                    关键词
+                                    <input type="text" id="keywordInput" placeholder="例如：健康、好运、成长" />
+                                </label>
+                            </div>
+                            <label class="form-control">
+                                你的祝福内容
+                                <textarea id="wishText" placeholder="写下你的祝福或点击生成按钮"></textarea>
+                            </label>
+                            <div class="button-row">
+                                <button class="action-button" type="button" id="generateWish">生成祝福</button>
+                                <button class="action-button secondary" type="button" id="copyWish">复制祝福</button>
+                                <button class="action-button secondary" type="button" id="saveWish">保存到心愿墙</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="panel">
+                        <h2><i class="fas fa-heart"></i> 心愿墙</h2>
+                        <p>把你的祝福贴在心愿墙上，随时回看、再度感受新年能量。</p>
+                        <div class="wish-wall" id="wishWall"></div>
+                    </div>
+                </section>
+
+                <section class="content-grid">
+                    <div class="panel">
+                        <h2><i class="fas fa-hourglass"></i> 停留挑战</h2>
+                        <p>完成以下小任务，让新年的祝福仪式持续在线。</p>
+                        <div class="stay-time" id="stayTimer">00:00</div>
+                        <div class="stay-tasks" id="stayTasks">
+                            <div class="stay-task" data-task="write">
+                                <i class="fas fa-feather"></i>
+                                写下至少一句祝福
+                            </div>
+                            <div class="stay-task" data-task="save">
+                                <i class="fas fa-thumbtack"></i>
+                                保存到心愿墙
+                            </div>
+                            <div class="stay-task" data-task="copy">
+                                <i class="fas fa-share"></i>
+                                复制或分享祝福
+                            </div>
+                            <div class="stay-task" data-task="stay">
+                                <i class="fas fa-clock"></i>
+                                停留 3 分钟，陪伴跨年倒计时
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <h2><i class="fas fa-lightbulb"></i> 新年陪伴建议</h2>
+                        <p>让新年祝福不止于一句话，试试以下互动方式：</p>
+                        <ul class="stay-tasks">
+                            <li class="stay-task"><i class="fas fa-mug-hot"></i> 记录三件过去一年值得感谢的小事。</li>
+                            <li class="stay-task"><i class="fas fa-calendar-check"></i> 写下新年三件最想实现的目标。</li>
+                            <li class="stay-task"><i class="fas fa-music"></i> 播放你最喜欢的跨年歌单，保持好心情。</li>
+                            <li class="stay-task"><i class="fas fa-camera-retro"></i> 截图并分享你的祝福卡片。</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <script>
+        const wishTemplates = {
+            warm: {
+                friend: [
+                    "新的一年，愿{target}的每一天都被{keywords}包围，笑容更明亮。",
+                    "愿{target}在新年里拥抱{keywords}，把温暖留给自己。"
+                ],
+                family: [
+                    "新年到了，愿{target}健康平安，{keywords}常伴左右。",
+                    "愿{target}在新的一年里被爱包围，{keywords}永不缺席。"
+                ],
+                lover: [
+                    "愿新年把{keywords}带给{target}，也把我留在你身边。",
+                    "新的一年，愿{target}的心里有我，也有{keywords}的甜蜜。"
+                ],
+                colleague: [
+                    "愿{target}在新年里工作顺利，{keywords}时时出现。",
+                    "新的一年，愿{target}的努力收获{keywords}与掌声。"
+                ],
+                self: [
+                    "新年你好，愿{target}拥抱{keywords}，成为更坚定的自己。",
+                    "新的一年，愿{target}把{keywords}放进生活的每一个角落。"
+                ]
+            },
+            energetic: {
+                friend: [
+                    "新的一年冲呀！愿{target}收获{keywords}，每一步都闪闪发光！",
+                    "愿{target}在新年里元气满满，让{keywords}成为你的超能力。"
+                ],
+                family: [
+                    "新年新的冒险，愿{target}健康满格，{keywords}一路开挂！",
+                    "愿{target}元气爆棚，{keywords}带来更多惊喜。"
+                ],
+                lover: [
+                    "新的一年，愿{target}被{keywords}点亮，我们一起奔赴更甜的未来！",
+                    "愿{target}的每一天都因为{keywords}而闪耀，我也会一直在。"
+                ],
+                colleague: [
+                    "新年冲刺开局，愿{target}收获{keywords}和更多好消息！",
+                    "愿{target}新年绩效满分，{keywords}助你更上一层楼！"
+                ],
+                self: [
+                    "新年新的自己，愿{target}带着{keywords}一路向前！",
+                    "愿{target}在新年里能量拉满，{keywords}成为你的底气。"
+                ]
+            },
+            classic: {
+                friend: [
+                    "恭贺新年，愿{target}福运常在，{keywords}事事如意。",
+                    "新春至，愿{target}平安喜乐，{keywords}日日相随。"
+                ],
+                family: [
+                    "新年快乐，愿{target}阖家安康，{keywords}福寿绵长。",
+                    "岁岁年年，愿{target}身体康健，{keywords}满堂生辉。"
+                ],
+                lover: [
+                    "新年同庆，愿{target}心想事成，{keywords}与我长相守。",
+                    "新春佳节，愿{target}幸福美满，{keywords}情意更深。"
+                ],
+                colleague: [
+                    "新岁启程，愿{target}事业兴旺，{keywords}蒸蒸日上。",
+                    "辞旧迎新，愿{target}工作顺遂，{keywords}前程似锦。"
+                ],
+                self: [
+                    "新年伊始，愿{target}身心安泰，{keywords}喜乐常伴。",
+                    "新岁新程，愿{target}心怀{keywords}，步步生辉。"
+                ]
+            }
+        };
+
+        const themePresets = {
+            warm: "linear-gradient(135deg, #0f172a 0%, #312e81 45%, #f97316 100%)",
+            midnight: "linear-gradient(135deg, #020617 0%, #1e1b4b 45%, #2563eb 100%)",
+            gold: "linear-gradient(135deg, #1c1917 0%, #b45309 45%, #fbbf24 100%)"
+        };
+
+        const toast = document.getElementById('toast');
+        const wishText = document.getElementById('wishText');
+        const wishWall = document.getElementById('wishWall');
+        const stayTasks = document.querySelectorAll('.stay-task');
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const nextYear = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0);
+            const diff = nextYear - now;
+
+            const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+            const days = Math.floor(totalSeconds / (24 * 3600));
+            const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            document.getElementById('daysValue').textContent = String(days).padStart(2, '0');
+            document.getElementById('hoursValue').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutesValue').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('secondsValue').textContent = String(seconds).padStart(2, '0');
+        }
+
+        function generateWish() {
+            const recipient = document.getElementById('recipientSelect').value;
+            const tone = document.getElementById('toneSelect').value;
+            const name = document.getElementById('nameInput').value.trim() || '你';
+            const keywords = document.getElementById('keywordInput').value.trim() || '好运与喜悦';
+
+            const options = wishTemplates[tone][recipient];
+            const template = options[Math.floor(Math.random() * options.length)];
+            const generated = template
+                .replace('{target}', name)
+                .replace('{keywords}', keywords);
+
+            wishText.value = generated;
+            markTaskComplete('write');
+        }
+
+        function copyWish() {
+            if (!wishText.value.trim()) {
+                showToast('请先填写或生成祝福内容');
+                return;
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(wishText.value).then(() => {
+                    showToast('祝福已复制到剪贴板');
+                    markTaskComplete('copy');
+                });
+            } else {
+                wishText.select();
+                document.execCommand('copy');
+                showToast('祝福已复制到剪贴板');
+                markTaskComplete('copy');
+            }
+        }
+
+        function getSavedWishes() {
+            try {
+                return JSON.parse(localStorage.getItem('newYearWishes') || '[]');
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveWish() {
+            const content = wishText.value.trim();
+            if (!content) {
+                showToast('请先填写或生成祝福内容');
+                return;
+            }
+
+            const wishes = getSavedWishes();
+            const newWish = {
+                id: Date.now(),
+                content,
+                createdAt: new Date().toLocaleString('zh-CN')
+            };
+            wishes.unshift(newWish);
+            localStorage.setItem('newYearWishes', JSON.stringify(wishes.slice(0, 8)));
+            renderWishWall();
+            showToast('已保存到心愿墙');
+            markTaskComplete('save');
+        }
+
+        function renderWishWall() {
+            const wishes = getSavedWishes();
+            if (!wishes.length) {
+                wishWall.innerHTML = '<p>还没有祝福内容，写下你的第一条新年愿望吧！</p>';
+                return;
+            }
+
+            wishWall.innerHTML = wishes.map(wish => `
+                <div class="wish-card">
+                    <h4>新年祝福</h4>
+                    <p>${wish.content}</p>
+                    <div class="wish-meta">${wish.createdAt}</div>
+                </div>
+            `).join('');
+        }
+
+        function markTaskComplete(taskId) {
+            stayTasks.forEach(task => {
+                if (task.dataset.task === taskId) {
+                    task.classList.add('completed');
+                }
+            });
+        }
+
+        function handleTextInput() {
+            if (wishText.value.trim().length > 5) {
+                markTaskComplete('write');
+            }
+        }
+
+        function initThemeSwitcher() {
+            const themeButtons = document.querySelectorAll('.theme-button');
+            themeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    themeButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const theme = button.dataset.theme;
+                    document.body.style.setProperty('--wish-bg', themePresets[theme]);
+                });
+            });
+        }
+
+        function startStayTimer() {
+            const startTime = Date.now();
+            const stayTimer = document.getElementById('stayTimer');
+            setInterval(() => {
+                const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsedSeconds / 60);
+                const seconds = elapsedSeconds % 60;
+                stayTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                if (elapsedSeconds >= 180) {
+                    markTaskComplete('stay');
+                }
+            }, 1000);
+        }
+
+        document.getElementById('generateWish').addEventListener('click', generateWish);
+        document.getElementById('copyWish').addEventListener('click', copyWish);
+        document.getElementById('saveWish').addEventListener('click', saveWish);
+        wishText.addEventListener('input', handleTextInput);
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        renderWishWall();
+        initThemeSwitcher();
+        startStayTimer();
+    </script>
+    <script src="dropdown.js" defer></script>
+    <script src="footer.js" defer></script>
+</body>
+</html>

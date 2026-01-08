@@ -21,6 +21,14 @@
         <priority>0.96</priority>
     </url>
 
+    <!-- 新年祝福页 -->
+    <url>
+        <loc>https://www.iseetime.online/new-year-wishes.html</loc>
+        <lastmod>2024-05-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+
     <!-- Holiday Countdown (English) -->
     <url>
         <loc>https://www.iseetime.online/holiday-countdown-en.html</loc>
