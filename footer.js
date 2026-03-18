@@ -16,65 +16,53 @@
                             <i class="fas fa-clock"></i>
                         </span>
                         <div>
-                            <h3>TimeMaster Online Countdown Timer</h3>
-                            <p>An all-in-one timer suite with online timers, countdowns, and Pomodoro sessions to make every second count.</p>
+                            <h3>ISEEtime Online</h3>
+                            <p>A growing matrix of countdown timers and date calculators built for birthdays, weddings, exams, holidays and planning tasks.</p>
                         </div>
                     </div>
-                    <a class="footer-contact-link" href="mailto:hello@timemaster.com">
+                    <a class="footer-contact-link" href="mailto:hello@iseetime.online">
                         <i class="fas fa-envelope"></i>
-                        hello@timemaster.com
+                        hello@iseetime.online
                     </a>
-                    <div class="footer-social" aria-label="Social media">
-                        <span>Follow Us</span>
-                        <div class="social-links">
-                            <a href="#" aria-label="Join the TimeMaster WeChat community">
-                                <i class="fab fa-weixin"></i>
-                            </a>
-                            <a href="#" aria-label="Follow TimeMaster on Weibo">
-                                <i class="fab fa-weibo"></i>
-                            </a>
-                            <a href="#" aria-label="Join the TimeMaster Telegram community">
-                                <i class="fab fa-telegram-plane"></i>
-                            </a>
-                        </div>
-                    </div>
                 </div>
                 <div class="footer-column">
-                    <h4>Core Tools</h4>
+                    <h4>Popular Countdowns</h4>
                     <ul>
-                        <li><a href="fullscreen-countdown.html">Fullscreen Countdown</a></li>
-                        <li><a href="index.html#countdown">Countdown Timer</a></li>
-                        <li><a href="index.html#pomodoro">Pomodoro Timer</a></li>
-                        <li><a href="index.html#stopwatch">Stopwatch</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Popular Uses</h4>
-                    <ul>
+                        <li><a href="birthday-countdown.html">Birthday Countdown</a></li>
                         <li><a href="wedding-countdown.html">Wedding Countdown</a></li>
                         <li><a href="exam-countdown.html">Exam Countdown</a></li>
-                        <li><a href="birthday-countdown.html">Birthday Countdown</a></li>
-                        <li><a href="holiday-background-countdown.html">Holiday Background Countdown</a></li>
-                        <li><a href="festival-countdown.html">Holiday & Festival Countdowns</a></li>
-                        <li><a href="game.html">Time Guardian Mini Game</a></li>
+                        <li><a href="anniversary-countdown.html">Anniversary Countdown</a></li>
+                        <li><a href="christmas-countdown.html">Countdown to Christmas</a></li>
+                        <li><a href="new-year-countdown.html">Countdown to New Year</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>Learning Resources</h4>
+                    <h4>Date Calculators</h4>
                     <ul>
-                        <li><a href="articles.html">Time Management Articles</a></li>
-                        <li><a href="article-time-planning.html">Daily Time Planning</a></li>
-                        <li><a href="article-website-planning.html">Website Planning Guide</a></li>
-                        <li><a href="how-to-create-countdown-timer.html">Countdown Timer Tutorial</a></li>
+                        <li><a href="age-calculator.html">Age Calculator</a></li>
+                        <li><a href="days-between-dates.html">Days Between Dates</a></li>
+                        <li><a href="how-many-days-until.html">How Many Days Until</a></li>
+                        <li><a href="date-calculator.html">Date Calculator</a></li>
+                        <li><a href="time-until-date.html">Time Until a Date</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>More Tools</h4>
+                    <ul>
+                        <li><a href="festival-countdown.html">Festival Countdowns</a></li>
+                        <li><a href="fullscreen-countdown.html">Fullscreen Countdown</a></li>
+                        <li><a href="world-time-tools.html">World Time Tools</a></li>
+                        <li><a href="articles.html">Articles Hub</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© <span id="currentYear"></span> TimeMaster · Dedicated to crafting an elegant online countdown experience.</p>
+                <p>© <span id="currentYear"></span> ISEEtime Online · Free countdown timers and date calculators for focused search intent.</p>
                 <div class="footer-bottom-links">
-                    <a href="articles.html">Articles Hub</a>
+                    <a href="index.html">Home</a>
                     <a href="sitemap.html">Sitemap</a>
-                    <a href="mailto:hello@timemaster.com">Contact Us</a>
+                    <a href="mailto:hello@iseetime.online">Contact</a>
                 </div>
             </div>
         </div>
